@@ -23,7 +23,7 @@ module.exports = {
     const Op = Sequelize.Op;
 
     return await queryInterface.bulkDelete('ReviewImages', {
-      id: { [Op.in]: [1, 2, 3] }
+      url: { [Op.in]: ['image1forreview1@im.age', 'image2forreview2@im.age', 'image3forreview3@im.age'] }
     })
   }
 };
