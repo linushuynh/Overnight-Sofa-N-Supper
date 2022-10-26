@@ -7,12 +7,71 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
 // const validateBody = [
-//     check("")
-// ]
+    //     check("")
+    // ]
+    router.get(
+        '/current',
+        // ADDED AUTHORIZATION
+        requireAuth,
+        async (req, res) => {
+            const userid = req.user.toJSON().id
+            const spots = await Spot.findAll({
+                // DIFFERENCE IS IN THIS WHERE
+                where: {
+                    ownerId: userid
+                },
+                include: [
+                    {
+                        model: Review
+                    },
+                    {
+                        model: SpotImage
+                    }
+                ]
+            });
 
-router.get(
-    '/:spotId',
-    async (req, res) => {
+            const spotList = [];
+
+            // Translate list of spots into JSON for reading
+            spots.forEach(async (spot) => {
+                spotList.push(spot.toJSON())
+            })
+
+            // Perform the following code for each spot
+            spotList.forEach(async (spot) => {
+                // For every spot, find the reviews
+                let reviewArray = spot.Reviews;
+                let spotTotalAverage = 0;
+
+                // Iterate through the reviews to key into the stars and add into spotTotalAverage
+                reviewArray.forEach(async (review) => {
+                    spotTotalAverage += review.stars
+                })
+                spotTotalAverage /= reviewArray.length;
+                spot.avgRating = spotTotalAverage;
+                delete spot.Reviews;
+
+                let spotImageArray = spot.SpotImages;
+
+                // For every spot in the list, check if preview is true
+                // and then set the url as previewImage key
+                spotImageArray.forEach(async (image) => {
+                    if (image.preview === true) {
+                        spot.previewImage = image.url
+                    }
+                    delete spot.SpotImages
+                })
+
+            })
+
+            return res.json({
+                Spots: spotList
+            })
+        });
+
+    router.get(
+        '/:spotId',
+        async (req, res) => {
         // Finding the spot by spotId
         const { spotId } = req.params;
         const spot = await Spot.findByPk(spotId, {
@@ -75,66 +134,6 @@ router.get(
         return res.json(jsonSpot);
     }
 );
-
-router.get(
-    '/current',
-    // ADDED AUTHORIZATION
-    requireAuth,
-    async (req, res) => {
-        const userid = req.user.toJSON().id
-        const spots = await Spot.findAll({
-            // DIFFERENCE IS IN THIS WHERE
-            where: {
-                ownerId: userid
-            },
-            include: [
-                {
-                    model: Review
-                },
-                {
-                    model: SpotImage
-                }
-            ]
-        });
-
-        const spotList = [];
-
-        // Translate list of spots into JSON for reading
-        spots.forEach(async (spot) => {
-            spotList.push(spot.toJSON())
-        })
-
-        // Perform the following code for each spot
-        spotList.forEach(async (spot) => {
-            // For every spot, find the reviews
-            let reviewArray = spot.Reviews;
-            let spotTotalAverage = 0;
-
-            // Iterate through the reviews to key into the stars and add into spotTotalAverage
-            reviewArray.forEach(async (review) => {
-                spotTotalAverage += review.stars
-            })
-            spotTotalAverage /= reviewArray.length;
-            spot.avgRating = spotTotalAverage;
-            delete spot.Reviews;
-
-            let spotImageArray = spot.SpotImages;
-
-            // For every spot in the list, check if preview is true
-            // and then set the url as previewImage key
-            spotImageArray.forEach(async (image) => {
-                if (image.preview === true) {
-                    spot.previewImage = image.url
-                }
-                delete spot.SpotImages
-            })
-
-        })
-
-        return res.json({
-            Spots: spotList
-        })
-    });
 
 router.get(
     '/',
@@ -276,6 +275,7 @@ router.post(
             const { address, city, state, country, lat, lng, name, description, price } = req.body;
             const { spotId } = req.params;
 
+            // Select spot to update using spotId from param
             let updatedSpot = await Spot.findOne({
                 where: { id: spotId }
             });
@@ -311,6 +311,46 @@ router.post(
             await updatedSpot.save();
 
             res.json(updatedSpot);
+        });
+
+    router.delete(
+        '/:spotId',
+        requireAuth,
+        async (req, res) => {
+            const { spotId } = req.params;
+            const currentUserId = req.user.toJSON().id;
+
+            // Select spot to destroy using spotId param
+            const destroySpot = await Spot.findOne({
+                where: {
+                    id: spotId
+                }
+            });
+
+            // Error Handling for non-existent spot id
+            if (!destroySpot) {
+                res.status(404);
+                return res.json({
+                    message: "Spot couldn't be found",
+                    statusCode: 404
+                })
+            };
+
+            // Authorization
+            if (currentUserId !== destroySpot.ownerId) {
+                res.status(403);
+                return res.json({
+                    message: "You must be authorized to perform this action.",
+                    statusCode: 403
+                })
+            };
+
+            await destroySpot.destroy();
+
+            return res.json({
+                message: "Successfully delete",
+                statusCode: 200
+            });
         });
 
 module.exports = router;
