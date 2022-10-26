@@ -26,7 +26,7 @@ module.exports = {
     const Op = Sequelize.Op;
 
     return await queryInterface.bulkDelete('SpotImages', {
-      id: { [Op.in]: [1, 2, 3] }
+      url: { [Op.in]: ['image1forspot1@im.age', 'image2forspot2@im.age', 'image3forspot3@im.age'] }
     })
   }
 };

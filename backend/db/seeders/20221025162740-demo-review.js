@@ -28,7 +28,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return await queryInterface.bulkDelete('Reviews', {
-      id: { [Op.in]: [1, 2, 3] }
+      review: { [Op.in]: ["This was truly a nice place indeed.", "This was advertised well but ultimately a letdown.", "Not enough super people."] }
     })
   }
 };
