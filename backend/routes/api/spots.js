@@ -194,6 +194,7 @@ router.post(
     '/:spotId/images',
     requireAuth,
     async (req, res) => {
+        const currentUserId = req.user.toJSON().id;
         const { spotId } = req.params;
         const { url, preview } = req.body;
 
@@ -206,6 +207,14 @@ router.post(
             })
         }
 
+        // Authorization
+        if (currentUserId !== spot.ownerId) {
+            res.status(403);
+            return res.json({
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
+            })
+        }
         const newSpotImage = await SpotImage.create({
             spotId,
             url,
@@ -257,5 +266,51 @@ router.post(
         res.status(201)
         return res.json(newSpot)
     });
+
+    router.put(
+        '/:spotId',
+        requireAuth,
+        async (req, res) => {
+            const currentUserId = req.user.toJSON().id;
+
+            const { address, city, state, country, lat, lng, name, description, price } = req.body;
+            const { spotId } = req.params;
+
+            let updatedSpot = await Spot.findOne({
+                where: { id: spotId }
+            });
+
+            // Authorization
+            if (currentUserId !== updatedSpot.ownerId) {
+                res.status(403);
+                return res.json({
+                    message: "You must be authorized to perform this action.",
+                    statusCode: 403
+                })
+            }
+            // Error Handling for non-existent spotId
+            if (!updatedSpot) {
+                res.status(404);
+                return res.json({
+                    message: "Spot couldn't be found",
+                    statusCode: 404
+                })
+            }
+
+            // Update values in selected Spot object
+            updatedSpot.set({
+                address,
+                city,
+                state,
+                country,
+                lat,
+                lng,
+                name,
+                description
+            });
+            await updatedSpot.save();
+
+            res.json(updatedSpot);
+        });
 
 module.exports = router;
