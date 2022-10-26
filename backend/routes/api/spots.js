@@ -11,6 +11,72 @@ const { requireAuth } = require('../../utils/auth');
 // ]
 
 router.get(
+    '/:spotId',
+    async (req, res) => {
+        // Finding the spot by spotId
+        const { spotId } = req.params;
+        const spot = await Spot.findByPk(spotId, {
+            include: [
+                {
+                    model: Review
+                },
+                {
+                    model: SpotImage,
+                    attributes: ["id", "url", "preview"]
+                }
+            ]
+        });
+
+        // Error handling for undefined spotId
+        if (!spot) {
+            res.status(404);
+            return res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              });
+        };
+
+        //Initialize spot response
+        let jsonSpot = spot.toJSON();
+
+        // Find and append owner to spot response
+        const owner = await User.findOne({
+            include: [
+                { model: Spot,
+                where: {
+                    id: spotId
+                }
+                }
+            ]
+        });
+        const jsonOwner = owner.toJSON()
+        const { id, firstName, lastName} = jsonOwner
+        jsonSpot.Owner = {
+            id,
+            firstName,
+            lastName
+        };
+
+        //Calculate reviews
+        let reviewArray = jsonSpot.Reviews;
+        let spotTotalAverage = 0;
+
+        // Iterate through the reviews to key into the stars and add into spotTotalAverage
+        reviewArray.forEach(async (review) => {
+            spotTotalAverage += review.stars
+        })
+        spotTotalAverage /= reviewArray.length;
+
+        // Append numReviews and avgRating
+        jsonSpot.numReviews = reviewArray.length;
+        jsonSpot.avgRating = spotTotalAverage;
+        delete jsonSpot.Reviews;
+
+        return res.json(jsonSpot);
+    }
+);
+
+router.get(
     '/current',
     // ADDED AUTHORIZATION
     requireAuth,
