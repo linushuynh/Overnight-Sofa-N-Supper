@@ -544,94 +544,94 @@ router.post(
         return res.json(newSpot)
     });
 
-    //EDIT SPOT
-    router.put(
-        '/:spotId',
-        requireAuth,
-        validateSpotBody,
-        async (req, res) => {
-            const currentUserId = req.user.toJSON().id;
+//EDIT SPOT
+router.put(
+    '/:spotId',
+    requireAuth,
+    validateSpotBody,
+    async (req, res) => {
+        const currentUserId = req.user.toJSON().id;
 
-            const { address, city, state, country, lat, lng, name, description, price } = req.body;
-            const { spotId } = req.params;
+        const { address, city, state, country, lat, lng, name, description, price } = req.body;
+        const { spotId } = req.params;
 
-            // Select spot to update using spotId from param
-            let updatedSpot = await Spot.findOne({
-                where: { id: spotId }
-            });
-
-            // Authorization
-            if (currentUserId !== updatedSpot.ownerId) {
-                res.status(403);
-                return res.json({
-                    message: "You must be authorized to perform this action.",
-                    statusCode: 403
-                })
-            }
-            // Error Handling for non-existent spotId
-            if (!updatedSpot) {
-                res.status(404);
-                return res.json({
-                    message: "Spot couldn't be found",
-                    statusCode: 404
-                })
-            }
-
-            // Update values in selected Spot object
-            await updatedSpot.set({
-                address,
-                city,
-                state,
-                country,
-                lat,
-                lng,
-                name,
-                description
-            });
-            await updatedSpot.save();
-
-            res.json(updatedSpot);
+        // Select spot to update using spotId from param
+        let updatedSpot = await Spot.findOne({
+            where: { id: spotId }
         });
 
-    // DELETE SPOT
-    router.delete(
-        '/:spotId',
-        requireAuth,
-        async (req, res) => {
-            const { spotId } = req.params;
-            const currentUserId = req.user.toJSON().id;
-
-            // Select spot to destroy using spotId param
-            const destroySpot = await Spot.findOne({
-                where: {
-                    id: spotId
-                }
-            });
-
-            // Error Handling for non-existent spot id
-            if (!destroySpot) {
-                res.status(404);
-                return res.json({
-                    message: "Spot couldn't be found",
-                    statusCode: 404
-                })
-            };
-
-            // Authorization
-            if (currentUserId !== destroySpot.ownerId) {
-                res.status(403);
-                return res.json({
-                    message: "You must be authorized to perform this action.",
-                    statusCode: 403
-                })
-            };
-
-            await destroySpot.destroy();
-
+        // Authorization
+        if (currentUserId !== updatedSpot.ownerId) {
+            res.status(403);
             return res.json({
-                message: "Successfully delete",
-                statusCode: 200
-            });
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
+            })
+        }
+        // Error Handling for non-existent spotId
+        if (!updatedSpot) {
+            res.status(404);
+            return res.json({
+                message: "Spot couldn't be found",
+                statusCode: 404
+            })
+        }
+
+        // Update values in selected Spot object
+        await updatedSpot.set({
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description
         });
+        await updatedSpot.save();
+
+        res.json(updatedSpot);
+    });
+
+// DELETE SPOT
+router.delete(
+    '/:spotId',
+    requireAuth,
+    async (req, res) => {
+        const { spotId } = req.params;
+        const currentUserId = req.user.toJSON().id;
+
+        // Select spot to destroy using spotId param
+        const destroySpot = await Spot.findOne({
+            where: {
+                id: spotId
+            }
+        });
+
+        // Error Handling for non-existent spot id
+        if (!destroySpot) {
+            res.status(404);
+            return res.json({
+                message: "Spot couldn't be found",
+                statusCode: 404
+            })
+        };
+
+        // Authorization
+        if (currentUserId !== destroySpot.ownerId) {
+            res.status(403);
+            return res.json({
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
+            })
+        };
+
+        await destroySpot.destroy();
+
+        return res.json({
+            message: "Successfully delete",
+            statusCode: 200
+        });
+    });
 
 module.exports = router;
