@@ -71,21 +71,21 @@ router.put(
 
         let updatedReview = await Review.findByPk(reviewId);
 
+        // Error handling for non-existent reviews
+        if (!updatedReview) {
+            res.status(404);
+            return res.json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
+
         // Authorization
         if (user.id !== updatedReview.userId) {
             res.status(403);
             return res.json({
                 message: "You must be authorized to perform this action.",
                 statusCode: 403
-            })
-        }
-
-        // Error handling for non-existent reviews
-        if (!updatedReview) {
-            res.status(404);
-            res.json({
-                message: "Review couldn't be found",
-                statusCode: 404
             })
         }
 
@@ -109,21 +109,21 @@ router.delete(
 
         const destroyReview = await Review.findByPk(reviewId);
 
-        // Authorization
-        if (user.id !== destroyReview.userId) {
-            res.status(403);
-            return res.json({
-                message: "You must be authorized to perform this action.",
-                statusCode: 403
-            })
-        }
-
         // Error handling for non-existent reviews
         if (!destroyReview) {
             res.status(404);
             return res.json({
                 message: "Review couldn't be found",
                 statusCode: 404
+            })
+        }
+
+        // Authorization
+        if (user.id !== destroyReview.userId) {
+            res.status(403);
+            return res.json({
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
             })
         }
 
