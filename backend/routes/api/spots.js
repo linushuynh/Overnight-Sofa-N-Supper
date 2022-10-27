@@ -6,9 +6,40 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
-// const validateBody = [
-    //     check("")
-    // ]
+const validateSpotBody = [
+        check('address')
+            .exists({ checkFalsy: true })
+            .withMessage('Street address is required'),
+        check('city')
+            .exists({ checkFalsy: true })
+            .withMessage('City is required'),
+        check('state')
+            .exists({ checkFalsy: true })
+            .withMessage('State is required'),
+        check('country')
+            .exists({ checkFalsy: true })
+            .withMessage('Country is required'),
+        check('lat')
+            .isDecimal()
+            .withMessage('Latitude is not valid'),
+        check('lng')
+            .isDecimal()
+            .withMessage('Longitude is not valid'),
+        check('name')
+            .exists({ checkFalsy: true })
+            .isLength({ max: 50 })
+            .withMessage('Name must be less than 50 characters'),
+        check('description')
+            .exists({ checkFalsy: true })
+            .withMessage('Description is required'),
+        check('price')
+            .exists({ checkFalsy: true })
+            .isCurrency()
+            .withMessage('Price per day is required'),
+        handleValidationErrors
+    ]
+
+
     router.get(
         '/current',
         // ADDED AUTHORIZATION
@@ -190,6 +221,49 @@ router.get(
 );
 
 router.post(
+    '/:spotId/reviews',
+    requireAuth,
+    async (req, res) => {
+        const currentUserId = req.user.toJSON().id;
+        const { review, stars } = req.body;
+        const { spotId } = req.params;
+
+        // Error Handling for non-existent spot
+        const spot = await Spot.findByPk(spotId);
+        if (!spot) {
+            res.status(404);
+            return res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              });
+        };
+
+        // Error Handling for existing reviews
+        const reviewCheck = await Review.findOne({
+            where: { userId: currentUserId }
+        });
+        if (reviewCheck) {
+            res.status(403);
+            return res.json({
+                "message": "User already has a review for this spot",
+                "statusCode": 403
+              });
+        }
+
+        // Create new review
+        const newReview = await Review.create({
+            userId: currentUserId,
+            spotId: parseInt(spotId),
+            review,
+            stars,
+        });
+
+        res.status(201);
+        return res.json(newReview);
+    }
+    );
+
+router.post(
     '/:spotId/images',
     requireAuth,
     async (req, res) => {
@@ -197,6 +271,7 @@ router.post(
         const { spotId } = req.params;
         const { url, preview } = req.body;
 
+        // Error Handling for non-existent spot
         const spot = await Spot.findByPk(spotId);
         if (!spot) {
             await res.status(404);
@@ -231,9 +306,11 @@ router.post(
     }
 );
 
+// CREATE NEW SPOT
 router.post(
     '/',
     requireAuth,
+    validateSpotBody,
     async (req, res) => {
         const {
             address,
@@ -266,9 +343,11 @@ router.post(
         return res.json(newSpot)
     });
 
+    //EDIT SPOT
     router.put(
         '/:spotId',
         requireAuth,
+        validateSpotBody,
         async (req, res) => {
             const currentUserId = req.user.toJSON().id;
 
@@ -313,6 +392,7 @@ router.post(
             res.json(updatedSpot);
         });
 
+    // DELETE SPOT
     router.delete(
         '/:spotId',
         requireAuth,
