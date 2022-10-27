@@ -375,7 +375,41 @@ router.post(
         }
 
         // Booking Conflicts
-        
+        let allBookings = await spot.getBookings();
+        let bookingArray = [];
+        allBookings.forEach(async (booking) => {
+            bookingArray.push(booking.toJSON())
+        })
+
+        for (let booking of bookingArray){
+            // Converting date into time number for comparison
+            const bookingStartDate = new Date(booking.startDate);
+            const bookingStartDateOnly = new Date(bookingStartDate.toDateString());
+            const bookingStartDateCompare = bookingStartDateOnly.getTime();
+
+            const bookingEndDate = new Date(booking.endDate);
+            const bookingEndDateOnly = new Date(bookingEndDate.toDateString());
+            const bookingEndDateCompare = bookingEndDateOnly.getTime();
+
+            const errsObj = {};
+
+            // Check if startDate or endDate is between the existing booking's time
+            if (bookingStartDateCompare <= startDateCompare && startDateCompare <= bookingEndDateCompare) {
+                errsObj.startDate = "Start date conflicts with an existing booking";
+            }
+            if (bookingStartDateCompare <= endDateCompare && endDateCompare <= bookingEndDateCompare) {
+                errsObj.endDate = "End date conflicts with an existing booking";
+            }
+
+            if (Object.keys(errsObj).length !== 0) {
+                res.status(403);
+                return res.json({
+                    message: "Sorry, this spot is already booked for the specified dates",
+                    statusCode: 403,
+                    errors: errsObj
+                })
+            }
+        }
 
         // Create the new Booking and save
         const newBooking = await Booking.create({
