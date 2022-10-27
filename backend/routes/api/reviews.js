@@ -60,6 +60,56 @@ router.get(
         })
     });
 
+router.post(
+    '/:reviewId/images',
+    requireAuth,
+    async (req, res) => {
+        const { user } = req;
+        const { reviewId } = req.params;
+        const { url } = req.body;
+
+        const review = await Review.findByPk(reviewId);
+
+        // Check if number of images for review is > 10
+        const reviewImages = await review.getReviewImages();
+        if (reviewImages.length > 10) {
+            res.status(403);
+            return res.json({
+                "message": "Maximum number of images for this resource was reached",
+                "statusCode": 403
+              });
+        }
+
+        // Error handling for non-existent reviews
+        if (!review) {
+            res.status(404);
+            return res.json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
+
+        // Authorization
+        if (user.id !== review.userId) {
+            res.status(403);
+            return res.json({
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
+            })
+        };
+
+        // Create ReviewImage using review's special method
+        const img = await review.createReviewImage({
+            url
+        });
+
+        return res.json({
+            id: img.id,
+            url
+        });
+    }
+);
+
 router.put(
     '/:reviewId',
     requireAuth,
