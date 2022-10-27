@@ -6,6 +6,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
+// GET BOOKINGS FOR CURRENT USER
 router.get(
     '/current',
     requireAuth,
@@ -41,4 +42,94 @@ router.get(
     }
 );
 
+// EDIT A BOOKING
+router.put(
+    '/:bookingId',
+    requireAuth,
+    async(req, res) => {
+        const { user } = req;
+        const { bookingId } = req.params;
+        const { startDate , endDate } = req.body;
+        const updateBooking = await Booking.findByPk(bookingId);
+
+        // Authorization for owners
+        if (updateBooking.userId !== user.id) {
+            res.status(403);
+            return res.json({
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
+            })
+        }
+
+        // Body Validation Errors
+        const startDateObj = new Date(startDate);
+        const startDateStr = startDateObj.toDateString();
+        const startDateTimelessObj = new Date(startDateStr);
+        const startDateCompare = startDateTimelessObj.getTime();
+
+        const endDateObj = new Date(endDate);
+        const endDateStr = endDateObj.toDateString();
+        const endDateTimelessObj = new Date(endDateStr);
+        const endDateCompare = endDateTimelessObj.getTime();
+
+        if (startDateCompare > endDateCompare) {
+            res.status(400);
+            return res.json({
+                "message": "Validation error",
+                "statusCode": 400,
+                "errors": {
+                    "endDate": "endDate cannot come before startDate"
+                }
+            })
+        }
+
+        // Booking Conflicts(Check through every booking)
+        let allBookings = await Booking.findAll({
+            where: { id: bookingId }
+        });
+        let bookingArray = [];
+        allBookings.forEach(async (booking) => {
+            bookingArray.push(booking.toJSON())
+        })
+
+        for (let booking of bookingArray){
+            // Converting date into time number for comparison
+            const bookingStartDate = new Date(booking.startDate);
+            const bookingStartDateOnly = new Date(bookingStartDate.toDateString());
+            const bookingStartDateCompare = bookingStartDateOnly.getTime();
+
+            const bookingEndDate = new Date(booking.endDate);
+            const bookingEndDateOnly = new Date(bookingEndDate.toDateString());
+            const bookingEndDateCompare = bookingEndDateOnly.getTime();
+
+            const errsObj = {};
+
+            // Check if startDate or endDate is between the existing booking's time
+            if (bookingStartDateCompare <= startDateCompare && startDateCompare <= bookingEndDateCompare) {
+                errsObj.startDate = "Start date conflicts with an existing booking";
+            }
+            if (bookingStartDateCompare <= endDateCompare && endDateCompare <= bookingEndDateCompare) {
+                errsObj.endDate = "End date conflicts with an existing booking";
+            }
+
+            if (Object.keys(errsObj).length !== 0) {
+                res.status(403);
+                return res.json({
+                    message: "Sorry, this spot is already booked for the specified dates",
+                    statusCode: 403,
+                    errors: errsObj
+                })
+            }
+        }
+
+        await updateBooking.set({
+            startDate,
+            endDate
+        })
+        await updateBooking.save()
+
+        return res.json(updateBooking)
+
+    }
+);
 module.exports = router;

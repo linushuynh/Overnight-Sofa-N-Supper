@@ -578,7 +578,7 @@ router.post(
             }
 
             // Update values in selected Spot object
-            updatedSpot.set({
+            await updatedSpot.set({
                 address,
                 city,
                 state,
