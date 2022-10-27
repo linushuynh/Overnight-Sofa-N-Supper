@@ -122,6 +122,53 @@ router.get(
         })
     });
 
+// GET BOOKINGS OF SPOT BY SPOT ID
+router.get(
+    '/:spotId/bookings',
+    requireAuth,
+    async (req, res) => {
+        const { user } = req;
+        const { spotId } = req.params;
+        const spot = await Spot.findByPk(spotId);
+
+        // Error handling for non-existent spots
+        if (!spot) {
+            res.status(404);
+            return res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        // Response for owners
+        if (parseInt(spot.ownerId) === parseInt(user.id)) {
+            const bookings = await spot.getBookings({
+                include: [ {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
+                 } ]
+            })
+
+            return res.json({
+                Bookings: bookings
+            })
+        }
+
+        // Response for guests
+        if (parseInt(spot.ownerId) !== parseInt(user.id)) {
+            const bookings = await spot.getBookings({
+                attributes: ['spotId', 'startDate', 'endDate']
+            });
+
+            return res.json({
+                Bookings: bookings
+            })
+        };
+
+    }
+);
+
+
 // GET REVIEWS OF SPOT BY SPOT ID
 router.get(
     '/:spotId/reviews',
@@ -326,6 +373,7 @@ router.post(
     }
     );
 
+// CREATE NEW BOOKING FOR SPOT ID
 router.post(
     '/:spotId/bookings',
     requireAuth,
