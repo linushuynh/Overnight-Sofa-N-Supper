@@ -75,9 +75,9 @@ router.put(
         if (startDateCompare > endDateCompare) {
             res.status(400);
             return res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
+                message: "Validation error",
+                statusCode: 400,
+                errors: {
                     "endDate": "endDate cannot come before startDate"
                 }
             })
@@ -132,4 +132,33 @@ router.put(
 
     }
 );
+
+
+// DELETE BOOKING
+router.delete(
+    '/:bookingId',
+    requireAuth,
+    async (req, res) => {
+        const { user } = req;
+        const { bookingId } = req.params;
+
+        const deleteBooking = await Booking.findByPk(bookingId);
+
+        if (!deleteBooking) {
+            res.status(404)
+            return res.json({
+                message: "Booking couldn't be found",
+                statusCode: 404
+            })
+        }
+
+        await deleteBooking.destroy();
+
+        return res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+        })
+    }
+);
+
 module.exports = router;
