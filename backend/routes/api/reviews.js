@@ -28,32 +28,53 @@ router.get(
         const currentUser = await User.findByPk(user.id);
         const reviews = await currentUser.getReviews();
 
-        const reviewsArray = [];
-        reviews.forEach((review) => {
-            reviewsArray.push(review.toJSON())
-        });
+        // To make changes to each review, map out in a promise
+        const reviewsArray = await Promise.all(reviews.map(async (review) => {
+            const rev = review.toJSON();
 
-        reviewsArray.forEach(async (review) => {
             // Query and Append User
             let addUser = await User.findByPk(user.id, {
                 attributes: ['id', 'firstName', 'lastName']
             });
-            // addUser = addUser.toJSON();
-            review.User = await addUser.dataValues;
-            console.log(review.User)
+
+            addUser = addUser.toJSON();
+            rev.User = addUser;
+
 
             // Query and append Spot
             let addSpot = await Spot.findOne({
                 where: { ownerId: user.id },
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
-            addSpot = await addSpot.toJSON();
-            review.Spot = await addSpot
-            // console.log(addSpot)
+            addSpot = addSpot.toJSON();
+            rev.Spot = addSpot
 
+            // Query and append a preview image to the Spot
+            let spotImg = await SpotImage.findOne({
+                where: {
+                    spotId: addSpot.id,
+                    preview: true
+                },
+                attributes: [ 'url' ]
+            });
+            spotImg = spotImg.toJSON();
+            rev.Spot.previewImage = spotImg.url
 
+            // Query ReviewImages list
+            let reviewImgs = await ReviewImage.findAll({
+                where: { reviewId: rev.id },
+                attributes: ['id', 'url']
+            })
 
-        })
+                // Convert each item in ReviewImgs list into readable object and append to review
+                let reviewImgList = await Promise.all(reviewImgs.map(async (img) => {
+                    img = img.toJSON();
+                    return img
+                }))
+                rev.ReviewImages = reviewImgList
+
+            return rev
+        }))
 
         return res.json({
             Reviews: reviewsArray

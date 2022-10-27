@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const { User, Spot, Review, SpotImage } = require('../../db/models');
+const { User, Spot, Review, SpotImage, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -111,6 +111,44 @@ router.get(
             Spots: spotList
         })
     });
+
+// GET REVIEWS OF SPOT BY SPOT ID
+router.get(
+    '/:spotId/reviews',
+    async (req, res) => {
+        const { user } = req;
+        const { spotId } = req.params;
+
+        // Error handling for non-existent spot
+        const spot = await Spot.findByPk(spotId);
+        if (!spot){
+            res.status(404);
+            return res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+
+        // Eager load Reviews to include User and ReviewImages
+        const reviews = await Review.findAll({
+            where: { spotId: spotId },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
+                },
+                {
+                    model: ReviewImage,
+                    attributes: ['id', 'url']
+                }
+            ]
+        })
+
+        return res.json({
+            Reviews: reviews
+        })
+    }
+);
 
 // GET SPOT BY SPOT'S ID
 router.get(
