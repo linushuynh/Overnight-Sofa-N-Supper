@@ -52,15 +52,6 @@ const validateReviewBody = [
     handleValidationErrors
 ];
 
-// const validateBookingBody = [
-//     check('startDate')
-//     ,
-//     check('endDate')
-//         .isAfter('startDate'),
-//     handleValidationErrors
-// ];
-
-
 // GET SPOTS OF CURRENT USER
 router.get(
     '/current',
