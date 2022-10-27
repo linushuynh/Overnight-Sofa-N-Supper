@@ -7,6 +7,18 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { json } = require('sequelize');
 
+const validateReviewBody = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt()
+        .isIn([1,2,3,4,5])
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 router.get(
     '/current',
     requireAuth,
@@ -48,5 +60,43 @@ router.get(
         })
     });
 
+router.put(
+    '/:reviewId',
+    requireAuth,
+    validateReviewBody,
+    async (req, res) => {
+        const { user } = req;
+        const { reviewId } = req.params;
+        const { review, stars } = req.body;
 
+        let updatedReview = await Review.findByPk(reviewId);
+
+        // Authorization
+        if (user.id !== updatedReview.userId) {
+            res.status(403);
+            return res.json({
+                message: "You must be authorized to perform this action.",
+                statusCode: 403
+            })
+        }
+
+        // Error handling for non-existent review
+        if (!updatedReview) {
+            res.status(404);
+            res.json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
+
+        // Update the selected review
+        updatedReview.set({
+            review,
+            stars
+        });
+        await updatedReview.save();
+
+        return res.json(updatedReview)
+    }
+);
 module.exports = router;
