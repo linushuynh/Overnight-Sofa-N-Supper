@@ -28,12 +28,14 @@ router.get(
         const currentUser = await User.findByPk(user.id);
         const reviews = await currentUser.getReviews();
 
-        const reviewsArray = [];
-        reviews.forEach((review) => {
-            reviewsArray.push(review.toJSON())
-        });
+        // const reviewsArray = [];
+        // reviews.forEach((review) => {
+        //     reviewsArray.push(review.toJSON())
+        // });
 
-        reviewsArray.forEach(async (review) => {
+        reviews.forEach(async (review) => {
+            const rev = review.toJSON();
+
             // Query and Append User
             let addUser = await User.findByPk(user.id, {
                 attributes: ['id', 'firstName', 'lastName']
