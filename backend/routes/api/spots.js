@@ -5,7 +5,7 @@ const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../d
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { json } = require('sequelize');
+const { Op } = require('sequelize');
 
 const validateSpotBody = [
         check('address')
@@ -268,9 +268,8 @@ router.get(
 router.get(
     '/',
     async (req, res) => {
-        let { page, size } = req.query;
+        let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
         let pagination = {};
-
         if (isNaN(page) && !(parseInt(page) > 0)) {
             page = 1;
         } else page = parseInt(page);
@@ -282,7 +281,38 @@ router.get(
         pagination.limit = size;
         pagination.offset = size * (page - 1);
 
+        let where = {};
+
+        if (minLat) {
+            where.lat = { [Op.gt]: minLat };
+        };
+        if (maxLat) {
+            where.lat = { [Op.lt]: maxLat };
+        }
+        if (minLat && maxLat) {
+            where.lat = { [Op.between]: [minLat, maxLat]}
+        }
+        if (minLng) {
+            where.lng = { [Op.gte]: minLng };
+        }
+        if (maxLng) {
+            where.lng = { [Op.lte]: maxLng };
+        }
+        if (minLng && maxLng) {
+            where.lng = { [Op.between]: [minLng, maxLng] };
+        }
+        if (minPrice) {
+            where.price = { [Op.gte]: minPrice }
+        }
+        if (maxPrice) {
+            where.price = { [Op.lte]: maxPrice }
+        }
+        if (minPrice && maxPrice) {
+            where.price = { [Op.between]: [minPrice, maxPrice] }
+        }
+
         const spots = await Spot.findAll({
+            where,
             include: [
                 {
                     model: Review
@@ -303,7 +333,7 @@ router.get(
 
         // Perform the following code for each spot
         spotList.forEach(async (spot) => {
-            // For every spot, find the reviews
+            // For every spot, key into the reviews
             let reviewArray = spot.Reviews;
             let spotTotalAverage = 0;
 
@@ -317,8 +347,7 @@ router.get(
 
             let spotImageArray = spot.SpotImages;
 
-            // For every spot in the list, check if preview is true
-            // and then set the url as previewImage key
+            // Find an image where preview is true and set that as previewImage
             spotImageArray.forEach(async (image) => {
                 if (image.preview === true) {
                     spot.previewImage = image.url
