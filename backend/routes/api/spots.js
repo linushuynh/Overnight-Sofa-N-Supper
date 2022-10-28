@@ -268,15 +268,30 @@ router.get(
 router.get(
     '/',
     async (req, res) => {
+        let { page, size } = req.query;
+        let pagination = {};
+
+        if (isNaN(page) && !(parseInt(page) > 0)) {
+            page = 1;
+        } else page = parseInt(page);
+
+        if (isNaN(size) && !(parseInt(size) > 0)) {
+            size = 20
+        } else size = parseInt(size);
+
+        pagination.limit = size;
+        pagination.offset = size * (page - 1);
+
         const spots = await Spot.findAll({
             include: [
                 {
                     model: Review
                 },
                 {
-                    model: SpotImage
+                    model: SpotImage,
                 }
-            ]
+            ],
+            ...pagination
         });
 
         const spotList = [];
@@ -308,8 +323,8 @@ router.get(
                 if (image.preview === true) {
                     spot.previewImage = image.url
                 }
-                delete spot.SpotImages
             })
+            delete spot.SpotImages
 
         })
 
