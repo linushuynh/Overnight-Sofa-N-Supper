@@ -11,14 +11,14 @@ module.exports = {
         endDate: '2021-06-08'
       },
       {
-        spotId: 3,
-        userId: 1,
+        spotId: 2,
+        userId: 3,
         startDate: '2021-12-11',
         endDate: '2021-06-08'
       },
       {
         spotId: 3,
-        userId: 3,
+        userId: 1,
         startDate: '2022-02-02',
         endDate: '2022-02-02'
       },
