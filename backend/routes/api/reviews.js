@@ -5,7 +5,6 @@ const { User, Spot, Review, SpotImage, ReviewImage } = require('../../db/models'
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { json } = require('sequelize');
 
 const validateReviewBody = [
     check('review')
@@ -96,8 +95,8 @@ router.post(
         if (reviewImages.length > 10) {
             res.status(403);
             return res.json({
-                "message": "Maximum number of images for this resource was reached",
-                "statusCode": 403
+                message: "Maximum number of images for this resource was reached",
+                statusCode: 403
               });
         }
 

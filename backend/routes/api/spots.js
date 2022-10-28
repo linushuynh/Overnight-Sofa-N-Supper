@@ -35,7 +35,7 @@ const validateSpotBody = [
             .withMessage('Description is required'),
         check('price')
             .exists({ checkFalsy: true })
-            .isCurrency()
+            .isCurrency({ require_symbol: false })
             .withMessage('Price per day is required'),
         handleValidationErrors
     ];
@@ -51,6 +51,32 @@ const validateReviewBody = [
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
 ];
+
+// const validateQueryFilter = [
+//     check('page')
+//         .isNumeric()
+//         .withMessage('Page must be greater than or equal to 1'),
+//     check('size')
+//         .isNumeric()
+//         .withMessage('Size must be greater than or equal to 1'),
+//     check('maxLat')
+//         .isLatLong()
+//         .withMessage('Maximum latitude is invalid'),
+//     check('minLat')
+//         .isLatLong()
+//         .withMessage('Minimum latitude is invalid'),
+//     check('minLng')
+//         .isLatLong()
+//         .withMessage('Minimum longitude is invalid'),
+//     check('maxLng')
+//         .isLatLong()
+//         .withMessage('Maximum longitude is invalid'),,
+//     check('minPrice')
+//         .isCurrency( { require_symbol: false } ),
+//     check('maxPrice')
+//         .isCurrency( { require_symbol: false }),
+//     handleValidationErrors
+// ];
 
 // GET SPOTS OF CURRENT USER
 router.get(
@@ -126,8 +152,8 @@ router.get(
         if (!spot) {
             res.status(404);
             return res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
+                message: "Spot couldn't be found",
+                statusCode: 404
               })
         }
 
@@ -172,8 +198,8 @@ router.get(
         if (!spot){
             res.status(404);
             return res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
+                message: "Spot couldn't be found",
+                statusCode: 404
             })
         }
 
@@ -220,8 +246,8 @@ router.get(
     if (!spot) {
         res.status(404);
         return res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
+            message: "Spot couldn't be found",
+            statusCode: 404
             });
     };
 
@@ -267,6 +293,7 @@ router.get(
 // GET ALL SPOTS
 router.get(
     '/',
+    // validateQueryFilter,
     async (req, res) => {
         let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
         let pagination = {};
@@ -378,8 +405,8 @@ router.post(
         if (!spot) {
             res.status(404);
             return res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
+                message: "Spot couldn't be found",
+                statusCode: 404
               });
         };
 
@@ -390,8 +417,8 @@ router.post(
         if (reviewCheck) {
             res.status(403);
             return res.json({
-                "message": "User already has a review for this spot",
-                "statusCode": 403
+                message: "User already has a review for this spot",
+                statusCode: 403
               });
         }
 
@@ -422,8 +449,8 @@ router.post(
         if (!spot) {
             res.status(404);
             return res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
+                message: "Spot couldn't be found",
+                statusCode: 404
               })
         }
 
@@ -449,9 +476,9 @@ router.post(
         if (startDateCompare > endDateCompare) {
             res.status(400);
             return res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
+                message: "Validation error",
+                statusCode: 400,
+                errors: {
                   "endDate": "endDate cannot come before startDate"
                 }
             })

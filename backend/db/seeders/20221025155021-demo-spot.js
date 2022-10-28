@@ -17,7 +17,7 @@ module.exports = {
         price: 999.99
       },
       {
-        ownerId: 1,
+        ownerId: 2,
         address: '222 Happy Place',
         city: 'Los Angeles',
         state: 'CA',
@@ -29,7 +29,7 @@ module.exports = {
         price: 500.00
       },
       {
-        ownerId: 2,
+        ownerId: 3,
         address: '333 Happy Place',
         city: 'New York City',
         state: 'NY',
