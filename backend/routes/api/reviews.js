@@ -17,7 +17,7 @@ const validateReviewBody = [
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
 ];
-
+// GET ALL REVIEWS OF CURRENT USER
 router.get(
     '/current',
     requireAuth,
@@ -80,6 +80,7 @@ router.get(
         })
     });
 
+// ADD IMAGE TO REVIEW BY REVIEW ID
 router.post(
     '/:reviewId/images',
     requireAuth,
@@ -89,6 +90,15 @@ router.post(
         const { url } = req.body;
 
         const review = await Review.findByPk(reviewId);
+
+        // Error handling for non-existent reviews
+        if (!review) {
+            res.status(404);
+            return res.json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
 
         // Check if number of images for review is > 10
         const reviewImages = await review.getReviewImages();
@@ -100,20 +110,11 @@ router.post(
               });
         }
 
-        // Error handling for non-existent reviews
-        if (!review) {
-            res.status(404);
-            return res.json({
-                message: "Review couldn't be found",
-                statusCode: 404
-            })
-        }
-
         // Authorization
         if (user.id !== review.userId) {
             res.status(403);
             return res.json({
-                message: "You must be authorized to perform this action.",
+                message: 'Forbidden',
                 statusCode: 403
             })
         };
@@ -130,6 +131,7 @@ router.post(
     }
 );
 
+// EDIT REVIEW BY REVIEW ID
 router.put(
     '/:reviewId',
     requireAuth,
@@ -154,7 +156,7 @@ router.put(
         if (user.id !== updatedReview.userId) {
             res.status(403);
             return res.json({
-                message: "You must be authorized to perform this action.",
+                message: 'Forbidden',
                 statusCode: 403
             })
         }
@@ -170,6 +172,7 @@ router.put(
     }
 );
 
+// DELETE REVIEW
 router.delete(
     '/:reviewId',
     requireAuth,
@@ -192,7 +195,7 @@ router.delete(
         if (user.id !== destroyReview.userId) {
             res.status(403);
             return res.json({
-                message: "You must be authorized to perform this action.",
+                message: 'Forbidden',
                 statusCode: 403
             })
         }

@@ -52,11 +52,20 @@ router.put(
         const { startDate , endDate } = req.body;
         const updateBooking = await Booking.findByPk(bookingId);
 
+        // Error handling for non-existent booking
+        if (!updateBooking) {
+            res.status(404);
+            return res.json({
+                message: "Booking couldn't be found",
+                statusCode: 404
+            })
+        }
+
         // Authorization for owners
         if (updateBooking.userId !== user.id) {
             res.status(403);
             return res.json({
-                message: "You must be authorized to perform this action.",
+                message: "Forbidden",
                 statusCode: 403
             })
         }
@@ -144,11 +153,21 @@ router.delete(
 
         const deleteBooking = await Booking.findByPk(bookingId);
 
+        // Error handling for non-existent bookings
         if (!deleteBooking) {
             res.status(404)
             return res.json({
                 message: "Booking couldn't be found",
                 statusCode: 404
+            })
+        }
+
+       // Authorization for owners
+       if (deleteBooking.userId !== user.id) {
+            res.status(403);
+            return res.json({
+                message: "Forbidden",
+                statusCode: 403
             })
         }
 

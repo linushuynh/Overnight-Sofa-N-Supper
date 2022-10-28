@@ -30,7 +30,8 @@ router.delete(
         if (spot.ownerId !== user.id) {
             res.status(403);
             return res.json({
-                message: 'You are unauthorized to delete this image'
+                message: 'Forbidden',
+                statusCode: 403
             })
         }
 
