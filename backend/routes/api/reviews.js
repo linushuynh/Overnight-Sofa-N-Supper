@@ -22,14 +22,12 @@ router.get(
     '/current',
     requireAuth,
     async (req, res) => {
-        // const currentUserId = req.user.toJSON().id;
         const { user } = req;
-        const currentUser = await User.findByPk(user.id);
-        const reviews = await currentUser.getReviews();
+        const reviews = await user.getReviews();
 
-        // To make changes to each review, map out in a promise
+        // Take array and map out in new array of promises
         const reviewsArray = await Promise.all(reviews.map(async (review) => {
-            const rev = review.toJSON();
+            const rev = await review.toJSON();
 
             // Query and Append User
             let addUser = await User.findByPk(user.id, {
@@ -48,6 +46,7 @@ router.get(
             addSpot = addSpot.toJSON();
             rev.Spot = addSpot
 
+            console.log(addSpot.id)
             // Query and append a preview image to the Spot
             let spotImg = await SpotImage.findOne({
                 where: {
@@ -56,8 +55,12 @@ router.get(
                 },
                 attributes: [ 'url' ]
             });
-            spotImg = spotImg.toJSON();
-            rev.Spot.previewImage = spotImg.url
+            if (spotImg) {
+                spotImg = spotImg.toJSON();
+                rev.Spot.previewImage = spotImg.url;
+            } else {
+                rev.Spot.previewImage = null
+            }
 
             // Query ReviewImages list
             let reviewImgs = await ReviewImage.findAll({
