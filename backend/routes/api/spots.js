@@ -296,6 +296,7 @@ router.get(
     // validateQueryFilter,
     async (req, res) => {
         let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+        // Pagination
         let pagination = {};
         if (isNaN(page) && !(parseInt(page) > 0)) {
             page = 1;
@@ -308,6 +309,7 @@ router.get(
         pagination.limit = size;
         pagination.offset = size * (page - 1);
 
+        // Query Filter
         let where = {};
 
         if (minLat) {
@@ -385,7 +387,9 @@ router.get(
         })
 
         return res.json({
-            Spots: spotList
+            Spots: spotList,
+            page,
+            size
         })
     }
 );
@@ -458,7 +462,8 @@ router.post(
         if (parseInt(spot.ownerId) === parseInt(user.id)) {
             res.status(403);
             return res.json({
-                message: 'You cannot book your own spot as the owner'
+                message: 'Forbidden',
+                statusCode: 403
             })
         }
 
@@ -557,7 +562,7 @@ router.post(
         if (currentUserId !== spot.ownerId) {
             res.status(403);
             return res.json({
-                message: "You must be authorized to perform this action.",
+                message: 'Forbidden',
                 statusCode: 403
             })
         }
@@ -631,20 +636,20 @@ router.put(
             where: { id: spotId }
         });
 
-        // Authorization
-        if (currentUserId !== updatedSpot.ownerId) {
-            res.status(403);
-            return res.json({
-                message: "You must be authorized to perform this action.",
-                statusCode: 403
-            })
-        }
         // Error Handling for non-existent spotId
         if (!updatedSpot) {
             res.status(404);
             return res.json({
                 message: "Spot couldn't be found",
                 statusCode: 404
+            })
+        }
+        // Authorization
+        if (currentUserId !== updatedSpot.ownerId) {
+            res.status(403);
+            return res.json({
+                message: 'Forbidden',
+                statusCode: 403
             })
         }
 
@@ -692,7 +697,7 @@ router.delete(
         if (currentUserId !== destroySpot.ownerId) {
             res.status(403);
             return res.json({
-                message: "You must be authorized to perform this action.",
+                message: 'Forbidden',
                 statusCode: 403
             })
         };
