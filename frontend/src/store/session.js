@@ -18,6 +18,7 @@ export const removeSession = () => {
     }
 }
 
+// Thunks
 export const login = (inputUser) => async (dispatch) => {
     const { credential, password } = inputUser;
     const response = await csrfFetch('/api/session',{
@@ -57,6 +58,17 @@ export const signup = (user) => async (dispatch) => {
     dispatch(setSession(data.user));
     return response;
 };
+
+export const logout = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+        method: "DELETE"
+    })
+
+    if (response.ok) {
+        dispatch(removeSession());
+    }
+    return response
+}
 
 //Reducer
 const initialState = { user: null }
