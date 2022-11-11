@@ -30,11 +30,13 @@ router.get(
         const userDetails = user.toSafeObject();
         const { id, firstName, lastName, email, username } = userDetails
         return res.json({
-          id,
-          firstName,
-          lastName,
-          email,
-          username
+          user: {
+            id,
+            firstName,
+            lastName,
+            email,
+            username
+          }
         });
       } else return res.json({});
     }
@@ -62,12 +64,13 @@ router.post(
       const { id, firstName, lastName, email, username } = user;
 
       return res.json({
-        id,
-        firstName,
-        lastName,
-        email,
-        username,
-        token
+        user: {
+          id,
+          firstName,
+          lastName,
+          email,
+          username
+      }
       });
     }
   );

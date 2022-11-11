@@ -38,12 +38,13 @@ router.post(
       const { id } = await user
 
       return res.json({
-        id,
-        firstName,
-        lastName,
-        email,
-        username,
-        token
+        user: {
+          id,
+          firstName,
+          lastName,
+          email,
+          username
+        }
       });
     }
   );
