@@ -29,7 +29,6 @@ export const login = (inputUser) => async (dispatch) => {
         })
     })
     const data = await response.json();
-    console.log(data)
     if (response.ok) {
         dispatch(setSession(data.user))
     }
