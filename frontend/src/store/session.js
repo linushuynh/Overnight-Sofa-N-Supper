@@ -27,14 +27,21 @@ export const login = (inputUser) => async (dispatch) => {
             password
         })
     })
-    const user = response.json();
-
+    const data = await response.json();
+    console.log(data)
     if (response.ok) {
-        dispatch(setSession(user.user))
+        dispatch(setSession(data.user))
     }
 
     return response
 }
+
+export const restoreUser = () => async dispatch => {
+    const response = await csrfFetch('/api/session');
+    const data = await response.json();
+    dispatch(setSession(data.user));
+    return response;
+  };
 
 //Reducer
 const initialState = { user: null }
