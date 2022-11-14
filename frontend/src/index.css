@@ -23,6 +23,9 @@
 .mainpage {
     display: flex;
     flex-direction: column;
-    border: solid black 1px;
+    /* border: solid black 1px; */
     height: 100%;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
 }

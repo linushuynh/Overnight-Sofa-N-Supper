@@ -4,15 +4,14 @@
     box-sizing: border-box;
     position: sticky;
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     justify-content: space-between;
 }
 
 .icon {
-    position: fixed;
+    position: relative;
     left: 15px;
-    right: 45px;
-    top: 30px;
+    top: 10px;
 }
 
 .iconContainer {
@@ -22,10 +21,14 @@
 }
 
 .overnightsns {
-    position: fixed;
-    left: 50px;
-    top: 37px;
+    position: relative;
+    left: 20px;
+    top: 0px;
     text-decoration: none;
+    color: #ff385c;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 1000;
+    font-size: larger;
 }
 
 .bookingBox {
@@ -35,5 +38,5 @@
 
 .userBox {
     width: 33%;
-    
+
 }

@@ -6,7 +6,7 @@ module.exports = {
     return await queryInterface.bulkInsert('SpotImages', [
       {
         spotId: 1,
-        url: 'image1forspot1@im.age',
+        url: 'https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/mcdonalds-playplace.jpg?quality=82&strip=1&w=640',
         preview: true
       },
       {

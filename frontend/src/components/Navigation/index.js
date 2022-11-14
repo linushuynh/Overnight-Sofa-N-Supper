@@ -24,6 +24,7 @@ function Navigation({ isLoaded }){
   }
 
   return (
+    <>
     <div className='navbar'>
       <div className='iconContainer'>
         <img src={bnbicon} alt="Logo" className='icon' />
@@ -31,7 +32,7 @@ function Navigation({ isLoaded }){
       </div>
         <hr />
       <div className='bookingBox'>
-        <p> Anywhere <hr /> Any week <hr /> Add guests </p>
+        <p> Anywhere Any week Add guests </p>
 
       </div>
         <hr />
@@ -39,6 +40,7 @@ function Navigation({ isLoaded }){
             {isLoaded && sessionLinks}
       </div>
     </div>
+    </>
 
   );
 }
