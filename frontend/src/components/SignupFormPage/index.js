@@ -19,7 +19,20 @@ function SignupFormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
+    const errorsArr = []
+    if (firstName.slice(0,1) !== firstName.slice(0,1).toUpperCase()) {
+      errorsArr.push('The first name must be capitalized')
+    }
+    if (lastName.slice(0,1) !== lastName.slice(0,1).toUpperCase()) {
+      errorsArr.push('The last name must be capitalized')
+    }
+    if (password !== confirmPassword) {
+      errorsArr.push('Confirm Password field must be the same as the Password field')
+    }
+
+    if (errorsArr.length > 0) {
+      return setErrors(errorsArr);
+    } else {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, password,firstName, lastName }))
         .catch(async (res) => {
@@ -27,7 +40,7 @@ function SignupFormPage() {
           if (data && data.errors) setErrors(data.errors);
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+
   };
 
   return (
