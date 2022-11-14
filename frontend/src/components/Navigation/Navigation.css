@@ -1,1 +1,39 @@
 /* TO DO ADD STYLING*/
+.navbar {
+    height: 82px;
+    box-sizing: border-box;
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icon {
+    position: fixed;
+    left: 15px;
+    right: 45px;
+    top: 30px;
+}
+
+.iconContainer {
+    justify-items: center;
+    align-items: center;
+    width: 33%;
+}
+
+.overnightsns {
+    position: fixed;
+    left: 50px;
+    top: 37px;
+    text-decoration: none;
+}
+
+.bookingBox {
+    flex-direction: row;
+    width: 33%;
+}
+
+.userBox {
+    width: 33%;
+    
+}

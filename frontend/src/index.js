@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== "production") {
 
 function Root() {
   return (
+    <div className='mainpage'>
     <ReduxProvider store={store}>
       <ModalProvider>
         <BrowserRouter>
@@ -28,6 +29,7 @@ function Root() {
         </BrowserRouter>
       </ModalProvider>
     </ReduxProvider>
+    </div>
   );
 }
 
