@@ -17,6 +17,9 @@ function App() {
   return (
     <>
       <GetSpots />
+      <div id="bar">
+        <hr className="screen-bar"/>
+      </div>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -25,9 +28,6 @@ function App() {
           </Route>
         </Switch>
       )}
-        <div id="bar">
-          <hr className="screen-bar"/>
-        </div>
     </>
   );
 }

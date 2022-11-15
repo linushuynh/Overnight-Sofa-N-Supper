@@ -19,7 +19,8 @@ function GetSpots() {
             {allSpots.map((spot) => (
                 <div key={spot.id} className="spot-box">
                     <img src={spot.previewImage} className="spot-image" />
-                    <p className="spot-info">{spot.address}</p>
+                    <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>
+                    <p className="spot-info" id="spot-price">${spot.price} night</p>
                 </div>
             ))}
         </div>

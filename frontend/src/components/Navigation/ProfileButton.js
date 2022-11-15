@@ -31,18 +31,28 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
 
     return (
       <>
+        {user ? (
         <button onClick={openMenu} className='profile-button'>
-          <div >
-        <i className="fa-regular fa-user" id="user-icon"></i>
-          </div>
+            <i className="fa-solid fa-bars" id="bars-icon"></i>
+            <i className="fa-regular fa-user" id="logged-in-user-icon"></i>
         </button>
+        )
+        :
+        (
+        <button onClick={openMenu} className='profile-button'>
+            <i className="fa-solid fa-bars" id="bars-icon"></i>
+            <i className="fa-regular fa-user" id="not-logged-in-user-icon"></i>
+        </button>
+        )}
         {showMenu && (user ?
           <ul className="profile-dropdown">
+            <div className="button-holder">
             <li>{user.username}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
+            </div>
           </ul>
           :
           <ul className="profile-dropdown">
