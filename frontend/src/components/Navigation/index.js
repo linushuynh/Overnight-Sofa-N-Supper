@@ -13,33 +13,18 @@ function Navigation({ isLoaded }){
   const [showModal, setShowModal] = useState(false);
   const [login, setLogin] = useState(true)
 
-  // let sessionLinks;
-  // if (sessionUser) {
-  //   sessionLinks = (
-  //     <ProfileButton user={sessionUser} className="profile-button"/>
-  //   );
-  // } else {
-  //   sessionLinks = (
-  //     <>
-  //       <LoginFormModal />
-  //       <NavLink to="/signup">Sign Up</NavLink>
-  //     </>
-  //   );
-  // }
-
   return (
     <>
+    <div className='filler'> </div>
+
     <div className='navbar'>
       <div className='iconContainer'>
         <img src={bnbicon} alt="Logo" className='icon' />
         <NavLink exact to="/" className='overnightsns'> Overnight S&S </NavLink>
       </div>
-        <hr />
       <div className='bookingBox'>
-        <p> Anywhere Any week Add guests </p>
-
+        <p> Anywhere | Any week | Add guests </p>
       </div>
-        <hr />
       <div className='userBox'>
             {isLoaded && (
               <ProfileButton

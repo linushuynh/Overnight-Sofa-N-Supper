@@ -25,7 +25,22 @@
     flex-direction: column;
     /* border: solid black 1px; */
     height: 100%;
-    margin-left: 40px;
+    /* margin-left: 40px;
     margin-right: 40px;
-    margin-top: 20px;
+    margin-top: 20px; */
+    /* justify-content: stretch; */
+}
+
+.screen-bar{
+    width: 100vw;
+    opacity: 40%;
+    /* border: 1px solid red; */
+}
+
+#bar {
+    position: fixed;
+    top: 50px;
+    width: 100vw;
+    left: 0;
+    /* height: 20%; */
 }
