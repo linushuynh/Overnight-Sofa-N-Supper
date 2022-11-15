@@ -40,3 +40,20 @@
     width: 33%;
 
 }
+
+.profile-button {
+    border: rgb(218, 218, 218) 0.5px solid;
+    position: fixed;
+    top: 4%;
+    right: 4%;
+    background-color: white;
+    border-radius: 33%;
+    padding: 10px;
+    width: 75px;
+}
+
+#user-icon {
+    font-size: 25px;
+    position: relative;
+    top: 40%;
+}

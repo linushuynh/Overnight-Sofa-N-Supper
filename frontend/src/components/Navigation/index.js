@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 import bnbicon from "../../images/bnbicon.png"
 import SignupFormPage from '../SignupFormPage';
@@ -14,19 +13,19 @@ function Navigation({ isLoaded }){
   const [showModal, setShowModal] = useState(false);
   const [login, setLogin] = useState(true)
 
-  let sessionLinks;
-  if (sessionUser) {
-    sessionLinks = (
-      <ProfileButton user={sessionUser} />
-    );
-  } else {
-    sessionLinks = (
-      <>
-        <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
-    );
-  }
+  // let sessionLinks;
+  // if (sessionUser) {
+  //   sessionLinks = (
+  //     <ProfileButton user={sessionUser} className="profile-button"/>
+  //   );
+  // } else {
+  //   sessionLinks = (
+  //     <>
+  //       <LoginFormModal />
+  //       <NavLink to="/signup">Sign Up</NavLink>
+  //     </>
+  //   );
+  // }
 
   return (
     <>

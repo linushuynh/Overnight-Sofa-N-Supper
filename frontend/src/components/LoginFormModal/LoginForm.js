@@ -23,11 +23,12 @@ function LoginForm({ setShowModal }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="login-box">
+    <form onSubmit={handleSubmit} className="form">
       <ul>
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
-        ))}
+          ))}
       </ul>
       <label>
         Username or Email
@@ -36,7 +37,7 @@ function LoginForm({ setShowModal }) {
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
-        />
+          />
       </label>
       <label>
         Password
@@ -45,10 +46,11 @@ function LoginForm({ setShowModal }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        />
+          />
       </label>
       <button type="submit">Log In</button>
     </form>
+    </div>
   );
 }
 
