@@ -11,12 +11,27 @@ module.exports = {
       },
       {
         spotId: 2,
-        url: 'image2forspot2@im.age',
+        url: 'https://i.insider.com/56a78d4158c32394008b526e?width=700',
         preview: true
       },
       {
         spotId: 3,
-        url: 'image3forspot3@im.age',
+        url: 'https://www.kron4.com/wp-content/uploads/sites/11/2021/06/PopeyesExteriorGettyImages-643471694.jpg?w=2560&h=1440&crop=1',
+        preview: true
+      },
+      {
+        spotId: 4,
+        url: 'https://www.eatthis.com/wp-content/uploads/sites/4/2021/11/in-n-out-exterior.jpg?quality=82&strip=1',
+        preview: true
+      },
+      {
+        spotId: 5,
+        url: 'https://nypost.com/wp-content/uploads/sites/2/2022/08/chick-fil-a-menu-index.jpg?quality=75&strip=all',
+        preview: true
+      },
+      {
+        spotId: 6,
+        url: 'https://www.nrn.com/sites/nrn.com/files/Dominos-coronavirus-earnings_0_0.gif',
         preview: true
       },
     ])
@@ -26,7 +41,7 @@ module.exports = {
     const Op = Sequelize.Op;
 
     return await queryInterface.bulkDelete('SpotImages', {
-      url: { [Op.in]: ['image1forspot1@im.age', 'image2forspot2@im.age', 'image3forspot3@im.age'] }
+      spotId: { [Op.in]: [1, 2, 3, 4, 5, 6] }
     })
   }
 };
