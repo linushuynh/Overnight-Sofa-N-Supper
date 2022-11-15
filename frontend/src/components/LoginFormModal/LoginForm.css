@@ -1,0 +1,10 @@
+/* TO-DO: ADD STYLING TO LOGIN PAGE */
+.login-box {
+    display: flex;
+    height: 50vw;
+    width: 50vw;
+}
+
+.form {
+    background-color: transparent;
+}

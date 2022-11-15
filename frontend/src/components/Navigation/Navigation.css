@@ -1,1 +1,139 @@
 /* TO DO ADD STYLING*/
+.navbar {
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 78.3px;
+    background-color: white;
+}
+
+.iconContainer {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    width: 33%;
+    position: relative;
+    left: 1%;
+    gap: 4px;
+    /* top: 2.25%; */
+}
+
+.overnightsns {
+    text-decoration: none;
+    color: #ff385c;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 1000;
+    font-size: larger;
+}
+
+.bookingBox {
+    display: flex;
+    flex-direction: row;
+    width: 33%;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 10.5px;
+    left: 33%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.userBox {
+    width: 33%;
+
+}
+
+.profile-button {
+    /* border: rgb(218, 218, 218) 0.5px solid; */
+    border: none;
+    box-shadow: 0px 0px 3px gray;
+    position: fixed;
+    top: 1.5%;
+    right: 4%;
+    background-color: white;
+    border-radius: 25px;
+    padding: 10px;
+    width: 80px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#logged-in-user-icon {
+    font-size: 20px;
+    position: relative;
+    top: 40%;
+    right: 3%;
+    border: 2px solid black;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+#not-logged-in-user-icon {
+    font-size: 20px;
+    position: relative;
+    top: 40%;
+    right: 3%;
+    border: 2px solid black;
+    padding: 3px;
+    border-radius: 50%;
+}
+
+#bars-icon {
+    font-size: 15px;
+    position: relative;
+    left: 5%;
+}
+
+.profile-dropdown {
+    position: fixed;
+    right: 2%;
+    top: 6.5%;
+    list-style-type: none;
+}
+
+.form-button {
+    width: 96%;
+    border: none;
+    text-align: left;
+    height: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    background-color: transparent;
+    border-radius: 17%;
+    position: relative;
+    left: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+#signup-button {
+    font-weight: 800;
+}
+
+.button-holder {
+    border-radius: 5%;
+    background-color: white;
+    height: 243px;
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 2px gray;
+}
+
+.dropdown-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    height: 50px;
+    position: relative;
+    left: 10px;
+}

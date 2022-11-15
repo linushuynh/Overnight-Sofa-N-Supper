@@ -39,7 +39,43 @@ module.exports = {
         name: 'Superb Place',
         description: 'A place for super people.',
         price: 700.00
-      }
+      },
+      {
+        ownerId: 1,
+        address: '444 Happy Place',
+        city: 'New York City',
+        state: 'NY',
+        country: 'United States',
+        lat: 57.50293,
+        lng: 100.61798,
+        name: 'Wonderful Place',
+        description: 'Stand here and wonder.',
+        price: 200.00
+      },
+      {
+        ownerId: 2,
+        address: '555 Happy Place',
+        city: 'San Francisco',
+        state: 'CA',
+        country: 'United States',
+        lat: 37.50293,
+        lng: 122.61798,
+        name: 'A Place',
+        description: 'This is one place',
+        price: 350.00
+      },
+      {
+        ownerId: 3,
+        address: '666 Happy Place',
+        city: 'San Jose',
+        state: 'CA',
+        country: 'United States',
+        lat: 37.3387,
+        lng: 121.8853,
+        name: 'Place',
+        description: 'This is Place Jr.',
+        price: 750.00
+      },
     ])
   },
 

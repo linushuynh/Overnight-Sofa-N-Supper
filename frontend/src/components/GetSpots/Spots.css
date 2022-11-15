@@ -1,0 +1,36 @@
+.spots-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    top: 75px;
+    /* height: 100%; */
+}
+
+.spot-box {
+    /* border: 4px solid red; */
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    box-sizing: border-box;
+    padding: 10px;
+
+}
+
+.spot-image {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-self: center;
+    border-radius: 4%;
+}
+
+.spot-info {
+    justify-self: flex-start;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 1000;
+    font-size: 16px;
+}
+
+#spot-price {
+    font-weight: 500;
+}

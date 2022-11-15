@@ -4,6 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import GetSpots from "./components/GetSpots";
+import './index.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -14,6 +16,10 @@ function App() {
 
   return (
     <>
+      <GetSpots />
+      <div id="bar">
+        <hr className="screen-bar"/>
+      </div>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>

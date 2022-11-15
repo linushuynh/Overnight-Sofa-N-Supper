@@ -1,1 +1,45 @@
 /* TODO Add site wide styles */
+  /* .container {  display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 82px 75px 6.8fr 47px;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "NavBar"
+      "Search-Filters"
+      "Body"
+      "Footer";
+  }
+
+  .Body { grid-area: Body; }
+
+  .Search-Filters { grid-area: Search-Filters; }
+
+  .NavBar { grid-area: NavBar; }
+
+  .Footer { grid-area: Footer; } */
+
+
+.mainpage {
+    display: flex;
+    flex-direction: column;
+    /* border: solid black 1px; */
+    height: 100%;
+    margin-left: 2%;
+    margin-right: 2%;
+    /* justify-content: stretch; */
+}
+
+.screen-bar{
+    width: 100vw;
+    opacity: 40%;
+    /* border: 1px solid red; */
+}
+
+#bar {
+    position: fixed;
+    top: 70px;
+    width: 100vw;
+    left: 0;
+    /* height: 20%; */
+}
