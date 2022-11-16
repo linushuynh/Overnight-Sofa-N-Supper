@@ -9,6 +9,7 @@ const Hosting = () => {
     const [showMenu, setShowMenu] = useState(false);
     // const history = useHistory();
     const [showModal, setShowModal] = useState(false);
+    const [createFormMode, setCreateFormMode] = useState(true);
 
     const openMenu = () => {
         if (showMenu) return;
@@ -33,17 +34,36 @@ const Hosting = () => {
             <button className="listing-menu" onClick={openMenu}>
                 Menu
             </button>
+
             {showMenu && (
-                <button onClick={() => setShowModal(true)}>
+                <button onClick={() => {
+                    setCreateFormMode(true)
+                    setShowModal(true)
+                    }}>
                     Create a new listing
                 </button>
 
             )}
-            {showModal && (
+            {showModal && createFormMode && (
             <Modal onClose={() => setShowModal(false)}>
-                <SpotForm setShowModal={setShowModal}/>
+                <SpotForm setShowModal={setShowModal} actionType="create" />
             </Modal>
-      )}
+             )}
+
+            <div> Show listings here</div>
+
+                <button onClick={() => {
+                    setCreateFormMode(false)
+                    setShowModal(true)
+                    }}>
+                    Edit a current listing(Append this to each listing item)
+                </button>
+
+            {showModal && !createFormMode && (
+            <Modal onClose={() => setShowModal(false)}>
+                <SpotForm setShowModal={setShowModal} actionType="update" />
+            </Modal>
+             )}
         </div>
     )
 }

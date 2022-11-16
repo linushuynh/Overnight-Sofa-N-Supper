@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createSpot } from "../../store/spots";
 
-const SpotForm = ({ setShowModal }) => {
+const SpotForm = ({ setShowModal, actionType }) => {
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -21,6 +21,7 @@ const SpotForm = ({ setShowModal }) => {
         e.preventDefault();
         setErrors([]);
 
+        
         return dispatch(createSpot({
             address, city, state, country, lat, lng, name, description, price
         }))

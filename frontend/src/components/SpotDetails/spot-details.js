@@ -1,18 +1,25 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
-import { getSpotById } from "../../store/spots";
+import { deleteSpot, getSpotById } from "../../store/spots";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots.spotById);
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getSpotById(spotId));
     }, [spotId, dispatch])
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        dispatch(deleteSpot(spotId))
+        history.push("/")
+    }
     if (!spot) return null
 
     return (
@@ -21,6 +28,7 @@ const SpotDetails = () => {
                 {spot.SpotImages.map((spotImg) => (
                     <img src={spotImg.url} alt={spotImg.address} key={spotImg.id} className='spot-img' />
                 ))}
+                <button onClick={handleSubmit}> Delete this spot </button>
             </div>
         </>
     )
