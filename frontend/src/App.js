@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import GetSpots from "./components/GetSpots";
 import SpotDetails from "./components/SpotDetails/spot-details";
+import Hosting from "./components/Hosting";
 import './index.css'
 
 function App() {
@@ -30,6 +31,12 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/hosting">
+            <Hosting />
+          </Route>
+          <Route path="/newspot">
+            
           </Route>
         </Switch>
       )}

@@ -19,7 +19,7 @@ function GetSpots() {
         <div className="spots-container">
             {allSpots.map((spot) => (
                 <div key={spot.id} className="spot-box" onClick={() => history.push(`/spots/${spot.id}`)}>
-                    <img src={spot.previewImage} alt="" className="spot-image" />
+                   {spot.previewImage && (<img src={spot.previewImage} alt="" className="spot-image" />)}
                     <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>
                     <p className="spot-info" id="spot-price">${spot.price} night</p>
                 </div>
