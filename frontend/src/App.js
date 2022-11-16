@@ -5,6 +5,8 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import GetSpots from "./components/GetSpots";
+import SpotDetails from "./components/SpotDetails/spot-details";
+import Hosting from "./components/Hosting";
 import './index.css'
 
 function App() {
@@ -16,18 +18,29 @@ function App() {
 
   return (
     <>
-      <GetSpots />
       <div id="bar">
         <hr className="screen-bar"/>
       </div>
-      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path="/">
+            <GetSpots />
+          </Route>
+          <Route path="/spots/:spotId">
+            <SpotDetails />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path="/hosting">
+            <Hosting />
+          </Route>
+          <Route path="/newspot">
+            
+          </Route>
         </Switch>
       )}
+      <Navigation isLoaded={isLoaded} />
     </>
   );
 }

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
+import { useHistory } from "react-router-dom";
 
 const ProfileButton = ({ user, setShowModal, setLogin }) => {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
+    const history = useHistory();
 
     const openMenu = () => {
       if (showMenu) return;
@@ -49,6 +51,9 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
             <div className="button-holder">
             <li>{user.username}</li>
             <li>{user.email}</li>
+            <li id="manage-listings" onClick={() => history.push('/hosting')}>
+              Manage listings
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
