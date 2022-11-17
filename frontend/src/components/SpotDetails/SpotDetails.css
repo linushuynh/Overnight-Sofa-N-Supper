@@ -1,5 +1,41 @@
-.spot-detail-container {
+#spot-detail-container {
     position: absolute;
     top: 100px;
+    width: 100vw;
+}
+
+#reviews-container {
+    position: absolute;
+    top: 600px;
     width: 100%;
+    height:max-content;
+    /* display: flex; */
+}
+
+#avgRating {
+    position: absolute;
+    top: 60%;
+}
+
+.spot-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.img-container {
+    width: 40vw;
+    height: 40%;
+
+}
+
+#center-container {
+    display: flex;
+    position: absolute;
+    width: 75%;
+    height: 100%;
+    left: 12.5%;
+    border: 3px red solid;
+    margin: auto;
+    justify-self: center;
 }

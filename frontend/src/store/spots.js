@@ -120,7 +120,7 @@ export const getSpotsOfUser = () => async (dispatch) => {
 }
 
 // Reducer
-const initialState = { Spots: null, spotById: null, userSpots: null }
+const initialState = { Spots: [], spotById: null, userSpots: null}
 
 export const spotReducer = (state = initialState, action) => {
     const newState = { ...state };
