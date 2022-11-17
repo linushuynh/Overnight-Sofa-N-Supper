@@ -18,10 +18,15 @@ function GetSpots() {
     return (
         <div className="spots-container">
             {allSpots.map((spot) => (
-                <div key={spot.id} className="spot-box" onClick={() => history.push(`/spots/${spot.id}`)}>
-                   {spot.previewImage && (<img src={spot.previewImage} alt="" className="spot-image" />)}
-                    <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>
-                    <p className="spot-info" id="spot-price">${spot.price} night</p>
+                <div key={spot.id} className="spot-box" >
+                   {spot.previewImage && (<img src={spot.previewImage} alt="" className="spot-image" onClick={() => history.push(`/spots/${spot.id}`)} />)}
+                   <div id="spot-header" onClick={() => history.push(`/spots/${spot.id}`)}>
+                        <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>
+                        <p className="spot-info" id="rating">★ {spot.avgRating? spot.avgRating : "New"}</p>
+                    </div>
+                    <div id="spot-details" onClick={() => history.push(`/spots/${spot.id}`)}>
+                         <p className="spot-info" id="spot-price">${spot.price} night</p>
+                    </div>
                 </div>
             ))}
         </div>

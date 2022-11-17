@@ -2,9 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createSpot } from "../../store/spots";
+import { createSpot, editSpot } from "../../store/spots";
 
-const SpotForm = ({ setShowModal, actionType }) => {
+const SpotForm = ({ setShowModal, actionType, spotId }) => {
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -15,23 +15,45 @@ const SpotForm = ({ setShowModal, actionType }) => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [errors, setErrors] = useState([]);
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-
-        
-        return dispatch(createSpot({
+        const submitSpot = {
             address, city, state, country, lat, lng, name, description, price
-        }))
-        .then(() => setShowModal(false))
-        .catch(
-          async (res) => {
-            const data = await res.json();
-            if (data && data.errors) setErrors(data.errors);
-          }
-        );
+        }
+        //For Creating Spots
+        if (actionType === "create") {
+            return dispatch(createSpot(submitSpot))
+            .then(() => setShowModal(false))
+            .catch(
+              async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+              }
+            )
+            .then(() => {
+                if (errors.length < 1 ) history.push("/")
+            })
+        }
+        // For Updating Spots
+        if (actionType === "update") {
+            submitSpot.id = spotId
+            return dispatch(editSpot(submitSpot))
+            .then(() => setShowModal(false))
+            .catch(
+              async (res) => {
+                const data = await res.json();
+                console.log(data)
+                if (data && data.errors) setErrors(data.errors);
+              }
+            )
+            .then(() => {
+                if (errors.length < 1) history.push("/")
+            })
+        }
       };
 
     return (
