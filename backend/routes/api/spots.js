@@ -662,7 +662,8 @@ router.put(
             lat,
             lng,
             name,
-            description
+            description,
+            price
         });
         await updatedSpot.save();
 

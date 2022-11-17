@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // Action Type
 const GET_ALL_SPOTS = "spots/getallspots"
 const GET_SPOT_BY_ID = "spots/getspotbyid"
+const GET_SPOTS_OF_USER = "spots/getspotsofuser"
 const CREATE_NEW_SPOT = "spots/createnewspot"
 const EDIT_SPOT = "spots/editspot"
 const DELETE_SPOT = "spots/deletespot"
@@ -42,6 +43,13 @@ export const deleteSpotAction = (spotId) => {
         spotId
     }
 }
+
+export const getSpotsOfUserAction = (spots) => {
+    return {
+        type: GET_SPOTS_OF_USER,
+        spots
+    }
+}
 // Thunks
 export const getAllSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
@@ -70,9 +78,9 @@ export const createSpot = (spotInfo) => async (dispatch) => {
         body: JSON.stringify(spotInfo)
     });
 
-    const data = await response.json();
+    // const data = await response.json();
     if (response.ok) {
-        dispatch(createNewSpotAction(data));
+        dispatch(setSpots());
     }
     return response
 }
@@ -94,36 +102,49 @@ export const deleteSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: "DELETE"
     });
-    const data = await response.json()
+    // const data = await response.json()
+    if (response.ok) {
+        dispatch(deleteSpotAction(spotId))
+    }
+    return response
+}
+
+export const getSpotsOfUser = () => async (dispatch) => {
+    const response = await csrfFetch("/api/spots/current")
+    const data = await response.json();
 
     if (response.ok) {
-        dispatch(deleteSpotAction(data))
-        // ^^ maybe change data into data.message or data.statusCode or spot.id to read in later action case
+        dispatch(getSpotsOfUserAction(data.Spots))
     }
     return response
 }
 
 // Reducer
-const initialState = { Spots: null, spotById: null }
+const initialState = { Spots: null, spotById: null, userSpots: null }
 
 export const spotReducer = (state = initialState, action) => {
     const newState = { ...state };
     switch (action.type) {
         case GET_ALL_SPOTS:
-            return { ...state, Spots: action.spots, spotById: null };
+            newState.Spots = action.spots
+            return newState;
         case GET_SPOT_BY_ID:
-            return { ...state, spotById: action.spot };
-        case CREATE_NEW_SPOT:
-            return { ...state, Spots: [ ...state.Spots, action.spotDetails ]}
+            newState.spotById = action.spot
+            return newState;
+        case GET_SPOTS_OF_USER:
+            newState.userSpots = action.spots;
+            return newState
         case EDIT_SPOT:
             // FIND INDEX OF EXISTING SPOT AND SPLICE REPLACE
-            return { ...state, Spots: [ ...state.Spots, action.spotDetails ]}
+            const { id } = action.spot;
+            const spotIndexEdit = newState.userSpots.findIndex(spot => Number(spot.id) === Number(id));
+            newState.userSpots.splice(spotIndexEdit, 1, action.spot);
+            return newState
         case DELETE_SPOT:
             const { spotId } = action;
-            const spotIndex = newState.Spots.find(spot => Number(spot.id) === Number(spotId));
-            newState.Spots = newState.Spots.splice(spotIndex, 1);
-            newState.spotById = null;
-            return newState
+            const spotIndexDelete = newState.userSpots.find(spot => Number(spot.id) === Number(spotId));
+            newState.userSpots.splice(spotIndexDelete, 1)
+            return newState;
         default:
             return state;
     }
