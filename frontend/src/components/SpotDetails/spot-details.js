@@ -58,7 +58,6 @@ const SpotDetails = () => {
     }
 
     if (!spot) return null
-    if (reviews.length < 1) return null
 
     return (
         <>
