@@ -416,8 +416,12 @@ router.post(
 
         // Error Handling for existing reviews
         const reviewCheck = await Review.findOne({
-            where: { userId: currentUserId }
+            where: {
+                spotId: spot.id,
+                userId: currentUserId
+            }
         });
+
         if (reviewCheck) {
             res.status(403);
             return res.json({
