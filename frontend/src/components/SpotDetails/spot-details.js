@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
 import { getSpotById } from "../../store/spots";
-import { createReview, loadReviews } from "../../store/review";
+import { createReview, deleteReview, loadReviews } from "../../store/review";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
@@ -14,7 +14,8 @@ const SpotDetails = () => {
     const [showReviewMenu, setShowReviewMenu] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [stars, setStars] = useState(0);
-    const [loadAfterSubmit, setLoadAfterSubmit] = useState(false)
+    const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     const openReviewMenu = () => {
         if (showReviewMenu) return
@@ -23,14 +24,14 @@ const SpotDetails = () => {
 
     const closeReviewMenu = () => {
         if (!showReviewMenu) return;
-         setShowReviewMenu(false);
+        setShowReviewMenu(false);
     };
 
     useEffect(() => {
         dispatch(getSpotById(spotId));
         dispatch(loadReviews(spotId));
         setLoadAfterSubmit(false);
-    }, [spotId, loadAfterSubmit, dispatch])
+    }, [spotId, loadAfterSubmit, dispatch, errors])
 
     const submitReview = (e) => {
         e.preventDefault();
@@ -38,12 +39,26 @@ const SpotDetails = () => {
         dispatch(createReview({
             review: reviewText,
             stars
-        }, spotId))
-        setLoadAfterSubmit(true)
+        }, spotId));
+
+        setReviewText("");
+        setStars(0);
+        setErrors([]);
+        closeReviewMenu();
+        setLoadAfterSubmit(true);
+    }
+
+    const clickDeleteReview = (e, reviewId) => {
+        e.preventDefault();
+
+        dispatch(deleteReview(reviewId))
+        setErrors([]);
+        setShowReviewMenu(false);
+        setLoadAfterSubmit(true);
     }
 
     if (!spot) return null
-    if (!reviews) return null
+    if (reviews.length < 1) return null
 
     return (
         <>
@@ -65,6 +80,10 @@ const SpotDetails = () => {
                             <div>{review.User.firstName} {review.User.lastName}</div>
                             <div>{review.createdAt}</div>
                             {review.review}
+                            <div id="delete-button-container">
+                                 <button onClick={(e) => clickDeleteReview(e, review.id)}>Delete review</button>
+                            </div>
+                            <br />
                         </div>
                     ))}
                     <br />
@@ -75,7 +94,7 @@ const SpotDetails = () => {
                             :
                             (<div>
                         <button onClick={closeReviewMenu}>Cancel review</button>
-                        <form onSubmit={submitReview} id="review-form">
+                        <form onSubmit={submitReview} id="review-menu">
                             <label>
                                 <br />
                                 <textarea
