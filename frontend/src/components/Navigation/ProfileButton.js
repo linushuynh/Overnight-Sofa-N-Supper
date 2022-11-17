@@ -51,7 +51,7 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
             <div className="button-holder">
             <li>{user.username}</li>
             <li>{user.email}</li>
-            <li id="manage-listings" onClick={() => history.push('/hosting')}>
+            <li id="manage-listings" className="form-button" onClick={() => history.push('/hosting')}>
               Manage listings
             </li>
             <li>
