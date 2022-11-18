@@ -17,8 +17,8 @@ const SpotDetails = () => {
     const [stars, setStars] = useState(0);
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const [errors, setErrors] = useState([]);
-    const currentUser = useSelector(state => state.session.user);
-    const [selectEditForm, setSelectEditForm] = useState(0)
+    const [selectEditForm, setSelectEditForm] = useState(0);
+    const currentUser = useSelector(state => state.session.user)
 
     const openReviewMenu = () => {
         if (showReviewMenu) return
@@ -34,7 +34,8 @@ const SpotDetails = () => {
         dispatch(getSpotById(spotId));
         dispatch(loadReviews(spotId));
         setLoadAfterSubmit(false);
-    }, [spotId, loadAfterSubmit, dispatch, errors])
+        setErrors([]);
+    }, [spotId, loadAfterSubmit, dispatch])
 
     const submitReview = (e) => {
         e.preventDefault();
@@ -77,6 +78,10 @@ const SpotDetails = () => {
         setLoadAfterSubmit(true);
     }
 
+    const checkReviewOwner = (userId) => {
+        return currentUser.id !== userId
+    }
+
     if (!spot) return null
 
     return (
@@ -85,67 +90,84 @@ const SpotDetails = () => {
                 <div id="spot-detail-container">
                     <p id="spot-name">{spot.name}</p>
                     <p>{spot.city}, {spot.country}</p>
+
                     {spot.SpotImages.map((spotImg) => (
                         <div className="img-container" key={spotImg.id}>
                             <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
                         </div>
                     ))}
+
                     <p>{spot.description}</p>
                     <div id="avgRating">
                         <p>★{spot.avgRating} · {spot.numReviews} review(s)</p>
                     </div>
+
+                    <ul>
+                        {errors.map((error, idx) => (
+                         <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+
                     {reviews.map((review) => (
                         <div className="review-item" key={review.id}>
                             <div>{review.User.firstName} {review.User.lastName}</div>
                             <div>{review.createdAt}</div>
                             {review.review}
-                            {showEditForm ? (
-                                <div className="edit-container">
-                                    <button className="edit-button" onClick={() => {
-                                        if (!showEditForm) return
-                                        setShowEditForm(false);
-                                        setReviewText("");
-                                        setStars(0);
-                                    }}>Cancel Edit</button>
-                                    <form onSubmit={(e) => clickEditReview(e, review.id)}>
-                                        <label>
-                                        <textarea
-                                        onChange={(e) => setReviewText(e.target.value) }
-                                        value={reviewText}
-                                        placeholder="Tell us your thoughts"
-                                        />
-                                        </label>
-                                        <br />
-                                        <label>
-                                            Stars:
-                                            <input
-                                            type="number"
-                                            min="0"
-                                            max="5"
-                                            placeholder="0-5★"
-                                            onChange={(e) => setStars(e.target.value)}
-                                            value={stars}
+                            { selectEditForm === review.id && showEditForm ? (
+                                (
+                                    <div className="edit-container">
+                                        <button className="edit-button" onClick={() => {
+                                            if (!showEditForm) return
+                                            setSelectEditForm("");
+                                            setShowEditForm(false);
+                                            setReviewText("");
+                                            setStars(0);
+                                        }}>Cancel Edit</button>
+                                        <form onSubmit={(e) => clickEditReview(e, review.id)}>
+                                            <label>
+                                            <textarea
+                                            onChange={(e) => setReviewText(e.target.value) }
+                                            value={reviewText}
+                                            placeholder="Tell us your thoughts"
                                             />
-                                        </label>
-                                        <br />
-                                        <button type="submit">Submit Edit</button>
-                                    </form>
-                                </div>
+                                            </label>
+                                            <br />
+                                            <label>
+                                                Stars:
+                                                <input
+                                                type="number"
+                                                min="0"
+                                                max="5"
+                                                placeholder="0-5★"
+                                                onChange={(e) => setStars(e.target.value)}
+                                                value={stars}
+                                                />
+                                            </label>
+                                            <br />
+                                            <button type="submit">Submit Edit</button>
+                                        </form>
+                                    </div>
+                                )
                             )
                             :
                             (
                                 <div className="edit-container">
-                                    <button className="edit-button" onClick={() => {
-                                        if (showEditForm) return
-                                        setShowEditForm(true)
-                                        setReviewText(review.review);
-                                        setStars(review.stars);
-                                    }}>Edit</button>
-                                </div>
+                                <button className="edit-button" onClick={() => {
+                                    if (showEditForm) return
+                                    if (checkReviewOwner(review.userId)) return setErrors([...errors, "This is not your review to edit!"])
+                                    setSelectEditForm(review.id)
+                                    setShowEditForm(true)
+                                    setReviewText(review.review);
+                                    setStars(review.stars);
+                                }}>Edit</button>
+                            </div>
                             )}
                             <br />
                             <div id="delete-button-container">
-                                 <button onClick={(e) => clickDeleteReview(e, review.id)}>Delete review</button>
+                                 <button onClick={(e) => {
+                                    if (checkReviewOwner(review.userId)) return setErrors([...errors, "This is not your review to delete!"])
+                                    clickDeleteReview(e, review.id)
+                                    }}>Delete review</button>
                             </div>
                             <br />
                         </div>

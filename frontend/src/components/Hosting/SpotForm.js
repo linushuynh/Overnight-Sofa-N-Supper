@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createSpot, editSpot } from "../../store/spots";
 
-const SpotForm = ({ setShowModal, actionType, spotId }) => {
+const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -13,7 +13,7 @@ const SpotForm = ({ setShowModal, actionType, spotId }) => {
     const [lng, setLng] = useState(0);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState("");
     const [errors, setErrors] = useState([]);
     const history = useHistory();
     const dispatch = useDispatch();
@@ -32,12 +32,13 @@ const SpotForm = ({ setShowModal, actionType, spotId }) => {
             setName(currentSpot.name)
             setDescription(currentSpot.description)
             setPrice(currentSpot.price)
+            setErrors([]);
         }
-    })
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
+        const errorValidations = [];
         const submitSpot = {
             address, city, state, country, lat, lng, name, description, price
         }
@@ -45,31 +46,29 @@ const SpotForm = ({ setShowModal, actionType, spotId }) => {
         if (actionType === "create") {
             return dispatch(createSpot(submitSpot))
             .then(() => setShowModal(false))
+            .then(() => setLoadAfterSubmit(true))
             .catch(
-              async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-              }
-            )
-            .then(() => {
-                if (errors.length < 1 ) history.push("/")
-            })
-        }
-        // For Updating Spots
-        if (actionType === "update") {
-            submitSpot.id = spotId
-            return dispatch(editSpot(submitSpot))
-            .then(() => setShowModal(false))
-            .catch(
-              async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-              }
-            )
-            .then(() => {
-                if (errors.length < 1) history.push("/")
-            })
-        }
+                async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) errorValidations.push(data.errors);
+                }
+                )
+            }
+            // For Updating Spots
+            if (actionType === "update") {
+                submitSpot.id = spotId
+                return dispatch(editSpot(submitSpot))
+                .then(() => setShowModal(false))
+                .then(() => setLoadAfterSubmit(true))
+                .catch(
+                    async (res) => {
+                        const data = await res.json();
+                    console.log(data)
+                    if (data && data.errors) errorValidations.push(data.errors);
+                }
+                )
+            }
+            setErrors(errorValidations);
       };
 
     return (
@@ -153,7 +152,7 @@ const SpotForm = ({ setShowModal, actionType, spotId }) => {
                 <label>
                     Price:
                     <input
-                    type="text"
+                    type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required
