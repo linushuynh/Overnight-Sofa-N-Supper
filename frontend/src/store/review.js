@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const LOAD_REVIEWS = "reviews/loadreviews"
 const CREATE_REVIEW = "reviews/createreview"
 const DELETE_REVIEW = "reviews/deletereview"
+const EDIT_REVIEW = "reviews/editreview"
 
 // Action Creators
 export const setReviewsAction = (reviews) => {
@@ -19,6 +20,12 @@ export const setReviewsAction = (reviews) => {
 //         review
 //     }
 // }
+export const editReviewAction = (review) => {
+    return {
+        type: EDIT_REVIEW,
+        review
+    }
+}
 
 export const deleteReviewAction = (reviewId) => {
     return {
@@ -43,7 +50,7 @@ export const createReview = (review, spotId) => async (dispatch) => {
         method: "POST",
         body: JSON.stringify(review)
     })
-    const data = await response.json();
+    // const data = await response.json();
 
     if (response.ok) {
         dispatch(loadReviews(spotId))
@@ -51,12 +58,26 @@ export const createReview = (review, spotId) => async (dispatch) => {
     return response
 }
 
+export const editReview = (updatedReview , reviewId) => async (dispatch) => {
+    const { review, stars } = updatedReview;
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    });
+    const data = await response.json();
+    if (response.ok) {
+        dispatch(editReviewAction(data))
+    }
+}
+
 export const deleteReview = (reviewId) => async (dispatch) => {
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: "DELETE"
     })
     const data = await response.json();
-    console.log("THIS IS DATA RESPONSE***", data)
     if (response.ok) {
         dispatch(deleteReviewAction(reviewId))
     }
@@ -76,6 +97,10 @@ export const reviewReducer = (state = initialState, action) => {
         //     let addReviewArr = newState.reviews.concat(action.review)
         //     newState.reviews = addReviewArr
         //     return newState;
+        case EDIT_REVIEW:
+            const editIndex = newState.reviews.findIndex((review) => Number(review.id) === Number(action.review.id))
+            reviewArray.splice(editIndex, 1, action.review)
+            return newState
         case DELETE_REVIEW:
             const deleteIndex = newState.reviews.findIndex((review) => Number(review.id) === Number(action.reviewId))
             reviewArray.splice(deleteIndex, 1)

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSpot, editSpot } from "../../store/spots";
 
 const SpotForm = ({ setShowModal, actionType, spotId }) => {
@@ -17,6 +17,23 @@ const SpotForm = ({ setShowModal, actionType, spotId }) => {
     const [errors, setErrors] = useState([]);
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const currentSpotState = useSelector(state => state.spots.userSpots)
+    const currentSpot = currentSpotState.find(spot => Number(spot.id) === Number(spotId))
+
+    useEffect(() => {
+        if (currentSpot) {
+            setAddress(currentSpot.address)
+            setCity(currentSpot.city)
+            setState(currentSpot.state)
+            setCountry(currentSpot.country)
+            setLat(currentSpot.lat)
+            setLng(currentSpot.lng)
+            setName(currentSpot.name)
+            setDescription(currentSpot.description)
+            setPrice(currentSpot.price)
+        }
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,7 +63,6 @@ const SpotForm = ({ setShowModal, actionType, spotId }) => {
             .catch(
               async (res) => {
                 const data = await res.json();
-                console.log(data)
                 if (data && data.errors) setErrors(data.errors);
               }
             )
