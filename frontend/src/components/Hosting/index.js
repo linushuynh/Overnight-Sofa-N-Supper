@@ -16,6 +16,7 @@ const Hosting = () => {
     const dispatch = useDispatch()
     const userSpots = useSelector((state) => state.spots.userSpots);
     const [selectSpotEdit, setSelectSpotEdit] = useState("");
+    const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
 
     const openMenu = () => {
         if (showMenu) return;
@@ -24,7 +25,8 @@ const Hosting = () => {
 
     useEffect(() => {
         dispatch(getSpotsOfUser())
-    }, [dispatch])
+        setLoadAfterSubmit(false)
+    }, [dispatch, loadAfterSubmit])
 
     useEffect(() => {
         if (!showMenu) return;
@@ -40,8 +42,8 @@ const Hosting = () => {
 
     const handleDelete = (e, spotId) => {
         e.preventDefault();
-        dispatch(deleteSpot(spotId))
-        history.push("/")
+        dispatch(deleteSpot(spotId));
+        setLoadAfterSubmit(true)
     }
 
     if (!userSpots) return null
@@ -62,8 +64,10 @@ const Hosting = () => {
 
             )}
             {showModal && createFormMode && (
-            <Modal onClose={() => setShowModal(false)}>
-                <SpotForm setShowModal={setShowModal} actionType="create" />
+            <Modal onClose={() => {
+                setShowModal(false)
+                }}>
+                <SpotForm setShowModal={setShowModal} actionType="create" setLoadAfterSubmit={setLoadAfterSubmit} />
             </Modal>
              )}
 
@@ -92,7 +96,10 @@ const Hosting = () => {
             </div>
 
             {showModal && !createFormMode && (
-            <Modal onClose={() => setShowModal(false)}>
+            <Modal onClose={() => {
+                setLoadAfterSubmit(true)
+                setShowModal(false)
+                }}>
                 <SpotForm setShowModal={setShowModal} actionType="update" spotId={selectSpotEdit} />
             </Modal>
              )}
