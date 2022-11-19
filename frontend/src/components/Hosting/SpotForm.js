@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createSpot, editSpot } from "../../store/spots";
+import { addImage, createSpot, editSpot } from "../../store/spots";
 
 const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [address, setAddress] = useState("");
@@ -17,6 +17,8 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [errors, setErrors] = useState([]);
     const history = useHistory();
     const dispatch = useDispatch();
+    const [url, setUrl] = useState("")
+    const [preview, setPreview] = useState(false)
 
     const currentSpotState = useSelector(state => state.spots.userSpots)
     const currentSpot = currentSpotState.find(spot => Number(spot.id) === Number(spotId))
@@ -44,30 +46,46 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
         }
         //For Creating Spots
         if (actionType === "create") {
-            return dispatch(createSpot(submitSpot))
+            dispatch(createSpot(submitSpot))
             .then(() => setShowModal(false))
             .then(() => setLoadAfterSubmit(true))
             .catch(
                 async (res) => {
                     const data = await res.json();
                     if (data && data.errors) errorValidations.push(data.errors);
+                    if (data && data.message) errorValidations.push(data.message);
                 }
                 )
+            if (url !== "") {
+               dispatch(addImage({
+                url,
+                preview
+               }, spotId),)
             }
-            // For Updating Spots
-            if (actionType === "update") {
-                submitSpot.id = spotId
-                return dispatch(editSpot(submitSpot))
-                .then(() => setShowModal(false))
-                .then(() => setLoadAfterSubmit(true))
-                .catch(
+            return
+        }
+        // For Updating Spots
+        if (actionType === "update") {
+            submitSpot.id = spotId
+            dispatch(editSpot(submitSpot))
+            .then(() => setShowModal(false))
+            .then(() => setLoadAfterSubmit(true))
+            .catch(
                     async (res) => {
                         const data = await res.json();
-                    console.log(data)
-                    if (data && data.errors) errorValidations.push(data.errors);
-                }
-                )
+                        if (data && data.errors) errorValidations.push(data.errors);
+                        if (data && data.message) errorValidations.push(data.message);
+                    }
+                    )
+            if (url !== "") {
+                dispatch(addImage({
+                    url,
+                    preview
+                }, spotId))
             }
+                return
+            }
+
             setErrors(errorValidations);
       };
 
@@ -157,6 +175,16 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                     onChange={(e) => setPrice(e.target.value)}
                     required
                     />
+                </label>
+                <label>
+                    Add image:
+                    <input
+                    type="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="Please put valid link"
+                     />
+                    <input type="checkbox" value={preview} onChange={() => setPreview(!preview)}/>
                 </label>
                 <button id="form-submit" type="submit">Submit</button>
             </form>

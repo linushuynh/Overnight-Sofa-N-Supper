@@ -100,7 +100,7 @@ const Hosting = () => {
                 setLoadAfterSubmit(true)
                 setShowModal(false)
                 }}>
-                <SpotForm setShowModal={setShowModal} actionType="update" spotId={selectSpotEdit} />
+                <SpotForm setShowModal={setShowModal} actionType="update" spotId={selectSpotEdit} setLoadAfterSubmit={setLoadAfterSubmit}/>
             </Modal>
              )}
         </div>

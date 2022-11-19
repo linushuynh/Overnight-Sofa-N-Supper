@@ -7,6 +7,7 @@ const GET_SPOTS_OF_USER = "spots/getspotsofuser"
 const CREATE_NEW_SPOT = "spots/createnewspot"
 const EDIT_SPOT = "spots/editspot"
 const DELETE_SPOT = "spots/deletespot"
+const ADD_IMAGE = "spots/addimage"
 
 // Action Creator
 export const setSpots = (spots) => {
@@ -50,7 +51,15 @@ export const getSpotsOfUserAction = (spots) => {
         spots
     }
 }
-// Thunks
+
+export const addImageAction = (image) => {
+    return {
+        type: ADD_IMAGE,
+        image
+    }
+}
+
+// Thunks **********************
 export const getAllSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
     const data = await response.json();
@@ -119,6 +128,23 @@ export const getSpotsOfUser = () => async (dispatch) => {
     return response
 }
 
+export const addImage = (image, spotId) => async (dispatch) => {
+    let { url, preview } = image;
+    if (!preview) preview = false;
+
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: "POST",
+        body: JSON.stringify({
+            url,
+            preview
+        })
+    })
+
+    const data = await response.json();
+    dispatch(addImageAction(data));
+
+    return response
+}
 // Reducer
 const initialState = { Spots: [], spotById: null, userSpots: null}
 
@@ -144,6 +170,9 @@ export const spotReducer = (state = initialState, action) => {
             const { spotId } = action;
             const spotIndexDelete = newState.userSpots.find(spot => Number(spot.id) === Number(spotId));
             newState.userSpots.splice(spotIndexDelete, 1)
+            return newState;
+        case ADD_IMAGE:
+            newState.spotById.SpotImages.concat([action.image])
             return newState;
         default:
             return state;

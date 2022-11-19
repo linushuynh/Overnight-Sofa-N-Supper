@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
 import { getSpotById } from "../../store/spots";
 import { createReview, deleteReview, editReview, loadReviews } from "../../store/review";
+import { Modal } from "../../context/Modal";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
@@ -19,6 +20,7 @@ const SpotDetails = () => {
     const [errors, setErrors] = useState([]);
     const [selectEditForm, setSelectEditForm] = useState(0);
     const currentUser = useSelector(state => state.session.user)
+    // const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const openReviewMenu = () => {
         if (showReviewMenu) return
@@ -65,17 +67,29 @@ const SpotDetails = () => {
 
     const clickEditReview = (e, reviewId) => {
         e.preventDefault();
+        const errorValidations = []
 
         dispatch(editReview({
             review: reviewText,
             stars
         }, reviewId))
+        .catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) errorValidations.push(data.errors);
+            }
+            )
 
-        setErrors([]);
+        setErrors([errorValidations]);
         setReviewText("")
         setStars(0);
         setShowEditForm(false)
         setLoadAfterSubmit(true);
+    }
+
+    const translateToDate = (createdAt) => {
+        const formattedDate = createdAt.slice(0, 10);
+        return formattedDate
     }
 
     const checkReviewOwner = (userId) => {
@@ -90,14 +104,16 @@ const SpotDetails = () => {
                 <div id="spot-detail-container">
                     <p id="spot-name">{spot.name}</p>
                     <p>{spot.city}, {spot.country}</p>
-
+                    <div id="avgRating">
+                        <p>★{spot.avgRating} · {spot.numReviews} review(s)</p>
+                    </div>
                     {spot.SpotImages.map((spotImg) => (
                         <div className="img-container" key={spotImg.id}>
                             <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
                         </div>
                     ))}
-
-                    <p>{spot.description}</p>
+                    <br />
+                    <div className="description-box">{spot.description}</div>
                     <div id="avgRating">
                         <p>★{spot.avgRating} · {spot.numReviews} review(s)</p>
                     </div>
@@ -111,9 +127,9 @@ const SpotDetails = () => {
                     {reviews.map((review) => (
                         <div className="review-item" key={review.id}>
                             <div>{review.User.firstName} {review.User.lastName}</div>
-                            <div>{review.createdAt}</div>
+                            <div>{translateToDate(review.createdAt)}</div>
                             {review.review}
-                            { selectEditForm === review.id && showEditForm ? (
+                            {/* { selectEditForm === review.id && showEditForm ? (
                                 (
                                     <div className="edit-container">
                                         <button className="edit-button" onClick={() => {
@@ -122,7 +138,9 @@ const SpotDetails = () => {
                                             setShowEditForm(false);
                                             setReviewText("");
                                             setStars(0);
-                                        }}>Cancel Edit</button>
+                                        }}>
+                                            Cancel Edit
+                                        </button>
                                         <form onSubmit={(e) => clickEditReview(e, review.id)}>
                                             <label>
                                             <textarea
@@ -154,14 +172,18 @@ const SpotDetails = () => {
                                 <div className="edit-container">
                                 <button className="edit-button" onClick={() => {
                                     if (showEditForm) return
-                                    if (checkReviewOwner(review.userId)) return setErrors([...errors, "This is not your review to edit!"])
+                                    if (checkReviewOwner(review.userId)) {
+                                        return setErrors([...errors, "This is not your review to edit!"])
+                                    }
                                     setSelectEditForm(review.id)
                                     setShowEditForm(true)
                                     setReviewText(review.review);
+                                    console.log("reviewText*******",reviewText)
                                     setStars(review.stars);
+                                    console.log("stars*******",stars)
                                 }}>Edit</button>
                             </div>
-                            )}
+                            )} */}
                             <br />
                             <div id="delete-button-container">
                                  <button onClick={(e) => {

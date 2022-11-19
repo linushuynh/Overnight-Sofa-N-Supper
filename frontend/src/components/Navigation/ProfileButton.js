@@ -62,7 +62,7 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
           :
           <ul className="profile-dropdown">
         <div className="button-holder">
-          <li>
+          <li >
             <button
             className="form-button"
             id="signup-button"
@@ -74,6 +74,7 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
           <li>
             <button
             className="form-button"
+            id="login-button"
             onClick={() => {
               setLogin(true);
               setShowModal(true);

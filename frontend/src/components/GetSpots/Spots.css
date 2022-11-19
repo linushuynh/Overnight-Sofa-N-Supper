@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    top: 75px;
+    top: 80px;
     /* height: 100%; */
 }
 
@@ -26,10 +26,10 @@
 }
 
 .spot-info {
+    display: flex;
     justify-self: flex-start;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 1000;
-    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
 }
 
 #spot-price {
@@ -44,4 +44,38 @@
 
 #spot-details {
     cursor: pointer;
+    display: flex;
+    gap: 2%;
+}
+
+
+.spot-name {
+    display: flex;
+    justify-self: flex-start;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+#rating {
+    font-size: 15px;
+    font-weight: 200;
+    box-sizing: border-box;
+}
+
+#spot-location {
+    color: gray;
+    font-weight: 200;
+    position: relative;
+    height: 100%;
+}
+
+#middle-text {
+    display: flex;
+    align-items: center;
+}
+
+#spot-price {
+    font-weight: 700;
 }

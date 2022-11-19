@@ -24,32 +24,39 @@ function LoginForm({ setShowModal }) {
 
   return (
     <div className="login-box">
-    <form onSubmit={handleSubmit} className="form">
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-          ))}
-      </ul>
-      <label>
-        Username or Email
-        <input
-          type="text"
-          value={credential}
-          onChange={(e) => setCredential(e.target.value)}
-          required
-          />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+      <div id="login-title">Log In</div>
+      <hr id="hr" />
+      <p id="welcome-tag">Welcome to Overnight S&S</p>
+      <form onSubmit={handleSubmit} className="form">
+        <ul id="list-of-input">
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+            ))}
+        </ul>
+        <label className="input-label">
+
+          <input
+            type="text"
+            value={credential}
+            onChange={(e) => setCredential(e.target.value)}
+            required
+            id="username-input"
+            placeholder="Username"
+            />
+        </label>
+        <hr />
+        <label className="input-label">
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            id="password-input"
+            />
+        </label>
+        <button type="submit">Log In</button>
+      </form>
     </div>
   );
 }

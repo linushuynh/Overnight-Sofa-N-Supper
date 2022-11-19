@@ -3,8 +3,64 @@
     display: flex;
     height: 50vw;
     width: 50vw;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+}
+
+#hr {
+    width: 49.8vw;
+    position: absolute;
+    left: 0;
+    top: 65px;
+    /* background-color: red; */
+    border: 1px solid rgb(230, 230, 230);
+}
+
+#welcome-tag {
+    position: relative;
+    left: 10%;
+    align-self: flex-start;
+    margin-top: 10%;
+    font-family: "Inter", sans-serif;
+    /* font-weight: bold; */
+    font-size: large;
 }
 
 .form {
     background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 2%;
+    border: 1px solid gray;
+    width: 80%;
+    border-radius: 10px;
+}
+
+#list-of-input {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#login-title {
+    margin-top: 5%;
+    margin-bottom: 3%;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+}
+
+.input-label {
+    font-family: "Inter", sans-serif;
+    position: relative;
+    align-items: flex-start;
+    width: 90%;
+    display: flex;
+}
+
+#username-input {
+    width: 100%;
+    justify-self: center;
+    font-family: "Inter", sans-serif;
 }
