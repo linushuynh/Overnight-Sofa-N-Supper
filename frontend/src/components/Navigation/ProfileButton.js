@@ -47,18 +47,20 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
         </button>
         )}
         {showMenu && (user ?
-          <ul className="profile-dropdown">
-            <div className="button-holder">
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li id="manage-listings" className="form-button" onClick={() => history.push('/hosting')}>
-              Manage listings
-            </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-            </div>
-          </ul>
+            <ul className="profile-dropdown" id="logged-in-list">
+             <div className="button-holder " id="logged-in-dropdown">
+              <li className="dropdown-text user-text">{user.username}</li>
+              <li className="dropdown-text user-text">{user.email}</li>
+              <hr />
+                <button id="login-button manage-listings" className="form-button" onClick={() => history.push('/hosting')}>
+                  Manage listings
+                </button>
+
+              <li id="logout-box">
+                <button id="login-button" className="form-button logout-box" onClick={logout}>Log Out</button>
+              </li>
+          </div>
+            </ul>
           :
           <ul className="profile-dropdown">
         <div className="button-holder">

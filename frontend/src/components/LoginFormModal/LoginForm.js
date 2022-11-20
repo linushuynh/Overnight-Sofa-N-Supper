@@ -28,34 +28,41 @@ function LoginForm({ setShowModal }) {
       <hr id="hr" />
       <p id="welcome-tag">Welcome to Overnight S&S</p>
       <form onSubmit={handleSubmit} className="form">
-        <ul id="list-of-input">
-          {errors.map((error, idx) => (
+        {errors.length > 0 && (<ul id="list-of-error">
+          { errors.map((error, idx) => (
             <li key={idx}>{error}</li>
             ))}
-        </ul>
-        <label className="input-label">
+        </ul>)}
+             <div id="input-box">
+              <label className="input-label">
+                <input
+                  type="text"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
+                  required
+                  id="username-input"
+                  className="input-bar"
+                  placeholder="Username"
+                  />
+              </label>
+              <div>
+                <hr id="hr-2"/>
+              </div>
+              <label className="input-label">
 
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-            id="username-input"
-            placeholder="Username"
-            />
-        </label>
-        <hr />
-        <label className="input-label">
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            id="password-input"
-            />
-        </label>
-        <button type="submit">Log In</button>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="input-bar"
+                  id="password-input"
+                  placeholder="Password"
+                  />
+              </label>
+                {/* <hr id="hr-2"/> */}
+             <button type="submit" id="submit">Log In</button>
+            </div>
       </form>
     </div>
   );

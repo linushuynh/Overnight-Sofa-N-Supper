@@ -1,15 +1,15 @@
 /* TO-DO: ADD STYLING TO LOGIN PAGE */
 .login-box {
     display: flex;
-    height: 50vw;
-    width: 50vw;
+    height: 618px;
+    width: 568px;
     /* justify-content: center; */
     align-items: center;
     flex-direction: column;
 }
 
 #hr {
-    width: 49.8vw;
+    width: 99.6%;
     position: absolute;
     left: 0;
     top: 65px;
@@ -36,6 +36,8 @@
     border: 1px solid gray;
     width: 80%;
     border-radius: 10px;
+    height: 50%;
+    justify-content: space-evenly;
 }
 
 #list-of-input {
@@ -54,13 +56,63 @@
 .input-label {
     font-family: "Inter", sans-serif;
     position: relative;
-    align-items: flex-start;
+    align-items: center;
+
     width: 90%;
     display: flex;
+    height: 40%;
 }
 
-#username-input {
+.input-bar {
     width: 100%;
-    justify-self: center;
+    /* justify-self: center; */
+    align-items: center;
     font-family: "Inter", sans-serif;
+    height: 50%;
+    border:0;
+    outline:0;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.input-bar:focus {
+    border-radius: 5px;
+    border: #ff385c 2px solid;
+}
+
+#input-box {
+    /* border: 1px black solid; */
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+}
+
+#list-of-error {
+    font-family: "Inter", sans-serif;
+    height: fit-content;
+}
+
+#submit {
+    background-color: #ff385c;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    width: 90%;
+}
+
+#submit:hover {
+    background-color: #d8304f;
+}
+
+#hr-2 {
+    width: 99.6%;
+    position: absolute;
+    left: 0;
+    border: 1px solid rgb(230, 230, 230);
 }

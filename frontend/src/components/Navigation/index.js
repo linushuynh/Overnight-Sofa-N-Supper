@@ -24,9 +24,14 @@ function Navigation({ isLoaded }){
         {/* <p> Anywhere </p> <hr /> <p> Any week | Add guests </p> */}
       </div>
       <div className='userBox'>
-            <NavLink to="/hosting" id='hosting-link'>
-              Switch to hosting
-            </NavLink>
+        <div id='hosting-box'>
+            {sessionUser &&
+              <NavLink to="/hosting" id='hosting-link'>
+                Start hosting
+              </NavLink>
+            }
+        </div>
+
             {isLoaded && (
               <ProfileButton
               user={sessionUser}
