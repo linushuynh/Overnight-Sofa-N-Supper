@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
+import superhost from "../../images/superhost.png"
 import { getSpotById } from "../../store/spots";
 import { createReview, deleteReview, editReview, loadReviews } from "../../store/review";
 import { Modal } from "../../context/Modal";
@@ -102,17 +103,23 @@ const SpotDetails = () => {
         <>
             <div id="center-container">
                 <div id="spot-detail-container">
-                    <p id="spot-name">{spot.name}</p>
-                    <p>{spot.city}, {spot.country}</p>
-                    <div id="avgRating">
-                        <p>★{spot.avgRating} · {spot.numReviews} review(s)</p>
+                    <div id="spot-name">{spot.name}</div>
+                    <div className="header-info">
+                        ★{spot.avgRating} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
+                         &nbsp; · &nbsp;
+                        <img src={superhost} /> &nbsp; Superhost &nbsp; · &nbsp;
+                        <p id="city-country-text">{spot.city}, {spot.country} </p>
                     </div>
-                    {spot.SpotImages.map((spotImg) => (
-                        <div className="img-container" key={spotImg.id}>
-                            <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
-                        </div>
-                    ))}
+                    <div className="img-container">
+                        {spot.SpotImages.map((spotImg) => (
+                            <div className="img-preview" key={spotImg.id}>
+                                <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
+                            </div>
+                        ))}
+                    </div>
+
                     <br />
+
                     <div className="description-box">{spot.description}</div>
                     <div id="avgRating">
                         <p>★{spot.avgRating} · {spot.numReviews} review(s)</p>
@@ -185,17 +192,18 @@ const SpotDetails = () => {
                             </div>
                             )} */}
                             <br />
-                            <div id="delete-button-container">
+                            { (currentUser.id == review.userId) && (<div id="delete-button-container">
                                  <button onClick={(e) => {
                                     if (checkReviewOwner(review.userId)) return setErrors([...errors, "This is not your review to delete!"])
                                     clickDeleteReview(e, review.id)
                                     }}>Delete review</button>
-                            </div>
+                            </div>)}
+
                             <br />
                         </div>
                     ))}
                     <br />
-                    <div id="create-review-box">
+                    {currentUser && (<div id="create-review-box">
                         {!showReviewMenu ? (
                             <button onClick={openReviewMenu}>Create a new review</button>
                             )
@@ -227,7 +235,8 @@ const SpotDetails = () => {
                             <button type="submit">Submit review</button>
                         </form>
                         </div>)}
-                    </div>
+                    </div>)}
+
                 </div>
             </div>
         </>
