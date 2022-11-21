@@ -21,7 +21,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
 
     const currentSpotState = useSelector(state => state.spots.userSpots)
     const currentSpot = currentSpotState.find(spot => Number(spot.id) === Number(spotId))
-    console.log("THIS IS CURRENT SPOT", currentSpot)
+
     useEffect(() => {
         if (currentSpot) {
             setAddress(currentSpot.address)
@@ -67,12 +67,11 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
         }
         // For Updating Spots
         if (actionType === "update") {
-            if (currentSpot.previewImage) {
-                console.log("We are inside the if statement for currentSpot.previewImage", currentSpot.previewImage)
-                errorValidations.push("There is already an image for this spot! Ability to add multiple images will be added soon")
-                setErrors(errorValidations)
-                return
-            }
+            // if (currentSpot.previewImage) {
+            //     errorValidations.push("There is already an image for this spot! Ability to add multiple images will be added soon")
+            //     setErrors(errorValidations)
+            //     return
+            // }
             submitSpot.id = spotId
             dispatch(editSpot(submitSpot))
             .then(() => setShowModal(false))

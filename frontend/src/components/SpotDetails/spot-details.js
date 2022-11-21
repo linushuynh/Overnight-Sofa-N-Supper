@@ -121,6 +121,7 @@ const SpotDetails = () => {
         ratingShaved = Math.ceil(spot.avgRating)
     }
 
+    const displayImg = spot.SpotImages[0];
     return (
         <>
             <div id="center-container">
@@ -133,11 +134,11 @@ const SpotDetails = () => {
                         <p id="city-country-text">{spot.city}, {spot.country} </p>
                     </div>
                     <div className="img-container">
-                        {spot.SpotImages.length > 0 && spot.SpotImages.map((spotImg) => (
-                            <div className="img-preview" key={spotImg.id}>
-                                <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
+                        {spot.SpotImages.length > 0 && (
+                            <div className="img-preview" key={displayImg.id}>
+                                <img src={displayImg.url} alt={displayImg.address} className='spot-img' />
                             </div>
-                        ))}
+                        )}
                         {spot.SpotImages.length === 0 && (
                             <div className="img-preview">
                                 <img src="https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg" alt="img-not-found" className='spot-img' />

@@ -69,11 +69,12 @@
     font-size: 20px;
     cursor: pointer;
     margin-right: 20px;
+    color: darkblue;
 }
 
 .spot-name-text:hover {
     text-decoration: underline;
-    color: rgb(98, 98, 98);
+    color: rgb(0, 0, 163);
 }
 
 #your-listings-text {
