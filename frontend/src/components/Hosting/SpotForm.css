@@ -1,0 +1,9 @@
+#form-container {
+    height: 618px;
+    width: 568px;
+}
+
+.spot-form {
+    display: flex;
+    flex-direction: column;
+}

@@ -98,7 +98,7 @@
 
 #reviews-box {
     display: flex;
-
+    flex-wrap: wrap;
 }
 
 .review-item {
@@ -116,4 +116,18 @@
     padding-bottom: 5px;
     padding-top: 5px;
     overflow-wrap: break-word;
+}
+
+textarea {
+    resize: none;
+}
+
+#review-input {
+    overflow-y: auto;
+    width: 99%;
+}
+
+#create-review-box {
+    overflow-y: auto;
+    overflow-x: hidden;
 }

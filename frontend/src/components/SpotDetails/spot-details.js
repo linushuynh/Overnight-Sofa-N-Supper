@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
@@ -194,7 +194,7 @@ const SpotDetails = () => {
                                         id="review-input"
                                         onChange={(e) => setReviewText(e.target.value) }
                                         value={reviewText}
-                                        placeholder="Tell us your thoughts"
+                                        placeholder="Tell us your thoughts about this place!"
                                         required
                                         />
                                     </label>
@@ -218,6 +218,8 @@ const SpotDetails = () => {
                                 </div>)}
                             </div>)}
 
+                        <br />
+                        
                         <div id="reviews-box">
                             {reviews.map((review) => (
                                 <div className="review-item" key={review.id}>

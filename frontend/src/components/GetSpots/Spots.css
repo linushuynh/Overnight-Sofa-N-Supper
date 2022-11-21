@@ -38,7 +38,7 @@
 }
 
 #spot-price {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 #spot-header {
@@ -57,7 +57,7 @@
 .spot-name {
     display: flex;
     justify-self: flex-start;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 15px;
     box-sizing: border-box;
 }

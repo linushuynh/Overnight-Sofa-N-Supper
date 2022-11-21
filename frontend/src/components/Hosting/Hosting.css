@@ -31,7 +31,7 @@
 
 #welcome-user-box {
     display: flex;
-    font-weight: 600;
+    font-weight: 800;
     font-size: 25px;
 }
 
@@ -45,10 +45,12 @@
     background-color: rgb(235, 235, 235);
     border-radius: 5px;
     padding: 10px 20px;
+    border:rgb(187, 187, 187) solid 2px;
 }
 
 #create-button:hover {
     background-color: rgb(187, 187, 187);
+    border: rgb(142, 142, 142) solid 2px;
     cursor: pointer;
 }
 

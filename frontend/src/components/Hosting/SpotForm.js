@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addImage, createSpot, editSpot } from "../../store/spots";
+import "./SpotForm.css"
 
 const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [address, setAddress] = useState("");
@@ -96,7 +97,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
       };
 
     return (
-        <div>
+        <div id="form-container">
             <form className="spot-form" onSubmit={handleSubmit}>
             <ul>
               {errors.length > 0 && errors.map((error, idx) => (
