@@ -19,6 +19,8 @@ First log-in in the top right and then you can go to Manage your listings. From 
 Not only that, you can visit other listings on the main page(accessible through clicking the top left Overnight S&S text). 
 While you visit other listings, you will see other people's reviews and can leave your own as well. If you change your mind about the review, you can delete it right away.
 The beauty of this project lies in its simplicity and speed. 
+<img width="959" alt="image" src="https://user-images.githubusercontent.com/109188075/203064609-02b29990-23cc-431e-bcd9-f1e2b7877f1a.png">
+
 <img width="956" alt="image" src="https://user-images.githubusercontent.com/109188075/203062467-33ede964-b665-438f-b27d-542ba86f5a3b.png">
 
 Thank you for checking out the website!
