@@ -70,15 +70,15 @@
     cursor: pointer;
     margin-right: 20px;
     color: darkblue;
+    text-decoration: underline;
 }
 
 .spot-name-text:hover {
     text-decoration: underline;
-    color: rgb(0, 0, 163);
+    color: rgb(64, 64, 234);
 }
 
 #your-listings-text {
     font-weight: 600;
     font-size: 25px;
-    /* text-decoration: underline; */
 }
