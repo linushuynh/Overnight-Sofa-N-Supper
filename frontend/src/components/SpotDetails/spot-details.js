@@ -122,7 +122,17 @@ const SpotDetails = () => {
         ratingShaved = Math.ceil(spot.avgRating)
     }
 
-    const displayImg = spot.SpotImages[0];
+    // FIND HIGHEST ID AKA MOST RECENTLY ADDED SPOT IMAGE
+   let displayImg;
+   let highestId = null;
+   spot.SpotImages.forEach((img) => {
+       if (img.id > highestId) {
+           highestId = +img.id
+           console.log("highest id", highestId)
+        displayImg = img
+    }
+   })
+
     return (
         <>
             <div id="center-container">
