@@ -100,13 +100,40 @@
     left: 5%;
 }
 
-.profile-dropdown {
+#logged-in-dropdown {
     position: fixed;
-    right: 6%;
-    top: 6%;
+    right: 50px;
+    top: 75px;
+}
+
+.profile-dropdown {
     list-style-type: none;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    box-shadow: 0px 0px 3px gray;
+    border-radius: 12px;
+    background-color: white;
+    width: 175px;
+}
+
+.login-dropdown-item {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.login-item {
+    position: relative;
+    left: 10px;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+#login-linebreak {
+    opacity: 40%;
 }
 
 .form-button {
@@ -126,7 +153,7 @@
 }
 
 .form-button:hover {
-    background-color: rgb(236, 236, 236);
+    background-color: rgb(241, 241, 241);
 }
 
 #signup-button {
@@ -159,34 +186,34 @@
     width: 240px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px -1px 2px gray;
+
     /* box-shadow: 0px 1px 2px gray; */
 }
 
 .dropdown-text {
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 15px;
     height: 50px;
     position: relative;
     left: 15px;
 }
 
-#manage-listings {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    /* height: 50px; */
-    width: 100%;
-    height: 22%;
-    /* position: relative;
-    left: 0; */
-    /* text-align: center; */
-    cursor: pointer;
-    /* text-indent: 5%; */
-    /* display: flex; */
-    /* align-items: center; */
 
+#manage-listings:hover {
+    background-color: rgb(229, 229, 229);
+    cursor: pointer;
+}
+
+#logout-button {
+    width: 100%;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    background-color: rgb(229, 229, 229);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 #hosting-box {
@@ -221,7 +248,6 @@
 
 .user-text {
     font-family: 'Poppins', sans-serif;
-
     padding: 1%;
     padding-bottom: 0;
 }
