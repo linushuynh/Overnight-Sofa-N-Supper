@@ -37,12 +37,12 @@ function LoginForm({ setShowModal }) {
     );
   }
 
-
   return (
     <div className="login-box">
       <div id="login-title">Log In</div>
       <hr id="hr" />
       <p id="welcome-tag">Welcome to Overnight S&S</p>
+
       <form onSubmit={handleSubmit} className="form">
         {errors.length > 0 && (<ul id="list-of-error">
           { errors.map((error, idx) => (
@@ -75,15 +75,12 @@ function LoginForm({ setShowModal }) {
                   placeholder="Password"
                   />
               </label>
-              <div>
-                <hr id="hr-2"/>
-              </div>
-                {/* <hr id="hr-2"/> */}
             </div>
+
             <div id="login-buttons-container">
-              <button type="submit" id="submit">Log In</button>
+              <button type="submit" className="submit-button">Log In</button>
               <br />
-              <button onClick={demoLogin} id="submit">Demo User</button>
+              <button onClick={demoLogin} className="submit-button">Demo User</button>
             </div>
       </form>
     </div>

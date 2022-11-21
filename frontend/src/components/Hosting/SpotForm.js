@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addImage, createSpot, editSpot } from "../../store/spots";
 import "./SpotForm.css"
@@ -10,38 +9,38 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [country, setCountry] = useState("");
-    const [lat, setLat] = useState(0);
-    const [lng, setLng] = useState(0);
+    // const [lat, setLat] = useState(0);
+    // const [lng, setLng] = useState(0);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [errors, setErrors] = useState([]);
-    const history = useHistory();
     const dispatch = useDispatch();
     const [url, setUrl] = useState("")
-    const [preview, setPreview] = useState(false)
+    const [preview, setPreview] = useState(true)
 
     const currentSpotState = useSelector(state => state.spots.userSpots)
     const currentSpot = currentSpotState.find(spot => Number(spot.id) === Number(spotId))
-
+    console.log("THIS IS CURRENT SPOT", currentSpot)
     useEffect(() => {
         if (currentSpot) {
             setAddress(currentSpot.address)
             setCity(currentSpot.city)
             setState(currentSpot.state)
             setCountry(currentSpot.country)
-            setLat(currentSpot.lat)
-            setLng(currentSpot.lng)
+            // setPreview(false)
+            // setLat(currentSpot.lat)
+            // setLng(currentSpot.lng)
             setName(currentSpot.name)
             setDescription(currentSpot.description)
             setPrice(currentSpot.price)
             setErrors([]);
         }
-    }, [])
+    }, [currentSpot])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const errorValidations = [];
+        let errorValidations = [];
 
         if (name.length > 20) {
             errorValidations.push("Name of the spot must be under 20 characters")
@@ -60,36 +59,38 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
             .catch(
                 async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) errorValidations.push(data.errors);
-                    if (data && data.message) errorValidations.push(data.message);
+                    if (data && data.errors) errorValidations = [...errorValidations, ...data.errors];
                 }
                 )
-            if (url !== "") {
-               dispatch(addImage({
-                url,
-                preview
-               }, spotId),)
-            }
+
             return
         }
         // For Updating Spots
         if (actionType === "update") {
+            if (currentSpot.previewImage) {
+                console.log("We are inside the if statement for currentSpot.previewImage", currentSpot.previewImage)
+                errorValidations.push("There is already an image for this spot! Ability to add multiple images will be added soon")
+                setErrors(errorValidations)
+                return
+            }
             submitSpot.id = spotId
             dispatch(editSpot(submitSpot))
             .then(() => setShowModal(false))
             .then(() => setLoadAfterSubmit(true))
+            .then(() => {
+                if (url !== "") {
+                    dispatch(addImage({
+                        url,
+                        preview: true
+                    }, spotId))
+                }
+            })
             .catch(
                     async (res) => {
                         const data = await res.json();
                         if (data && data.errors) errorValidations.push(data.errors);
                         if (data && data.message) errorValidations.push(data.message);
                     })
-            if (url !== "") {
-                dispatch(addImage({
-                    url,
-                    preview
-                }, spotId))
-            }
                 return
             }
 
@@ -99,8 +100,8 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     return (
         <div id="form">
             <div id="header-text">
-                {actionType === "create" && <text>Create Your New Spot</text>}
-                {actionType === "update" && <text>Edit {currentSpot.name}</text>}
+                {actionType === "create" && "Create Your New Spot"}
+                {actionType === "update" && `Edit ${currentSpot.name}`}
             </div>
 
             <div id="form-container">
@@ -190,7 +191,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        placeholder="Name"
+                        placeholder="Display Name"
                         />
                     </div>
                     <div>
@@ -217,29 +218,33 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         required
-                        placeholder="Price($)"
+                        placeholder="Price($) per night"
                         />
                     </div>
-                    <div>
-                        <hr className="hr-line"/>
-                    </div>
-                    <div className="input-container">
-                        <input
-                        className="input-line"
-                        type="url"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                        placeholder="Add image URL (optional)"
-                         />
-                        {/* <div>
-                        Preview
-                        <input type="checkbox" value={preview} onChange={() => setPreview(!preview)}/>
-                        </div> */}
-                    </div>
+                    {actionType === "update" && (
+                        <div>
+                            <hr className="hr-line"/>
+                        </div>
+                    )}
+                    {actionType === "update" && (
+                        <div className="input-container">
+                            <input
+                            className="input-line"
+                            type="url"
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value)}
+                            placeholder="Add image URL (optional)"
+                            />
+                            {/* <div>
+                            Preview
+                            <input type="checkbox" value={preview} onChange={() => setPreview(!preview)}/>
+                            </div> */}
+                        </div>
+                    )}
                 </div>
                     <button id="form-submit" type="submit">
-                        {actionType === "create" && (<text>Looks Good</text>)}
-                        {actionType === "update" && (<text>Confirm</text>)}
+                        {actionType === "create" && "Looks Good"}
+                        {actionType === "update" && "Confirm"}
                     </button>
                 </form>
             </div>

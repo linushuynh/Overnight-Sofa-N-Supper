@@ -34,6 +34,16 @@ module.exports = {
         url: 'https://www.nrn.com/sites/nrn.com/files/Dominos-coronavirus-earnings_0_0.gif',
         preview: true
       },
+      {
+        spotId: 7,
+        url: 'https://www.nrn.com/sites/nrn.com/files/Shake-Shack-Fishers-Ind.jpeg',
+        preview: true
+      },
+      {
+        spotId: 8,
+        url: 'https://media-cdn.tripadvisor.com/media/photo-s/13/24/75/80/jack-in-the-box.jpg',
+        preview: true
+      },
     ])
   },
 
@@ -41,7 +51,7 @@ module.exports = {
     const Op = Sequelize.Op;
 
     return await queryInterface.bulkDelete('SpotImages', {
-      spotId: { [Op.in]: [1, 2, 3, 4, 5, 6] }
+      spotId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8] }
     })
   }
 };

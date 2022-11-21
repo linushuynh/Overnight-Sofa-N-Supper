@@ -1,25 +1,23 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
 import superhost from "../../images/superhost.png"
 import { getSpotById } from "../../store/spots";
-import { createReview, deleteReview, editReview, loadReviews } from "../../store/review";
-import { Modal } from "../../context/Modal";
+import { createReview, deleteReview, loadReviews } from "../../store/review";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots.spotById);
     const reviews = useSelector((state) => state.reviewState.reviews)
-    const history = useHistory();
     const [showReviewMenu, setShowReviewMenu] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
+    // const [showEditForm, setShowEditForm] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [stars, setStars] = useState("");
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const [errors, setErrors] = useState([]);
-    const [selectEditForm, setSelectEditForm] = useState(0);
+    // const [selectEditForm, setSelectEditForm] = useState(0);
     const currentUser = useSelector(state => state.session.user)
     // const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -60,8 +58,7 @@ const SpotDetails = () => {
         .catch(
             async (res) => {
               const data = await res.json();
-              if (data && data.errors) setErrors(data.errors);
-              if (data && data.message) setErrors([data.message]);
+              if (data && data.errors) setErrors(...errors, data.errors);
             }
           );
     }
@@ -80,34 +77,33 @@ const SpotDetails = () => {
         .catch(
             async (res) => {
               const data = await res.json();
-              if (data && data.errors) setErrors(data.errors);
-              if (data && data.message) setErrors([data.message]);
+              if (data && data.errors) setErrors(...errors, data.errors);
             }
           );
 
     }
 
-    const clickEditReview = (e, reviewId) => {
-        e.preventDefault();
-        const errorValidations = []
+    // const clickEditReview = (e, reviewId) => {
+    //     e.preventDefault();
+    //     const errorValidations = []
 
-        dispatch(editReview({
-            review: reviewText,
-            stars
-        }, reviewId))
-        .catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.errors) errorValidations.push(data.errors);
-            }
-            )
+    //     dispatch(editReview({
+    //         review: reviewText,
+    //         stars
+    //     }, reviewId))
+    //     .catch(
+    //         async (res) => {
+    //             const data = await res.json();
+    //             if (data && data.errors) errorValidations.push(data.errors);
+    //         }
+    //         )
 
-        setErrors([errorValidations]);
-        setReviewText("")
-        setStars("");
-        setShowEditForm(false)
-        setLoadAfterSubmit(true);
-    }
+    //     setErrors([errorValidations]);
+    //     setReviewText("")
+    //     setStars("");
+    //     // setShowEditForm(false)
+    //     setLoadAfterSubmit(true);
+    // }
 
     const translateToDate = (createdAt) => {
         const formattedDate = createdAt.slice(0, 10);
@@ -133,15 +129,21 @@ const SpotDetails = () => {
                     <div className="header-info">
                         ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
                          &nbsp; · &nbsp;
-                        <img src={superhost} /> &nbsp; Superhost &nbsp; · &nbsp;
+                        <img src={superhost} alt="superhost-icon"/> &nbsp; Superhost &nbsp; · &nbsp;
                         <p id="city-country-text">{spot.city}, {spot.country} </p>
                     </div>
                     <div className="img-container">
-                        {spot.SpotImages.map((spotImg) => (
+                        {spot.SpotImages.length > 0 && spot.SpotImages.map((spotImg) => (
                             <div className="img-preview" key={spotImg.id}>
                                 <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
                             </div>
                         ))}
+                        {spot.SpotImages.length === 0 && (
+                            <div className="img-preview">
+                                <img src="https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg" alt="img-not-found" className='spot-img' />
+                            </div>
+                            )
+                        }
                     </div>
 
                     <br />
@@ -171,7 +173,7 @@ const SpotDetails = () => {
 
                     <div className="review-container">
                         <div id="avgRating">
-                            ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <text>s</text>}
+                            ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && "s"}
                         </div>
 
                         {errors.length > 0 && (<ul className="error-list">
@@ -204,9 +206,9 @@ const SpotDetails = () => {
                                         <input
                                         id="star-input"
                                         type="number"
-                                        min="0"
-                                        max="5"
-                                        placeholder="0-5★"
+                                        min="1.0"
+                                        max="5.0"
+                                        placeholder="1-5★"
                                         onChange={(e) => setStars(e.target.value)}
                                         value={stars}
                                         required
@@ -219,7 +221,7 @@ const SpotDetails = () => {
                             </div>)}
 
                         <br />
-                        
+
                         <div id="reviews-box">
                             {reviews.map((review) => (
                                 <div className="review-item" key={review.id}>
@@ -287,7 +289,7 @@ const SpotDetails = () => {
                                     </div>
                                     )} */}
                                     <br />
-                                    {currentUser && (currentUser.id == review.userId) && (<div id="delete-button-container">
+                                    {currentUser && (currentUser.id === review.userId) && (<div id="delete-button-container">
                                          <button
                                          className="action-buttons"
                                          onClick={(e) => {

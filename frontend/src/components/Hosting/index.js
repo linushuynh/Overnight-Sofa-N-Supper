@@ -19,10 +19,10 @@ const Hosting = () => {
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const currentUser = useSelector(state => state.session.user)
 
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
+    // const openMenu = () => {
+    //     if (showMenu) return;
+    //     setShowMenu(true);
+    // };
 
     useEffect(() => {
         dispatch(getSpotsOfUser())
@@ -93,7 +93,9 @@ const Hosting = () => {
                 <div id="listings-box">
                     {userSpots.map(spot => (
                         <div key={spot.id} className="user-spot-div">
-                            <div className="spot-name-text">{spot.name} &nbsp; </div>
+                            <div className="spot-name-text" onClick={() => history.push(`/spots/${spot.id}`)}>
+                                {spot.name}
+                                </div>
                             <div>
                                 <button
                                     className="buttons"

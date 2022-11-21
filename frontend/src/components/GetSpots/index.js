@@ -20,6 +20,7 @@ function GetSpots() {
             {allSpots.map((spot) => (
                 <div key={spot.id} className="spot-box" >
                    {spot.previewImage && (<img src={spot.previewImage} alt="" className="spot-image" onClick={() => history.push(`/spots/${spot.id}`)} />)}
+                   {!spot.previewImage && (<img src="https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg" alt="" className="spot-image" onClick={() => history.push(`/spots/${spot.id}`)} />)}
                    <div id="spot-header" onClick={() => history.push(`/spots/${spot.id}`)}>
                         <p className="spot-name">{spot.name}</p>
                         <p className="spot-info" id="rating">★ {spot.avgRating? spot.avgRating : "New"}</p>

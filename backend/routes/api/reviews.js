@@ -46,7 +46,6 @@ router.get(
             addSpot = addSpot.toJSON();
             rev.Spot = addSpot
 
-            console.log(addSpot.id)
             // Query and append a preview image to the Spot
             let spotImg = await SpotImage.findOne({
                 where: {
