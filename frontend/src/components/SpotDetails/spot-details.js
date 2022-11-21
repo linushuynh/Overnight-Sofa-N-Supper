@@ -58,7 +58,8 @@ const SpotDetails = () => {
         .catch(
             async (res) => {
               const data = await res.json();
-              if (data && data.errors) setErrors(...errors, data.errors);
+              if (data && data.message) setErrors([...errors, data.message])
+              if (data && data.errors) setErrors([...errors, ...data.errors]);
             }
           );
     }
