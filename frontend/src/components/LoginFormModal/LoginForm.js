@@ -18,9 +18,25 @@ function LoginForm({ setShowModal }) {
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
+        if (data && data.message) setErrors([data.message]);
       }
     );
   };
+
+  const demoLogin = (e) => {
+    e.preventDefault();
+    setErrors([]);
+    return dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+    .then(() => setShowModal(false))
+    .catch(
+      async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+        if (data && data.message) setErrors([data.message]);
+      }
+    );
+  }
+
 
   return (
     <div className="login-box">
@@ -62,6 +78,8 @@ function LoginForm({ setShowModal }) {
               </label>
                 {/* <hr id="hr-2"/> */}
              <button type="submit" id="submit">Log In</button>
+             <br />
+             <button onClick={demoLogin} id="submit">Demo User</button>
             </div>
       </form>
     </div>

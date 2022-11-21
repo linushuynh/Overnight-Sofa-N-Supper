@@ -82,10 +82,10 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
               setShowModal(true);
             }}>Log in</button>
           </li>
-          <li>
+          {/* <li>
             <hr />
-          </li>
-          <li className="dropdown-text">
+          </li> */}
+          {/* <li className="dropdown-text">
             Host your home
           </li>
           <li className="dropdown-text">
@@ -93,7 +93,7 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
           </li>
           <li className="dropdown-text">
             Help
-          </li>
+          </li> */}
         </div>
         </ul>
         )}

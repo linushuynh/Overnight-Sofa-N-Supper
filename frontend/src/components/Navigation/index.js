@@ -31,7 +31,7 @@ function Navigation({ isLoaded }){
               </NavLink>
             }
         </div>
-
+            <div id='button-box'>
             {isLoaded && (
               <ProfileButton
               user={sessionUser}
@@ -44,6 +44,8 @@ function Navigation({ isLoaded }){
                 { login ? <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
               </Modal>
             )}
+
+            </div>
       </div>
     </div>
     </>

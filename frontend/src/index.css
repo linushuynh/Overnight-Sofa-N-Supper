@@ -18,7 +18,9 @@
   .NavBar { grid-area: NavBar; }
 
   .Footer { grid-area: Footer; } */
-
+* {
+  font-family: 'Poppins', sans-serif;
+}
 
 .mainpage {
     display: flex;

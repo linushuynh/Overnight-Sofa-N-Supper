@@ -16,7 +16,7 @@ const SpotDetails = () => {
     const [showReviewMenu, setShowReviewMenu] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [reviewText, setReviewText] = useState("");
-    const [stars, setStars] = useState(0);
+    const [stars, setStars] = useState("");
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const [errors, setErrors] = useState([]);
     const [selectEditForm, setSelectEditForm] = useState(0);
@@ -30,6 +30,8 @@ const SpotDetails = () => {
 
     const closeReviewMenu = () => {
         if (!showReviewMenu) return;
+        setReviewText("")
+        setStars("")
         setShowReviewMenu(false);
     };
 
@@ -40,30 +42,50 @@ const SpotDetails = () => {
         setErrors([]);
     }, [spotId, loadAfterSubmit, dispatch])
 
+    // CREATE REVIEW
     const submitReview = (e) => {
         e.preventDefault();
 
         dispatch(createReview({
             review: reviewText,
             stars
-        }, spotId));
+        }, spotId))
+        .then(() => {
+            setReviewText("")
+            setStars(0)
+            setErrors([])
+            closeReviewMenu()
+            setLoadAfterSubmit(true)
+        })
+        .catch(
+            async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(data.errors);
+              if (data && data.message) setErrors([data.message]);
+            }
+          );
 
-        setReviewText("");
-        setStars(0);
-        setErrors([]);
-        closeReviewMenu();
-        setLoadAfterSubmit(true);
     }
 
     const clickDeleteReview = (e, reviewId) => {
         e.preventDefault();
 
         dispatch(deleteReview(reviewId))
-        setErrors([]);
-        setReviewText("")
-        setStars(0);
-        setShowReviewMenu(false);
-        setLoadAfterSubmit(true);
+        .then(() => {
+            setErrors([]);
+            setReviewText("")
+            setStars("");
+            setShowReviewMenu(false);
+            setLoadAfterSubmit(true);
+        })
+        .catch(
+            async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(data.errors);
+              if (data && data.message) setErrors([data.message]);
+            }
+          );
+
     }
 
     const clickEditReview = (e, reviewId) => {
@@ -83,7 +105,7 @@ const SpotDetails = () => {
 
         setErrors([errorValidations]);
         setReviewText("")
-        setStars(0);
+        setStars("");
         setShowEditForm(false)
         setLoadAfterSubmit(true);
     }
@@ -99,13 +121,18 @@ const SpotDetails = () => {
 
     if (!spot) return null
 
+    let ratingShaved;
+    if(spot.avgRating) {
+        ratingShaved = Math.ceil(spot.avgRating)
+    }
+
     return (
         <>
             <div id="center-container">
                 <div id="spot-detail-container">
                     <div id="spot-name">{spot.name}</div>
                     <div className="header-info">
-                        ★{spot.avgRating} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
+                        ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
                          &nbsp; · &nbsp;
                         <img src={superhost} /> &nbsp; Superhost &nbsp; · &nbsp;
                         <p id="city-country-text">{spot.city}, {spot.country} </p>
@@ -120,123 +147,164 @@ const SpotDetails = () => {
 
                     <br />
 
-                    <div className="description-box">{spot.description}</div>
-                    <div id="avgRating">
-                        <p>★{spot.avgRating} · {spot.numReviews} review(s)</p>
+                    <div className="description-box">
+                        <div id="home-owner-text">
+                            Entire home hosted by {spot.Owner.firstName}
+                        </div>
+                        <div id="guests-text">
+                            6 guests · 4 bedroom · 4 beds · 3 baths
+                        </div>
                     </div>
 
-                    <ul>
-                        {errors.map((error, idx) => (
-                         <li key={idx}>{error}</li>
-                        ))}
-                    </ul>
+                    <hr className="hr-line"/>
 
-                    {reviews.map((review) => (
-                        <div className="review-item" key={review.id}>
-                            <div>{review.User.firstName} {review.User.lastName}</div>
-                            <div>{translateToDate(review.createdAt)}</div>
-                            {review.review}
-                            {/* { selectEditForm === review.id && showEditForm ? (
-                                (
-                                    <div className="edit-container">
-                                        <button className="edit-button" onClick={() => {
-                                            if (!showEditForm) return
-                                            setSelectEditForm("");
-                                            setShowEditForm(false);
-                                            setReviewText("");
-                                            setStars(0);
-                                        }}>
-                                            Cancel Edit
-                                        </button>
-                                        <form onSubmit={(e) => clickEditReview(e, review.id)}>
-                                            <label>
-                                            <textarea
-                                            onChange={(e) => setReviewText(e.target.value) }
-                                            value={reviewText}
-                                            placeholder="Tell us your thoughts"
-                                            />
-                                            </label>
-                                            <br />
-                                            <label>
-                                                Stars:
-                                                <input
-                                                type="number"
-                                                min="0"
-                                                max="5"
-                                                placeholder="0-5★"
-                                                onChange={(e) => setStars(e.target.value)}
-                                                value={stars}
-                                                />
-                                            </label>
-                                            <br />
-                                            <button type="submit">Submit Edit</button>
-                                        </form>
-                                    </div>
-                                )
-                            )
-                            :
-                            (
-                                <div className="edit-container">
-                                <button className="edit-button" onClick={() => {
-                                    if (showEditForm) return
-                                    if (checkReviewOwner(review.userId)) {
-                                        return setErrors([...errors, "This is not your review to edit!"])
-                                    }
-                                    setSelectEditForm(review.id)
-                                    setShowEditForm(true)
-                                    setReviewText(review.review);
-                                    console.log("reviewText*******",reviewText)
-                                    setStars(review.stars);
-                                    console.log("stars*******",stars)
-                                }}>Edit</button>
-                            </div>
-                            )} */}
-                            <br />
-                            { (currentUser.id == review.userId) && (<div id="delete-button-container">
-                                 <button onClick={(e) => {
-                                    if (checkReviewOwner(review.userId)) return setErrors([...errors, "This is not your review to delete!"])
-                                    clickDeleteReview(e, review.id)
-                                    }}>Delete review</button>
+                    <div className="description-box">
+                        <div id="about">
+                            About this space
+                        </div>
+                        <br />
+                        <div id="description-text">
+                        {spot.description}
+                        </div>
+                    </div>
+
+                    <hr className="hr-line"/>
+
+                    <div className="review-container">
+                        <div id="avgRating">
+                            ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <text>s</text>}
+                        </div>
+
+                        {errors.length > 0 && (<ul className="error-list">
+                            {errors.map((error, idx) => (
+                             <li key={idx}>{error}</li>
+                            ))}
+                        </ul>)}
+
+                        {currentUser && (<div id="create-review-box">
+                                {!showReviewMenu ? (
+                                    <button className="action-buttons" onClick={openReviewMenu}>Create a new review</button>
+                                    )
+                                    :
+                                    (<div>
+                                <button className="action-buttons" onClick={closeReviewMenu}>Cancel review</button>
+                                <form onSubmit={submitReview} id="review-menu">
+                                    <label>
+                                        <br />
+                                        <textarea
+                                        id="review-input"
+                                        onChange={(e) => setReviewText(e.target.value) }
+                                        value={reviewText}
+                                        placeholder="Tell us your thoughts"
+                                        required
+                                        />
+                                    </label>
+                                    <br />
+                                    <label>
+                                        Stars: &nbsp;
+                                        <input
+                                        id="star-input"
+                                        type="number"
+                                        min="0"
+                                        max="5"
+                                        placeholder="0-5★"
+                                        onChange={(e) => setStars(e.target.value)}
+                                        value={stars}
+                                        required
+                                        />
+                                    </label>
+                                    <br />
+                                    <button className="action-buttons" type="submit">Submit review</button>
+                                </form>
+                                </div>)}
                             </div>)}
 
-                            <br />
-                        </div>
-                    ))}
-                    <br />
-                    {currentUser && (<div id="create-review-box">
-                        {!showReviewMenu ? (
-                            <button onClick={openReviewMenu}>Create a new review</button>
-                            )
-                            :
-                            (<div>
-                        <button onClick={closeReviewMenu}>Cancel review</button>
-                        <form onSubmit={submitReview} id="review-menu">
-                            <label>
-                                <br />
-                                <textarea
-                                onChange={(e) => setReviewText(e.target.value) }
-                                value={reviewText}
-                                placeholder="Tell us your thoughts"
-                                />
-                            </label>
-                            <br />
-                            <label>
-                                Stars:
-                                <input
-                                type="number"
-                                min="0"
-                                max="5"
-                                placeholder="0-5★"
-                                onChange={(e) => setStars(e.target.value)}
-                                value={stars}
-                                />
-                            </label>
-                            <br />
-                            <button type="submit">Submit review</button>
-                        </form>
-                        </div>)}
-                    </div>)}
+                        <div id="reviews-box">
+                            {reviews.map((review) => (
+                                <div className="review-item" key={review.id}>
+                                    <div className="review-info" id="reviewer-text">{review.User.firstName} {review.User.lastName}</div>
+                                    <div className="review-info" id="star-date">
+                                        <div className="review-info" id="review-date">{translateToDate(review.createdAt)} </div>
+                                        <div className="review-info" id="star-text">★{review.stars}</div>
+                                    </div>
+                                    <div className="review-info" id="review-description">{review.review}</div>
 
+
+                                    {/* { selectEditForm === review.id && showEditForm ? (
+                                        (
+                                            <div className="edit-container">
+                                                <button className="edit-button" onClick={() => {
+                                                    if (!showEditForm) return
+                                                    setSelectEditForm("");
+                                                    setShowEditForm(false);
+                                                    setReviewText("");
+                                                    setStars(0);
+                                                }}>
+                                                    Cancel Edit
+                                                </button>
+                                                <form onSubmit={(e) => clickEditReview(e, review.id)}>
+                                                    <label>
+                                                    <textarea
+                                                    onChange={(e) => setReviewText(e.target.value) }
+                                                    value={reviewText}
+                                                    placeholder="Tell us your thoughts"
+                                                    />
+                                                    </label>
+                                                    <br />
+                                                    <label>
+                                                        Stars:
+                                                        <input
+                                                        type="number"
+                                                        min="0"
+                                                        max="5"
+                                                        placeholder="0-5★"
+                                                        onChange={(e) => setStars(e.target.value)}
+                                                        value={stars}
+                                                        />
+                                                    </label>
+                                                    <br />
+                                                    <button type="submit">Submit Edit</button>
+                                                </form>
+                                            </div>
+                                        )
+                                    )
+                                    :
+                                    (
+                                        <div className="edit-container">
+                                        <button className="edit-button" onClick={() => {
+                                            if (showEditForm) return
+                                            if (checkReviewOwner(review.userId)) {
+                                                return setErrors([...errors, "This is not your review to edit!"])
+                                            }
+                                            setSelectEditForm(review.id)
+                                            setShowEditForm(true)
+                                            setReviewText(review.review);
+                                            console.log("reviewText*******",reviewText)
+                                            setStars(review.stars);
+                                            console.log("stars*******",stars)
+                                        }}>Edit</button>
+                                    </div>
+                                    )} */}
+                                    <br />
+                                    {currentUser && (currentUser.id == review.userId) && (<div id="delete-button-container">
+                                         <button
+                                         className="action-buttons"
+                                         onClick={(e) => {
+                                            if (checkReviewOwner(review.userId)) return setErrors([...errors, "This is not your review to delete!"])
+                                            clickDeleteReview(e, review.id)
+                                            }}>Delete review</button>
+                                    </div>)}
+
+                                    <br />
+                                </div>
+                            ))}
+                        </div>
+
+                        <hr className="hr-line"/>
+
+
+
+                    </div>
                 </div>
             </div>
         </>

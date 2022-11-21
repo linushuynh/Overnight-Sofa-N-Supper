@@ -41,8 +41,15 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const errorValidations = [];
+
+        if (name.length > 20) {
+            errorValidations.push("Name of the spot must be under 20 characters")
+            setErrors(errorValidations);
+            return
+        }
+
         const submitSpot = {
-            address, city, state, country, lat, lng, name, description, price
+            address, city, state, country, lat: 20, lng: 20, name, description, price
         }
         //For Creating Spots
         if (actionType === "create") {
@@ -75,8 +82,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         const data = await res.json();
                         if (data && data.errors) errorValidations.push(data.errors);
                         if (data && data.message) errorValidations.push(data.message);
-                    }
-                    )
+                    })
             if (url !== "") {
                 dispatch(addImage({
                     url,
@@ -93,7 +99,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
         <div>
             <form className="spot-form" onSubmit={handleSubmit}>
             <ul>
-              {errors.map((error, idx) => (
+              {errors.length > 0 && errors.map((error, idx) => (
                 <li key={idx}>{error}</li>
               ))}
              </ul>
@@ -133,7 +139,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                     required
                     />
                 </label>
-                <label>
+                {/* <label>
                     Latitude:
                     <input
                     type="number"
@@ -148,7 +154,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                     value={lng}
                     onChange={(e) => setLng(e.target.value)}
                     />
-                </label>
+                </label> */}
                 <label>
                     Name:
                     <input
@@ -177,7 +183,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                     />
                 </label>
                 <label>
-                    Add image:
+                    Add image(optional):
                     <input
                     type="url"
                     value={url}

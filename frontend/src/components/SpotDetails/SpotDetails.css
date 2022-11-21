@@ -15,9 +15,12 @@
 }
 
 #avgRating {
-    display: flex;
-    align-items: center;
+    font-family: 'Poppins', sans-serif;
     font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 2%;
 }
 
 .spot-img {
@@ -37,7 +40,7 @@
 #spot-name {
     font-size: 25px;
     font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+    font-weight: 600;
     box-sizing: border-box;
     height: 50%;
 }
@@ -56,4 +59,61 @@
 
 #city-country-text {
     text-decoration: underline;
+}
+
+.description-box {
+    margin-top: 2%;
+    margin-bottom: 3%;
+
+}
+
+#home-owner-text {
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+
+}
+
+#guests-text {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.hr-line {
+    opacity: 40%;
+}
+
+#description-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    overflow-wrap: break-word;
+}
+
+#about {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#reviews-box {
+    display: flex;
+
+}
+
+.review-item {
+    width: 50%;
+    font-family: 'Poppins', sans-serif;
+}
+
+#star-date {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-info {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    overflow-wrap: break-word;
 }

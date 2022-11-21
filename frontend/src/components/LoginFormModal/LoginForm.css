@@ -22,8 +22,6 @@
     left: 10%;
     align-self: flex-start;
     margin-top: 10%;
-    font-family: "Inter", sans-serif;
-    /* font-weight: bold; */
     font-size: large;
 }
 
@@ -49,7 +47,6 @@
 #login-title {
     margin-top: 5%;
     margin-bottom: 3%;
-    font-family: "Inter", sans-serif;
     font-weight: bold;
 }
 
@@ -67,7 +64,6 @@
     width: 100%;
     /* justify-self: center; */
     align-items: center;
-    font-family: "Inter", sans-serif;
     height: 50%;
     border:0;
     outline:0;
@@ -90,7 +86,6 @@
 }
 
 #list-of-error {
-    font-family: "Inter", sans-serif;
     height: fit-content;
 }
 
@@ -108,6 +103,7 @@
 
 #submit:hover {
     background-color: #d8304f;
+    cursor: pointer;
 }
 
 #hr-2 {
@@ -115,4 +111,36 @@
     position: absolute;
     left: 0;
     border: 1px solid rgb(230, 230, 230);
+}
+
+.error-list {
+    color: #ff385c;
+    font-weight: 600;
+}
+
+.action-buttons {
+    background-color: #ff385c;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.action-buttons:hover {
+    background-color: #d8304f;
+    cursor: pointer;
+}
+
+#review-input {
+    width: 350px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+#star-input {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 75px;
+    text-align: center;
 }
