@@ -239,7 +239,10 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         </div> */}
                     </div>
                 </div>
-                    <button id="form-submit" type="submit">Looks good</button>
+                    <button id="form-submit" type="submit">
+                        {actionType === "create" && (<text>Looks Good</text>)}
+                        {actionType === "update" && (<text>Confirm</text>)}
+                    </button>
                 </form>
             </div>
         </div>
