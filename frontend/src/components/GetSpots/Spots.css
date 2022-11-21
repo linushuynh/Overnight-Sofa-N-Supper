@@ -73,6 +73,7 @@
     font-weight: 200;
     position: relative;
     height: 100%;
+    cursor: pointer;
 }
 
 #middle-text {

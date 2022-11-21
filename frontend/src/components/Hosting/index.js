@@ -48,12 +48,13 @@ const Hosting = () => {
     }
 
     if (!userSpots) return null
+    if (!currentUser) history.push('/')
 
     return (
         <>
             <div className="hosting-box">
                 <div id="welcome-user-box">
-                    <div>Welcome to your dashboard, {currentUser.firstName}! </div>
+                    <div>Welcome to your dashboard! </div>
                 </div>
 
                 <br />

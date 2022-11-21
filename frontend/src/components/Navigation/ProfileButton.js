@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
-import { useHistory } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 
 const ProfileButton = ({ user, setShowModal, setLogin }) => {
     const dispatch = useDispatch();
@@ -28,7 +28,11 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
 
     const logout = (e) => {
       e.preventDefault();
-      dispatch(sessionActions.logout());
+      dispatch(sessionActions.logout())
+      .then(() => {
+
+      })
+      ;
     };
 
     return (

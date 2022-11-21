@@ -45,13 +45,18 @@
     background-color: rgb(235, 235, 235);
     border-radius: 5px;
     padding: 10px 20px;
-    border:rgb(187, 187, 187) solid 2px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0px 1px 3px rgb(187, 187, 187);
+    border: none;
+    /* border:rgb(187, 187, 187) solid 2px; */
 }
 
 #create-button:hover {
     background-color: rgb(187, 187, 187);
-    border: rgb(142, 142, 142) solid 2px;
+    /* border: rgb(142, 142, 142) solid 2px; */
     cursor: pointer;
+    box-shadow: 0px 2px 3px rgb(142, 142, 142);
 }
 
 .user-spot-div {

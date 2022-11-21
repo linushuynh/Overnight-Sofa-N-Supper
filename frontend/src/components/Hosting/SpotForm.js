@@ -97,104 +97,151 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
       };
 
     return (
-        <div id="form-container">
-            <form className="spot-form" onSubmit={handleSubmit}>
-            <ul>
-              {errors.length > 0 && errors.map((error, idx) => (
-                <li key={idx}>{error}</li>
-              ))}
-             </ul>
-                <label>
-                    Address:
-                    <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                    />
-                </label>
-                <label>
-                    City:
-                    <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                     />
-                </label>
-                <label>
-                    State:
-                    <input
-                    type="text"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    required
-                     />
-                </label>
-                <label>
-                    Country:
-                    <input
-                    type="text"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-                    />
-                </label>
-                {/* <label>
-                    Latitude:
-                    <input
-                    type="number"
-                    value={lat}
-                    onChange={(e) => setLat(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Longitude:
-                    <input
-                    type="number"
-                    value={lng}
-                    onChange={(e) => setLng(e.target.value)}
-                    />
-                </label> */}
-                <label>
-                    Name:
-                    <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    />
-                </label>
-                <label>
-                    Description:
-                    <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                    />
-                </label>
-                <label>
-                    Price:
-                    <input
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-                    />
-                </label>
-                <label>
-                    Add image(optional):
-                    <input
-                    type="url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="Please put valid link"
-                     />
-                    <input type="checkbox" value={preview} onChange={() => setPreview(!preview)}/>
-                </label>
-                <button id="form-submit" type="submit">Submit</button>
-            </form>
+        <div id="form">
+            <div id="header-text">
+                {actionType === "create" && <text>Create Your New Spot</text>}
+                {actionType === "update" && <text>Edit {currentSpot.name}</text>}
+            </div>
+
+            {/* <hr /> */}
+
+            <div id="form-container">
+                <form className="spot-form" onSubmit={handleSubmit}>
+                    {errors.length > 0 && (
+                        <ul>
+                            {errors.length > 0 && errors.map((error, idx) => (
+                                <li key={idx}>{error}</li>
+                            ))}
+                        </ul>
+                    )}
+                    <div id="input-list">
+
+                    <div className="input-container">
+                        <input
+                        className="input-line"
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                        placeholder="Address"
+                        />
+                    </div>
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+                        <input
+                        className="input-line"
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                        placeholder="City"
+                         />
+                    </div>
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+                        <input
+                        className="input-line"
+                        type="text"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                        required
+                        placeholder="State"
+                         />
+                    </div>
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+
+                        <input
+                        className="input-line"
+                        type="text"
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                        required
+                        placeholder="Country"
+                        />
+                    </div>
+                    {/* <div>
+                        Latitude:
+                        <input
+                        type="number"
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        Longitude:
+                        <input
+                        type="number"
+                        value={lng}
+                        onChange={(e) => setLng(e.target.value)}
+                        />
+                    </div> */}
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+                        <input
+                        className="input-line"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        placeholder="Name"
+                        />
+                    </div>
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+                        <textarea
+                        className="input-line"
+                        id="description-input"
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                        placeholder="Description"
+                        />
+                    </div>
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+                        <input
+                        className="input-line"
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        required
+                        placeholder="Price($)"
+                        />
+                    </div>
+                    <div>
+                        <hr className="hr-line"/>
+                    </div>
+                    <div className="input-container">
+                        <input
+                        className="input-line"
+                        type="url"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        placeholder="Add image URL (optional)"
+                         />
+                        {/* <div>
+                        Preview
+                        <input type="checkbox" value={preview} onChange={() => setPreview(!preview)}/>
+                        </div> */}
+                    </div>
+                </div>
+                    <button id="form-submit" type="submit">Looks good</button>
+                </form>
+            </div>
         </div>
     )
 }
