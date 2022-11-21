@@ -20,11 +20,11 @@ function Navigation({ isLoaded }){
         <img src={bnbicon} alt="Logo" className='icon' />
         <NavLink exact to="/" className='overnightsns'> Overnight S&S </NavLink>
       </div>
-      <div className='bookingBox'>
-        {/* <p> Anywhere </p> <hr /> <p> Any week | Add guests </p> */}
-      </div>
+      {/* <div className='bookingBox'>
+        <p> Anywhere </p> <hr /> <p> Any week | Add guests </p>
+      </div> */}
       <div className='userBox'>
-        <div id='hosting-box'>
+        <div id={ sessionUser ? 'hosting-box' : 'blank'}>
             {sessionUser &&
               <NavLink to="/hosting" id='hosting-link'>
                 Start hosting

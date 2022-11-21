@@ -75,28 +75,28 @@ const ProfileButton = ({ user, setShowModal, setLogin }) => {
             </div>
           </div>
           :
-          <div className="profile-dropdown">
-        <div className="button-holder">
-          <li >
-            <button
-            className="form-button"
-            id="signup-button"
-            onClick={() => {
-              setLogin(false);
-              setShowModal(true);
-            }}>Sign Up</button>
-          </li>
-          <li>
-            <button
-            className="form-button"
-            id="login-button"
-            onClick={() => {
-              setLogin(true);
-              setShowModal(true);
-            }}>Log in</button>
-          </li>
-        </div>
-        </div>
+          <div className="signed-out-dropdown">
+            <div className="profile-dropdown">
+              <div
+              className="signup-dropdown-item"
+              id="signup-button"
+              onClick={() => {
+                  setLogin(false);
+                  setShowModal(true);
+              }}>
+                <div>Sign Up</div>
+              </div>
+              <div
+              className="signup-dropdown-item"
+              id="login-button"
+              onClick={() => {
+                  setLogin(true);
+                  setShowModal(true);
+              }}>
+                <div>Log in</div>
+              </div>
+            </div>
+          </div>
         )}
       </>
     );
