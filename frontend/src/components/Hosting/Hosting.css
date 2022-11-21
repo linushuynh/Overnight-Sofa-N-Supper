@@ -67,10 +67,17 @@
 .spot-name-text {
     font-weight: 600;
     font-size: 20px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.spot-name-text:hover {
+    text-decoration: underline;
+    color: rgb(98, 98, 98);
 }
 
 #your-listings-text {
     font-weight: 600;
     font-size: 25px;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }

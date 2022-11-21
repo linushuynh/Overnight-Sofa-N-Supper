@@ -93,7 +93,9 @@ const Hosting = () => {
                 <div id="listings-box">
                     {userSpots.map(spot => (
                         <div key={spot.id} className="user-spot-div">
-                            <div className="spot-name-text">{spot.name} &nbsp; </div>
+                            <div className="spot-name-text" onClick={() => history.push(`/spots/${spot.id}`)}>
+                                {spot.name}
+                                </div>
                             <div>
                                 <button
                                     className="buttons"

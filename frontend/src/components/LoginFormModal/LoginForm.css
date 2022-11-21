@@ -89,7 +89,7 @@
     height: fit-content;
 }
 
-#submit {
+.submit-button {
     background-color: #ff385c;
     color: white;
     font-family: 'Poppins', sans-serif;
@@ -101,7 +101,7 @@
     width: 90%;
 }
 
-#submit:hover {
+.submit-button {
     background-color: #d8304f;
     cursor: pointer;
 }
@@ -116,6 +116,8 @@
 .error-list {
     color: #ff385c;
     font-weight: 600;
+    padding: 0px;
+    margin-top: -25px;
 }
 
 .action-buttons {

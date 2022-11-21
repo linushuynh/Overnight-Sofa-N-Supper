@@ -377,11 +377,16 @@ router.get(
             let spotImageArray = spot.SpotImages;
 
             // Find an image where preview is true and set that as previewImage
+            let highestId = 0;
             spotImageArray.forEach(async (image) => {
-                if (image.preview === true) {
-                    spot.previewImage = image.url
+                if (+image.id > +highestId) {
+                    highestId = image.id
+                    spot.previewImage = image.url;
                 }
+                // if (image.preview === true) {
+                // }
             })
+
             delete spot.SpotImages
 
         })

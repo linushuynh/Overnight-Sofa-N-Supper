@@ -58,8 +58,7 @@ const SpotDetails = () => {
         .catch(
             async (res) => {
               const data = await res.json();
-              if (data && data.errors) setErrors(data.errors);
-              if (data && data.message) setErrors([data.message]);
+              if (data && data.errors) setErrors(...errors, data.errors);
             }
           );
     }
@@ -78,8 +77,7 @@ const SpotDetails = () => {
         .catch(
             async (res) => {
               const data = await res.json();
-              if (data && data.errors) setErrors(data.errors);
-              if (data && data.message) setErrors([data.message]);
+              if (data && data.errors) setErrors(...errors, data.errors);
             }
           );
 
@@ -135,11 +133,17 @@ const SpotDetails = () => {
                         <p id="city-country-text">{spot.city}, {spot.country} </p>
                     </div>
                     <div className="img-container">
-                        {spot.SpotImages.map((spotImg) => (
+                        {spot.SpotImages.length > 0 && spot.SpotImages.map((spotImg) => (
                             <div className="img-preview" key={spotImg.id}>
                                 <img src={spotImg.url} alt={spotImg.address} className='spot-img' />
                             </div>
                         ))}
+                        {spot.SpotImages.length === 0 && (
+                            <div className="img-preview">
+                                <img src="https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg" alt="img-not-found" className='spot-img' />
+                            </div>
+                            )
+                        }
                     </div>
 
                     <br />
@@ -169,7 +173,7 @@ const SpotDetails = () => {
 
                     <div className="review-container">
                         <div id="avgRating">
-                            ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <text>s</text>}
+                            ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && "s"}
                         </div>
 
                         {errors.length > 0 && (<ul className="error-list">
@@ -202,9 +206,9 @@ const SpotDetails = () => {
                                         <input
                                         id="star-input"
                                         type="number"
-                                        min="0"
-                                        max="5"
-                                        placeholder="0-5★"
+                                        min="1.0"
+                                        max="5.0"
+                                        placeholder="1-5★"
                                         onChange={(e) => setStars(e.target.value)}
                                         value={stars}
                                         required

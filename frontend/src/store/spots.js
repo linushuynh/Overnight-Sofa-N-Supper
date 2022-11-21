@@ -141,6 +141,8 @@ export const addImage = (image, spotId) => async (dispatch) => {
     })
 
     const data = await response.json();
+    console.log(data, "THIS IS DATA AKA NEWLY CREATED IMAGE")
+    // dispatch(getSpotById(data.id))
     dispatch(addImageAction(data));
 
     return response

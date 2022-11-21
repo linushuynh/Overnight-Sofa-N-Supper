@@ -25,7 +25,7 @@
     text-decoration: none;
     color: #ff385c;
     font-family: 'Poppins', sans-serif;
-    font-weight: 800;
+    font-weight: 600;
     font-size: larger;
 }
 
@@ -50,6 +50,7 @@
     display: flex;
     justify-self: center;
     align-items: center;
+    background-color: white;
 }
 
 .profile-button {
@@ -139,6 +140,9 @@
     padding-top: 10px;
     padding-bottom: 10px;
     width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #login-linebreak {
