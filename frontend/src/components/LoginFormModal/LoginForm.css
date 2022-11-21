@@ -117,7 +117,9 @@
     color: #ff385c;
     font-weight: 600;
     padding: 0px;
-    margin-top: -25px;
+    margin-top: -20px;
+    position: relative;
+    left: 20px;
 }
 
 .action-buttons {

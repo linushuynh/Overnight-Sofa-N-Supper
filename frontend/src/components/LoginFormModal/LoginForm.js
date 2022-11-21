@@ -44,7 +44,7 @@ function LoginForm({ setShowModal }) {
       <p id="welcome-tag">Welcome to Overnight S&S</p>
 
       <form onSubmit={handleSubmit} className="form">
-        {errors.length > 0 && (<ul id="list-of-error">
+        {errors.length > 0 && (<ul className="error-list">
           { errors.map((error, idx) => (
             <li key={idx}>{error}</li>
             ))}
