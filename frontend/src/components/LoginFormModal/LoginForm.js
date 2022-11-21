@@ -37,7 +37,6 @@ function LoginForm({ setShowModal }) {
     );
   }
 
-
   return (
     <div className="login-box">
       <div id="login-title">Log In</div>

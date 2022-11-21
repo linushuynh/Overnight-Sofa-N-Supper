@@ -25,7 +25,6 @@ router.get(
     restoreUser,
     (req, res) => {
       const { user } = req;
-      console.log(user)
       if (user) {
         const userDetails = user.toSafeObject();
         const { id, firstName, lastName, email, username } = userDetails
