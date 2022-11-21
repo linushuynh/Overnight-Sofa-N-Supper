@@ -64,7 +64,6 @@ const SpotDetails = () => {
               if (data && data.message) setErrors([data.message]);
             }
           );
-
     }
 
     const clickDeleteReview = (e, reviewId) => {
@@ -299,10 +298,7 @@ const SpotDetails = () => {
                                 </div>
                             ))}
                         </div>
-
                         <hr className="hr-line"/>
-
-
 
                     </div>
                 </div>

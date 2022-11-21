@@ -17,6 +17,7 @@ const Hosting = () => {
     const userSpots = useSelector((state) => state.spots.userSpots);
     const [selectSpotEdit, setSelectSpotEdit] = useState("");
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
+    const currentUser = useSelector(state => state.session.user)
 
     const openMenu = () => {
         if (showMenu) return;
@@ -49,61 +50,81 @@ const Hosting = () => {
     if (!userSpots) return null
 
     return (
-        <div className="hosting-box">
-            <button className="listing-menu" onClick={openMenu}>
-                Menu
-            </button>
+        <>
+            <div className="hosting-box">
+                <div id="welcome-user-box">
+                    <div>Welcome to your dashboard, {currentUser.firstName}! </div>
+                </div>
 
-            {showMenu && (
-                <button onClick={() => {
-                    setCreateFormMode(true)
-                    setShowModal(true)
-                    }}>
-                    Create a new listing
-                </button>
-
-            )}
-            {showModal && createFormMode && (
-            <Modal onClose={() => {
-                setShowModal(false)
-                }}>
-                <SpotForm setShowModal={setShowModal} actionType="create" setLoadAfterSubmit={setLoadAfterSubmit} />
-            </Modal>
-             )}
-
-            <div id="listings-box"> Show listings here
-                {userSpots.map(spot => (
-                    <div key={spot.id} className="user-spot-div">
-                        {spot.name}
+                <br />
+                <hr />
+                <br />
+                {/* <button className="listing-menu" onClick={openMenu}>
+                    Menu
+                </button> */}
+                <div id="create-listing-box">
+                    {!showMenu && (
                         <button
-                        className="edit-button"
+                        id="create-button"
                         onClick={() => {
-                            setCreateFormMode(false)
+                            setCreateFormMode(true)
                             setShowModal(true)
-                            setSelectSpotEdit(spot.id)
-                            }}>
-                            Edit {spot.name}
-                        </button>
-                        <button
-                        className="delete-button"
-                        onClick={(e) => {
-                            handleDelete(e, spot.id)
                         }}>
-                            Delete {spot.name}
+                            Create a new listing
                         </button>
-                    </div>
-                ))}
-            </div>
+                    )}
+                </div>
 
-            {showModal && !createFormMode && (
-            <Modal onClose={() => {
-                setLoadAfterSubmit(true)
-                setShowModal(false)
-                }}>
-                <SpotForm setShowModal={setShowModal} actionType="update" spotId={selectSpotEdit} setLoadAfterSubmit={setLoadAfterSubmit}/>
-            </Modal>
-             )}
-        </div>
+                {showModal && createFormMode && (
+                    <Modal onClose={() => {
+                        setShowModal(false)
+                    }}>
+                    <SpotForm setShowModal={setShowModal} actionType="create" setLoadAfterSubmit={setLoadAfterSubmit} />
+                </Modal>
+                 )}
+
+                <div id="your-listings-text">
+                    Your Listings
+                </div>
+
+                <br />
+
+                <div id="listings-box">
+                    {userSpots.map(spot => (
+                        <div key={spot.id} className="user-spot-div">
+                            <div className="spot-name-text">{spot.name} &nbsp; </div>
+                            <div>
+                                <button
+                                    className="buttons"
+                                    onClick={() => {
+                                        setCreateFormMode(false)
+                                        setShowModal(true)
+                                        setSelectSpotEdit(spot.id)
+                                    }}>
+                                        Edit {spot.name}
+                                    </button>
+                                    <button
+                                    className="buttons"
+                                    onClick={(e) => {
+                                        handleDelete(e, spot.id)
+                                    }}>
+                                        Delete {spot.name}
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {showModal && !createFormMode && (
+                    <Modal onClose={() => {
+                        setLoadAfterSubmit(true)
+                        setShowModal(false)
+                    }}>
+                    <SpotForm setShowModal={setShowModal} actionType="update" spotId={selectSpotEdit} setLoadAfterSubmit={setLoadAfterSubmit}/>
+                </Modal>
+                )}
+            </div>
+        </>
     )
 }
 
