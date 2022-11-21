@@ -54,7 +54,7 @@
     font-family: "Inter", sans-serif;
     position: relative;
     align-items: center;
-
+    justify-content: center;
     width: 90%;
     display: flex;
     height: 40%;
@@ -93,7 +93,7 @@
     background-color: #ff385c;
     color: white;
     font-family: 'Poppins', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 17px;
     border-radius: 5px;
     border: none;
@@ -143,4 +143,14 @@
     margin-bottom: 15px;
     width: 75px;
     text-align: center;
+}
+
+#password-input {
+    margin-top: 5px;
+}
+
+#login-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

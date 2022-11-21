@@ -65,7 +65,6 @@ function LoginForm({ setShowModal }) {
                 <hr id="hr-2"/>
               </div>
               <label className="input-label">
-
                 <input
                   type="password"
                   value={password}
@@ -76,10 +75,15 @@ function LoginForm({ setShowModal }) {
                   placeholder="Password"
                   />
               </label>
+              <div>
+                <hr id="hr-2"/>
+              </div>
                 {/* <hr id="hr-2"/> */}
-             <button type="submit" id="submit">Log In</button>
-             <br />
-             <button onClick={demoLogin} id="submit">Demo User</button>
+            </div>
+            <div id="login-buttons-container">
+              <button type="submit" id="submit">Log In</button>
+              <br />
+              <button onClick={demoLogin} id="submit">Demo User</button>
             </div>
       </form>
     </div>

@@ -45,66 +45,119 @@ function SignupFormPage({ setShowModal }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        Email
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Username
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        First Name
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Last Name
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Confirm Password
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Sign Up</button>
-    </form>
+    <div id="signup-form-modal">
+      <div id="signup-header">
+        Sign Up
+      </div>
+
+      <hr className="hr-signup-bar" />
+
+      <div id="signup-welcome">
+        <div>
+          Welcome to Overnight S&S
+        </div>
+      </div>
+
+      <div id="signup-form-container">
+        <form id="signup-form" onSubmit={handleSubmit}>
+          {errors.length > 0 && (<ul className="error-list">
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>)}
+
+          <div id="signup-input-list">
+            <label className="signup-input-container">
+              <input
+                className="signup-input-bar"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="Email"
+              />
+            </label>
+
+            <div>
+              <hr className="hr-signup-bar" />
+            </div>
+
+            <label className="signup-input-container">
+              <input
+                className="signup-input-bar"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                placeholder="Username"
+              />
+            </label>
+
+            <div>
+              <hr className="hr-signup-bar" />
+            </div>
+
+            <label className="signup-input-container">
+              <input
+                className="signup-input-bar"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+                placeholder="First Name"
+              />
+            </label>
+
+            <div>
+              <hr className="hr-signup-bar" />
+            </div>
+
+            <label className="signup-input-container">
+              <input
+                className="signup-input-bar"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+                placeholder="Last Name"
+              />
+            </label>
+
+            <div>
+              <hr className="hr-signup-bar" />
+            </div>
+
+            <label className="signup-input-container">
+              <input
+                className="signup-input-bar"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Password"
+              />
+            </label>
+
+            <div>
+              <hr className="hr-signup-bar" />
+            </div>
+
+            <label className="signup-input-container">
+              <input
+                className="signup-input-bar"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                placeholder="Confirm Password"
+              />
+            </label>
+
+          </div>
+            <div>
+              <button className="buttons" id="signup-submit-button" type="submit">Sign Up</button>
+            </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

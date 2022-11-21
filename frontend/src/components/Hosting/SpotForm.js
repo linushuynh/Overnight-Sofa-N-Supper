@@ -103,12 +103,10 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                 {actionType === "update" && <text>Edit {currentSpot.name}</text>}
             </div>
 
-            {/* <hr /> */}
-
             <div id="form-container">
                 <form className="spot-form" onSubmit={handleSubmit}>
                     {errors.length > 0 && (
-                        <ul>
+                        <ul className="error-list">
                             {errors.length > 0 && errors.map((error, idx) => (
                                 <li key={idx}>{error}</li>
                             ))}
