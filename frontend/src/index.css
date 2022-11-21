@@ -18,16 +18,20 @@
   .NavBar { grid-area: NavBar; }
 
   .Footer { grid-area: Footer; } */
-
+* {
+  font-family: 'Poppins', sans-serif;
+}
 
 .mainpage {
     display: flex;
     flex-direction: column;
     /* border: solid black 1px; */
     height: 100%;
-    margin-left: 2%;
-    margin-right: 2%;
-    /* justify-content: stretch; */
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    /* justify-items: center; */
+    align-items: center;
 }
 
 .screen-bar{

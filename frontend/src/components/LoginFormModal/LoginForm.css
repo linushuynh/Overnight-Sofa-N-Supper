@@ -1,10 +1,156 @@
 /* TO-DO: ADD STYLING TO LOGIN PAGE */
 .login-box {
     display: flex;
-    height: 50vw;
-    width: 50vw;
+    height: 618px;
+    width: 568px;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+}
+
+#hr {
+    width: 99.6%;
+    position: absolute;
+    left: 0;
+    top: 65px;
+    /* background-color: red; */
+    border: 1px solid rgb(230, 230, 230);
+}
+
+#welcome-tag {
+    position: relative;
+    left: 10%;
+    align-self: flex-start;
+    margin-top: 10%;
+    font-size: large;
 }
 
 .form {
     background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 2%;
+    border: 1px solid gray;
+    width: 80%;
+    border-radius: 10px;
+    height: 50%;
+    justify-content: space-evenly;
+}
+
+#list-of-input {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#login-title {
+    margin-top: 5%;
+    margin-bottom: 3%;
+    font-weight: bold;
+}
+
+.input-label {
+    font-family: "Inter", sans-serif;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    display: flex;
+    height: 40%;
+}
+
+.input-bar {
+    width: 100%;
+    /* justify-self: center; */
+    align-items: center;
+    height: 50%;
+    border:0;
+    outline:0;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.input-bar:focus {
+    border-radius: 5px;
+    border: #ff385c 2px solid;
+}
+
+#input-box {
+    /* border: 1px black solid; */
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+}
+
+#list-of-error {
+    height: fit-content;
+}
+
+#submit {
+    background-color: #ff385c;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    width: 90%;
+}
+
+#submit:hover {
+    background-color: #d8304f;
+    cursor: pointer;
+}
+
+#hr-2 {
+    width: 99.6%;
+    position: absolute;
+    left: 0;
+    border: 1px solid rgb(230, 230, 230);
+}
+
+.error-list {
+    color: #ff385c;
+    font-weight: 600;
+}
+
+.action-buttons {
+    background-color: #ff385c;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.action-buttons:hover {
+    background-color: #c52b48;
+    cursor: pointer;
+}
+
+#review-input {
+    width: 350px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+#star-input {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 75px;
+    text-align: center;
+}
+
+#password-input {
+    margin-top: 5px;
+}
+
+#login-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

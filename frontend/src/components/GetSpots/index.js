@@ -21,11 +21,16 @@ function GetSpots() {
                 <div key={spot.id} className="spot-box" >
                    {spot.previewImage && (<img src={spot.previewImage} alt="" className="spot-image" onClick={() => history.push(`/spots/${spot.id}`)} />)}
                    <div id="spot-header" onClick={() => history.push(`/spots/${spot.id}`)}>
-                        <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>
+                        <p className="spot-name">{spot.name}</p>
                         <p className="spot-info" id="rating">★ {spot.avgRating? spot.avgRating : "New"}</p>
                     </div>
+                    <div id="middle-text" onClick={() => history.push(`/spots/${spot.id}`)}>
+                        <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>
+
+                    </div>
                     <div id="spot-details" onClick={() => history.push(`/spots/${spot.id}`)}>
-                         <p className="spot-info" id="spot-price">${spot.price} night</p>
+                         <p className="spot-info" id="spot-price">${spot.price}</p>
+                         <p className="spot-info" id="night-text"> night</p>
                     </div>
                 </div>
             ))}

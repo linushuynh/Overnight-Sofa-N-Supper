@@ -1,1 +1,75 @@
 /* TO-DO STYLING FOR SIGNUP FORM*/
+#signup-form-modal {
+    height: 618px;
+    width: 568px;
+}
+
+#signup-header {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.hr-signup-bar {
+    opacity: 40%;
+}
+
+#signup-welcome {
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 40px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#signup-form-container {
+    display: flex;
+    justify-content: center;
+    /* height: 65%; */
+}
+
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+#signup-input-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.signup-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.signup-input-bar {
+    width: 95%;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid white;
+    outline: none;
+    padding: 4px 0px;
+}
+
+.signup-input-bar:focus {
+    border: 2px solid #ff385c;
+}
+
+#signup-submit-button {
+    width: 100%;
+    margin-top: 30px;
+}

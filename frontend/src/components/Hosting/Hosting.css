@@ -6,4 +6,71 @@
 .hosting-box {
     position: relative;
     top: 100px;
+    width: 80%;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.buttons {
+    background-color: #ff385c;
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    margin-left: 0px;
+}
+
+.buttons:hover {
+    background-color: #c52b48;
+    cursor: pointer;
+}
+
+
+#welcome-user-box {
+    display: flex;
+    font-weight: 800;
+    font-size: 25px;
+}
+
+#create-listing-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#create-button {
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0px 1px 3px rgb(187, 187, 187);
+    border: none;
+    /* border:rgb(187, 187, 187) solid 2px; */
+}
+
+#create-button:hover {
+    background-color: rgb(187, 187, 187);
+    /* border: rgb(142, 142, 142) solid 2px; */
+    cursor: pointer;
+    box-shadow: 0px 2px 3px rgb(142, 142, 142);
+}
+
+.user-spot-div {
+    display: flex;
+    align-items: center;
+}
+
+.spot-name-text {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+#your-listings-text {
+    font-weight: 600;
+    font-size: 25px;
+    text-decoration: underline;
 }

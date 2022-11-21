@@ -35,9 +35,6 @@ function App() {
           <Route path="/hosting">
             <Hosting />
           </Route>
-          <Route path="/newspot">
-            
-          </Route>
         </Switch>
       )}
       <Navigation isLoaded={isLoaded} />
