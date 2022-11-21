@@ -128,7 +128,6 @@ const SpotDetails = () => {
    spot.SpotImages.forEach((img) => {
        if (img.id > highestId) {
            highestId = +img.id
-           console.log("highest id", highestId)
         displayImg = img
     }
    })
