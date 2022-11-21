@@ -19,10 +19,10 @@ const Hosting = () => {
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const currentUser = useSelector(state => state.session.user)
 
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
+    // const openMenu = () => {
+    //     if (showMenu) return;
+    //     setShowMenu(true);
+    // };
 
     useEffect(() => {
         dispatch(getSpotsOfUser())

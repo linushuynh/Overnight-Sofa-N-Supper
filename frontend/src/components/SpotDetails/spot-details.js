@@ -1,25 +1,23 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotDetails.css"
 import superhost from "../../images/superhost.png"
 import { getSpotById } from "../../store/spots";
-import { createReview, deleteReview, editReview, loadReviews } from "../../store/review";
-import { Modal } from "../../context/Modal";
+import { createReview, deleteReview, loadReviews } from "../../store/review";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots.spotById);
     const reviews = useSelector((state) => state.reviewState.reviews)
-    const history = useHistory();
     const [showReviewMenu, setShowReviewMenu] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
+    // const [showEditForm, setShowEditForm] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [stars, setStars] = useState("");
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const [errors, setErrors] = useState([]);
-    const [selectEditForm, setSelectEditForm] = useState(0);
+    // const [selectEditForm, setSelectEditForm] = useState(0);
     const currentUser = useSelector(state => state.session.user)
     // const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -87,27 +85,27 @@ const SpotDetails = () => {
 
     }
 
-    const clickEditReview = (e, reviewId) => {
-        e.preventDefault();
-        const errorValidations = []
+    // const clickEditReview = (e, reviewId) => {
+    //     e.preventDefault();
+    //     const errorValidations = []
 
-        dispatch(editReview({
-            review: reviewText,
-            stars
-        }, reviewId))
-        .catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.errors) errorValidations.push(data.errors);
-            }
-            )
+    //     dispatch(editReview({
+    //         review: reviewText,
+    //         stars
+    //     }, reviewId))
+    //     .catch(
+    //         async (res) => {
+    //             const data = await res.json();
+    //             if (data && data.errors) errorValidations.push(data.errors);
+    //         }
+    //         )
 
-        setErrors([errorValidations]);
-        setReviewText("")
-        setStars("");
-        setShowEditForm(false)
-        setLoadAfterSubmit(true);
-    }
+    //     setErrors([errorValidations]);
+    //     setReviewText("")
+    //     setStars("");
+    //     // setShowEditForm(false)
+    //     setLoadAfterSubmit(true);
+    // }
 
     const translateToDate = (createdAt) => {
         const formattedDate = createdAt.slice(0, 10);
@@ -133,7 +131,7 @@ const SpotDetails = () => {
                     <div className="header-info">
                         ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
                          &nbsp; · &nbsp;
-                        <img src={superhost} /> &nbsp; Superhost &nbsp; · &nbsp;
+                        <img src={superhost} alt="superhost-icon"/> &nbsp; Superhost &nbsp; · &nbsp;
                         <p id="city-country-text">{spot.city}, {spot.country} </p>
                     </div>
                     <div className="img-container">
@@ -219,7 +217,7 @@ const SpotDetails = () => {
                             </div>)}
 
                         <br />
-                        
+
                         <div id="reviews-box">
                             {reviews.map((review) => (
                                 <div className="review-item" key={review.id}>
@@ -287,7 +285,7 @@ const SpotDetails = () => {
                                     </div>
                                     )} */}
                                     <br />
-                                    {currentUser && (currentUser.id == review.userId) && (<div id="delete-button-container">
+                                    {currentUser && (currentUser.id === review.userId) && (<div id="delete-button-container">
                                          <button
                                          className="action-buttons"
                                          onClick={(e) => {

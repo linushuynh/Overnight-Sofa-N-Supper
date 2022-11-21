@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addImage, createSpot, editSpot } from "../../store/spots";
 import "./SpotForm.css"
@@ -10,13 +9,12 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [country, setCountry] = useState("");
-    const [lat, setLat] = useState(0);
-    const [lng, setLng] = useState(0);
+    // const [lat, setLat] = useState(0);
+    // const [lng, setLng] = useState(0);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [errors, setErrors] = useState([]);
-    const history = useHistory();
     const dispatch = useDispatch();
     const [url, setUrl] = useState("")
     const [preview, setPreview] = useState(false)
@@ -30,14 +28,15 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
             setCity(currentSpot.city)
             setState(currentSpot.state)
             setCountry(currentSpot.country)
-            setLat(currentSpot.lat)
-            setLng(currentSpot.lng)
+            setPreview(false)
+            // setLat(currentSpot.lat)
+            // setLng(currentSpot.lng)
             setName(currentSpot.name)
             setDescription(currentSpot.description)
             setPrice(currentSpot.price)
             setErrors([]);
         }
-    }, [])
+    }, [currentSpot])
 
     const handleSubmit = (e) => {
         e.preventDefault();
