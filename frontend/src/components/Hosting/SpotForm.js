@@ -17,7 +17,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const [url, setUrl] = useState("")
-    const [preview, setPreview] = useState(true)
+    // const [preview, setPreview] = useState(true)
 
     const currentSpotState = useSelector(state => state.spots.userSpots)
     const currentSpot = currentSpotState.find(spot => Number(spot.id) === Number(spotId))
