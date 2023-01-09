@@ -1,9 +1,15 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 // /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return await queryInterface.bulkInsert('SpotImages', [
+    options.tableName = 'SpotImages'
+    return await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         url: 'https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/mcdonalds-playplace.jpg?quality=82&strip=1&w=640',
@@ -49,8 +55,8 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op;
-
-    return await queryInterface.bulkDelete('SpotImages', {
+    options.tableName = 'SpotImages'
+    return await queryInterface.bulkDelete(options, {
       spotId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8] }
     })
   }
