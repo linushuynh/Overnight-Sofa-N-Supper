@@ -81,6 +81,28 @@ function Reviews () {
           );
     }
 
+    // const clickEditReview = (e, reviewId) => {
+    //     e.preventDefault();
+    //     const errorValidations = []
+
+    //     dispatch(editReview({
+    //         review: reviewText,
+    //         stars
+    //     }, reviewId))
+    //     .catch(
+    //         async (res) => {
+    //             const data = await res.json();
+    //             if (data && data.errors) errorValidations.push(data.errors);
+    //         }
+    //         )
+
+    //     setErrors([errorValidations]);
+    //     setReviewText("")
+    //     setStars("");
+    //     // setShowEditForm(false)
+    //     setLoadAfterSubmit(true);
+    // }
+
     let ratingShaved;
     if(spot.avgRating) {
         ratingShaved = Math.ceil(spot.avgRating)

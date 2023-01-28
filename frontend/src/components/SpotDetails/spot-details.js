@@ -5,6 +5,7 @@ import "./SpotDetails.css"
 import superhost from "../../images/superhost.png"
 import { getSpotById } from "../../store/spots";
 import Reviews from "../Reviews";
+import Bookings from "../Bookings";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
@@ -18,29 +19,6 @@ const SpotDetails = () => {
         dispatch(getSpotById(spotId));
         setLoadAfterSubmit(false);
     }, [spotId, loadAfterSubmit, dispatch])
-
-
-    // const clickEditReview = (e, reviewId) => {
-    //     e.preventDefault();
-    //     const errorValidations = []
-
-    //     dispatch(editReview({
-    //         review: reviewText,
-    //         stars
-    //     }, reviewId))
-    //     .catch(
-    //         async (res) => {
-    //             const data = await res.json();
-    //             if (data && data.errors) errorValidations.push(data.errors);
-    //         }
-    //         )
-
-    //     setErrors([errorValidations]);
-    //     setReviewText("")
-    //     setStars("");
-    //     // setShowEditForm(false)
-    //     setLoadAfterSubmit(true);
-    // }
 
     if (!spot) return null
 
@@ -84,27 +62,33 @@ const SpotDetails = () => {
                             )
                         }
                     </div>
-
                     <br />
+                    <div className="body-container">
+                        <div className="description-container">
+                            <div className="description-box">
+                                <div id="home-owner-text">
+                                    Entire home hosted by {spot.Owner.firstName}
+                                </div>
+                                <div id="guests-text">
+                                    6 guests · 4 bedroom · 4 beds · 3 baths
+                                </div>
+                            </div>
+                            <hr className="hr-line"/>
+                            <div className="description-box">
+                                <div id="about">
+                                    About this space
+                                </div>
+                                <br />
+                                <div id="description-text">
+                                {spot.description}
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className="description-box">
-                        <div id="home-owner-text">
-                            Entire home hosted by {spot.Owner.firstName}
-                        </div>
-                        <div id="guests-text">
-                            6 guests · 4 bedroom · 4 beds · 3 baths
-                        </div>
+                        <Bookings spot={spot} ratingShaved={ratingShaved} />
                     </div>
                     <hr className="hr-line"/>
-                    <div className="description-box">
-                        <div id="about">
-                            About this space
-                        </div>
-                        <br />
-                        <div id="description-text">
-                        {spot.description}
-                        </div>
-                    </div>
+                    <div>Calendar goes here</div>
                     <hr className="hr-line"/>
                     <Reviews />
                 </div>
