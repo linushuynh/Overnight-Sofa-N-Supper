@@ -18,9 +18,9 @@ function App() {
 
   return (
     <>
-      <div id="bar">
+      {/* <div id="bar">
         <hr className="screen-bar"/>
-      </div>
+      </div> */}
       {isLoaded && (
         <Switch>
           <Route exact path="/">
