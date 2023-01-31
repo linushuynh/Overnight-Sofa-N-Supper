@@ -44,7 +44,9 @@ export const createBookingThunk = (booking, spotId) => async (dispatch) => {
     })
     const data = await response.json()
     if (response.ok) {
-        await dispatch(createBookingAction(data))
+        await dispatch(loadBookingsThunk())
+        // THIS WILL NOT WORK BECAUSE RESPONSE DOES NOT RETURN ASSOCIATED SPOT DATA
+        // await dispatch(createBookingAction(data))
     }
     return data
 }
@@ -61,13 +63,21 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
 }
 
 // Reducer
-const initialState = { bookings: [] }
+const initialState = { bookingsList: [] }
 
 export const bookingsReducer = (state = initialState, action) => {
+    let newState = { ...state }
     switch (action.type) {
         case LOAD_BOOKINGS:
-            state.bookings = action.payload
-            return state
+            newState.bookingsList = [...action.payload.Bookings]
+            return newState
+        // case CREATE_BOOKING:
+        //     newState.bookingsList = [...newState.bookingsList, action.payload]
+        //     return newState
+        case DELETE_BOOKING:
+            const deleteIndex = newState.bookingsList.findIndex(booking => booking.id === action.bookingId)
+            newState.bookingsList.splice(deleteIndex, 1)
+            return newState
         default:
             return state
     }

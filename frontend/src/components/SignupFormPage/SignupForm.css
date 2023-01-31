@@ -63,6 +63,7 @@
     border: 2px solid white;
     outline: none;
     padding: 4px 0px;
+    text-indent: 5px;
 }
 
 .signup-input-bar:focus {
