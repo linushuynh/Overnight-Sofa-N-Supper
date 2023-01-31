@@ -7,6 +7,8 @@ import SpotForm from "./SpotForm";
 import { getSpotsOfUser } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSpot } from "../../store/spots";
+import { loadBookingsThunk } from "../../store/booking";
+import { convertToWords } from "../../utils/date-management";
 
 const Hosting = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -18,13 +20,11 @@ const Hosting = () => {
     const [selectSpotEdit, setSelectSpotEdit] = useState("");
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
     const currentUser = useSelector(state => state.session.user)
-
-    // const openMenu = () => {
-    //     if (showMenu) return;
-    //     setShowMenu(true);
-    // };
+    const bookings = useSelector(state => state.bookingState.bookings.Bookings)
+    console.log(bookings)
 
     useEffect(() => {
+        dispatch(loadBookingsThunk())
         dispatch(getSpotsOfUser())
         setLoadAfterSubmit(false)
     }, [dispatch, loadAfterSubmit])
@@ -126,6 +126,33 @@ const Hosting = () => {
                     <SpotForm setShowModal={setShowModal} actionType="update" spotId={selectSpotEdit} setLoadAfterSubmit={setLoadAfterSubmit}/>
                 </Modal>
                 )}
+
+                <br />
+
+                <div id="your-listings-text">
+                    Your Bookings
+                </div>
+                <br />
+                <div className="bookings-container">
+                    {bookings?.map(booking => (
+                        <div key={booking.id} className='booking-card'>
+                            <div className="booking-info">
+                                {booking?.Spot.address} {booking?.Spot.city} , {booking?.Spot.state}
+                            </div>
+                            <div className="booking-img-container">
+                                {booking?.Spot.previewImage && (
+                                    <img alt="bookingPreview" src={booking?.Spot.previewImage} />
+                                )}
+                            </div>
+                            <div className="dates-container">
+                                {convertToWords(booking?.startDate)} to {convertToWords(booking?.endDate)}
+                            </div>
+                            <div>
+                                <button className="action-buttons">Delete this booking</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     )

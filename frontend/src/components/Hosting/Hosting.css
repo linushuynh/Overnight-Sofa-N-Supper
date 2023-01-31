@@ -82,3 +82,29 @@
     font-weight: 600;
     font-size: 25px;
 }
+
+.bookings-container {
+    border: #c52b48 solid 1px;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.booking-card {
+    width: 25rem;
+    height: 20rem;
+    border: #01c24e solid 1px;
+}
+
+.booking-img-container {
+    width: fit-content;
+    height: fit-content;
+
+}
+
+.booking-img-container > img{
+    width: 100%;
+    height: 15rem;
+
+}

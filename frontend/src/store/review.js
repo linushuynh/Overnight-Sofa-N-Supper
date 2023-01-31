@@ -14,12 +14,12 @@ export const setReviewsAction = (reviews) => {
     }
 }
 
-// export const createReviewAction = (review) => {
-//     return {
-//         type: CREATE_REVIEW,
-//         review
-//     }
-// }
+export const createReviewAction = (review) => {
+    return {
+        type: CREATE_REVIEW,
+        review
+    }
+}
 export const editReviewAction = (review) => {
     return {
         type: EDIT_REVIEW,
@@ -50,12 +50,11 @@ export const createReview = (review, spotId) => async (dispatch) => {
         method: "POST",
         body: JSON.stringify(review)
     })
-    // const data = await response.json();
-
-    if (response.ok) {
-        dispatch(loadReviews(spotId))
-    }
-    return response
+    const data = await response.json();
+    // if (response.ok) {
+    //     dispatch(loadReviews(spotId))
+    // }
+    return data
 }
 
 export const editReview = (updatedReview , reviewId) => async (dispatch) => {
@@ -71,6 +70,7 @@ export const editReview = (updatedReview , reviewId) => async (dispatch) => {
     if (response.ok) {
         dispatch(editReviewAction(data))
     }
+    return data
 }
 
 export const deleteReview = (reviewId) => async (dispatch) => {
@@ -81,6 +81,7 @@ export const deleteReview = (reviewId) => async (dispatch) => {
     if (response.ok) {
         dispatch(deleteReviewAction(reviewId))
     }
+    return data
 }
 
 //Reducer
@@ -93,10 +94,9 @@ export const reviewReducer = (state = initialState, action) => {
         case LOAD_REVIEWS:
             newState.reviews = action.reviews
             return newState
-        // case CREATE_REVIEW:
-        //     let addReviewArr = newState.reviews.concat(action.review)
-        //     newState.reviews = addReviewArr
-        //     return newState;
+        case CREATE_REVIEW:
+            newState.reviews = [...newState.reviews, action.review]
+            return newState;
         case EDIT_REVIEW:
             const editIndex = newState.reviews.findIndex((review) => Number(review.id) === Number(action.review.id))
             reviewArray.splice(editIndex, 1, action.review)
