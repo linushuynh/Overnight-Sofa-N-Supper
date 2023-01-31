@@ -471,7 +471,7 @@ router.post(
         if (parseInt(spot.ownerId) === parseInt(user.id)) {
             res.status(403);
             return res.json({
-                message: 'Forbidden',
+                message: 'You cannot stay at your own spot',
                 statusCode: 403
             })
         }
@@ -490,7 +490,7 @@ router.post(
         if (startDateCompare > endDateCompare) {
             res.status(400);
             return res.json({
-                message: "Validation error",
+                message: "The end of your stay cannot come before the start",
                 statusCode: 400,
                 errors: {
                   "endDate": "endDate cannot come before startDate"

@@ -4,10 +4,12 @@
     position: fixed;
     top: 0;
     display: flex;
-    width: 88%;
-    height: 78.3px;
+    width: 100%;
+    height: 5rem;
+    padding: 0px 50px;
     background-color: white;
     justify-content: space-between;
+    border-bottom: #CCCCCC 1px solid;
 }
 
 
@@ -17,7 +19,7 @@
     align-items: center;
     /* width: 33%; */
     position: relative;
-    left: 1%;
+    /* left: 1%; */
     gap: 4px;
     /* top: 2.25%; */
 }
