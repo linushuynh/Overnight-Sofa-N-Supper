@@ -121,3 +121,19 @@
     display: flex;
     justify-content: space-between;
 }
+
+.successfulBooking {
+    text-align: center;
+    width: 80%;
+    font-weight: 500;
+    color: #01c24e;
+    margin-bottom: 0.5rem
+}
+
+.error {
+    color: #fd1641;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    width: 85%;
+}
