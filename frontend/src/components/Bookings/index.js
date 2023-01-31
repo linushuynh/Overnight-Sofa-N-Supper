@@ -24,7 +24,7 @@ function Bookings({ spot, ratingShaved }) {
         .then(() => setHasSubmitted(true))
         .catch(async (res) => {
             const data = await res.json();
-            await setErrs([...errs, data.message])
+            await setErrs([data.message])
           })
     }
 
