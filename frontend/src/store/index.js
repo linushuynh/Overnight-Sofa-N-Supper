@@ -4,6 +4,7 @@ import { sessionReducer } from "./session";
 import { spotReducer } from "./spots";
 import { reviewReducer } from "./review"
 import { bookingsReducer } from "./booking";
+import mapsReducer from "./maps"
 
 let enhancer;
 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotReducer,
   reviewState: reviewReducer,
-  bookingState: bookingsReducer
+  bookingState: bookingsReducer,
+  maps: mapsReducer
 });
 
 const configureStore = (preloadedState) => {

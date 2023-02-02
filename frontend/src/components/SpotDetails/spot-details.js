@@ -6,6 +6,7 @@ import superhost from "../../images/superhost.png"
 import { getSpotById } from "../../store/spots";
 import Reviews from "../Reviews";
 import Bookings from "../Bookings";
+import MapContainer from "../Maps";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
@@ -91,6 +92,7 @@ const SpotDetails = () => {
                     <div>Calendar goes here</div>
                     <hr className="hr-line"/>
                     <Reviews />
+                    <MapContainer />
                 </div>
             </div>
         </>
