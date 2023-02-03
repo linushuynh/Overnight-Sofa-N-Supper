@@ -1,0 +1,11 @@
+.mapContainer {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.headerText {
+    font-size: 22px;
+    font-weight: 500;
+}

@@ -60,9 +60,8 @@ const Hosting = () => {
                     <div>Welcome to your dashboard! </div>
                 </div>
 
-                <br />
-                <hr />
-                <br />
+                <hr style={{ marginTop: '1rem', marginBottom: "2rem" }} />
+
                 <div id="create-listing-box">
                     {!showMenu && (
                         <button
@@ -134,7 +133,7 @@ const Hosting = () => {
                     {bookings.length > 0 ? (bookings?.map(booking => (
                         <div key={booking.id} className='booking-card'>
                             <div className="booking-info">
-                                {booking?.Spot.address} {booking?.Spot.city} , {booking?.Spot.state}
+                                {booking?.Spot.address} · {booking?.Spot.city} , {booking?.Spot.state}
                             </div>
                             <div className="booking-img-container">
                                 {booking?.Spot.previewImage && (

@@ -6,6 +6,9 @@ import superhost from "../../images/superhost.png"
 import { getSpotById } from "../../store/spots";
 import Reviews from "../Reviews";
 import Bookings from "../Bookings";
+import MapContainer from "../Maps";
+import github from "../../images/github.svg"
+import linkedIn from "../../images/linkedin.svg"
 
 const SpotDetails = () => {
     const { spotId } = useParams();
@@ -87,12 +90,48 @@ const SpotDetails = () => {
 
                         <Bookings spot={spot} ratingShaved={ratingShaved} />
                     </div>
-                    <hr className="hr-line"/>
-                    <div>Calendar goes here</div>
+                    {/* <hr className="hr-line"/>
+                    <div>Calendar goes here</div> */}
                     <hr className="hr-line"/>
                     <Reviews />
+                    <MapContainer />
                 </div>
             </div>
+
+            <section id='spot-detail-footer'>
+                <div className='footer-info-container'>
+                    <span>2023 Overnight S&S</span>
+                    <div>
+                        <div>
+                        Developed by Linus Huynh
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: "flex-end", gap: "0.5rem" }}>
+                        <a className='git-container'
+                            href="https://github.com/linushuynh"
+                            target="_blank"
+                            rel="noreferrer"
+                            >
+                                <img
+                                className='github-img'
+                                src={github}
+                                alt="github-icon"
+                                />
+                            </a>
+                            <a className='linkedin-container'
+                                href="https://www.linkedin.com/in/linus-huynh/"
+                                target="_blank"
+                                rel="noreferrer"
+                                >
+                                    <img
+                                        src={linkedIn}
+                                        alt="linkedIn-icon"
+                                        className='linkedin-img'
+                                        />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </>
     )
 }
