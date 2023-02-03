@@ -81,28 +81,6 @@ function Reviews () {
           );
     }
 
-    // const clickEditReview = (e, reviewId) => {
-    //     e.preventDefault();
-    //     const errorValidations = []
-
-    //     dispatch(editReview({
-    //         review: reviewText,
-    //         stars
-    //     }, reviewId))
-    //     .catch(
-    //         async (res) => {
-    //             const data = await res.json();
-    //             if (data && data.errors) errorValidations.push(data.errors);
-    //         }
-    //         )
-
-    //     setErrors([errorValidations]);
-    //     setReviewText("")
-    //     setStars("");
-    //     // setShowEditForm(false)
-    //     setLoadAfterSubmit(true);
-    // }
-
     let ratingShaved;
     if(spot.avgRating) {
         ratingShaved = Math.ceil(spot.avgRating)
@@ -173,6 +151,9 @@ function Reviews () {
             <br />
 
             <div id="reviews-box">
+                {reviews.length < 1 && (<div style={{ marginBottom: "1.5rem" }}>
+                    Looks like there aren't any reviews for this spot yet... If you've been here, help them out!
+                </div>)}
                 {reviews.map((review) => (
                     <div className="review-item" key={review.id}>
                         <div className="review-info" id="reviewer-text">{review.User.firstName} {review.User.lastName}</div>
@@ -182,62 +163,6 @@ function Reviews () {
                         </div>
                         <div className="review-info" id="review-description">{review.review}</div>
 
-
-                        {/* { selectEditForm === review.id && showEditForm ? (
-                            (
-                                <div className="edit-container">
-                                    <button className="edit-button" onClick={() => {
-                                        if (!showEditForm) return
-                                        setSelectEditForm("");
-                                        setShowEditForm(false);
-                                        setReviewText("");
-                                        setStars(0);
-                                    }}>
-                                        Cancel Edit
-                                    </button>
-                                    <form onSubmit={(e) => clickEditReview(e, review.id)}>
-                                        <label>
-                                        <textarea
-                                        onChange={(e) => setReviewText(e.target.value) }
-                                        value={reviewText}
-                                        placeholder="Tell us your thoughts"
-                                        />
-                                        </label>
-                                        <br />
-                                        <label>
-                                            Stars:
-                                            <input
-                                            type="number"
-                                            min="0"
-                                            max="5"
-                                            placeholder="0-5★"
-                                            onChange={(e) => setStars(e.target.value)}
-                                            value={stars}
-                                            />
-                                        </label>
-                                        <br />
-                                        <button type="submit">Submit Edit</button>
-                                    </form>
-                                </div>
-                            )
-                        )
-                        :
-                        (
-                            <div className="edit-container">
-                            <button className="edit-button" onClick={() => {
-                                if (showEditForm) return
-                                if (checkReviewOwner(review.userId)) {
-                                    return setErrors([...errors, "This is not your review to edit!"])
-                                }
-                                setSelectEditForm(review.id)
-                                setShowEditForm(true)
-                                setReviewText(review.review);
-                                console.log("reviewText*******",reviewText)
-                                setStars(review.stars);
-                                console.log("stars*******",stars)
-                            }}>Edit</button>
-                        </div>
-                        )} */}
                         <br />
                         {currentUser && (currentUser.id === review.userId) && (<div id="delete-button-container">
                              <button
