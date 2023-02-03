@@ -22,22 +22,20 @@
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 .mainpage {
     display: flex;
     flex-direction: column;
-    /* border: solid black 1px; */
     height: 100%;
-    margin-left: 5%;
-    margin-right: 5%;
-    width: 90%;
-    /* justify-items: center; */
     align-items: center;
 }
 
 .screen-bar{
     width: 100vw;
     opacity: 40%;
-    /* border: 1px solid red; */
 }
 
 /* #bar {
