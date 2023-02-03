@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
 import { createReview, deleteReview, loadReviews } from "../../store/review";
+import { convertToWords } from "../../utils/date-management";
+import '../SpotDetails/SpotDetails.css'
 
 function Reviews () {
     const dispatch = useDispatch()
@@ -16,10 +18,10 @@ function Reviews () {
     const [errors, setErrors] = useState([])
     const reviewRef = useRef(null)
 
-    // When creating a review, re-render will scroll to the textbox off page
+    // Focus on the review input when planning on creating a review
     useEffect(() => {
         reviewRef.current?.focus()
-        reviewRef.current?.scrollIntoView({ behavior: "smooth" })
+        // reviewRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
     }, [reviewRef, showReviewMenu])
 
     useEffect(() => {
@@ -84,11 +86,6 @@ function Reviews () {
     let ratingShaved;
     if(spot.avgRating) {
         ratingShaved = Math.ceil(spot.avgRating)
-    }
-
-    const translateToDate = (createdAt) => {
-        const formattedDate = createdAt.slice(0, 10);
-        return formattedDate
     }
 
     const checkReviewOwner = (userId) => {
@@ -158,12 +155,11 @@ function Reviews () {
                     <div className="review-item" key={review.id}>
                         <div className="review-info" id="reviewer-text">{review.User.firstName} {review.User.lastName}</div>
                         <div className="review-info" id="star-date">
-                            <div className="review-info" id="review-date">{translateToDate(review.createdAt)} </div>
+                            <div className="review-info" id="review-date">{convertToWords(review.createdAt)} </div>
                             <div className="review-info" id="star-text">★{review.stars}</div>
                         </div>
                         <div className="review-info" id="review-description">{review.review}</div>
 
-                        <br />
                         {currentUser && (currentUser.id === review.userId) && (<div id="delete-button-container">
                              <button
                              className="action-buttons"
@@ -172,8 +168,6 @@ function Reviews () {
                                 clickDeleteReview(e, review.id)
                                 }}>Delete review</button>
                         </div>)}
-
-                        <br />
                     </div>
                 ))}
             </div>
