@@ -115,6 +115,7 @@
     gap: 1rem;
     justify-content: space-between;
     height: fit-content;
+    margin-bottom: 2rem;
 }
 
 .review-item {

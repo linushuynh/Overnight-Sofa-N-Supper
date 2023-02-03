@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
 import { createReview, deleteReview, loadReviews } from "../../store/review";
+import { shaveRating } from "../../utils/calc-functions";
 import { convertToWords } from "../../utils/date-management";
 import '../SpotDetails/SpotDetails.css'
 
@@ -83,11 +84,6 @@ function Reviews () {
           );
     }
 
-    let ratingShaved;
-    if(spot.avgRating) {
-        ratingShaved = Math.ceil(spot.avgRating)
-    }
-
     const checkReviewOwner = (userId) => {
         return currentUser.id !== userId
     }
@@ -95,7 +91,7 @@ function Reviews () {
     return (
         <div className="review-container">
             <div id="avgRating">
-                ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && "s"}
+                ★{shaveRating(spot.avgRating)} · {spot.numReviews} review{spot.numReviews !== 1 && "s"}
             </div>
 
             {errors.length > 0 && (<ul className="error-list">
