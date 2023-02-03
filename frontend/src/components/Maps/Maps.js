@@ -22,6 +22,7 @@ const Maps = ({ apiKey }) => {
                 style={{ border: '0', height: '30rem', width: '100%' }}
                 loading="lazy"
                 allowFullScreen
+                referrerpolicy="no-referrer-when-downgrade"
                 src={`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${spot.city}${spot.state}`}
             />
         </div>

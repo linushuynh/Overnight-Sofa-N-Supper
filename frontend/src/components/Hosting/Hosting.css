@@ -31,8 +31,9 @@
 
 #welcome-user-box {
     display: flex;
-    font-weight: 800;
-    font-size: 25px;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 27px;
 }
 
 #create-listing-box {
@@ -71,6 +72,8 @@
     margin-right: 20px;
     color: darkblue;
     text-decoration: underline;
+    min-width: 8rem;
+    width: fit-content;
 }
 
 .spot-name-text:hover {
