@@ -74,3 +74,37 @@
     width: 100%;
     margin-top: 30px;
 }
+
+@media screen and (max-width: 915px) {
+    #signup-form-modal {
+        width: 18rem;
+    }
+
+    #login-title {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    #hr {
+        top: 50px;
+    }
+
+    #signup-welcome {
+        font-size: 16px;
+        margin-left: 0;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    #input-box {
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid rgb(191, 191, 191);
+        border-radius: 10px;
+    }
+}
