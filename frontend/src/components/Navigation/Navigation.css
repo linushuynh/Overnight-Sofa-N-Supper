@@ -6,7 +6,6 @@
     display: flex;
     width: 100%;
     height: 5rem;
-    padding: 0px 50px;
     background-color: white;
     justify-content: space-between;
     border-bottom: #CCCCCC 1px solid;
@@ -17,11 +16,9 @@
     display: flex;
     justify-items: center;
     align-items: center;
-    /* width: 33%; */
     position: relative;
-    /* left: 1%; */
     gap: 4px;
-    /* top: 2.25%; */
+    margin-left: 3rem;
 }
 
 .overnightsns {
@@ -54,6 +51,7 @@
     justify-self: center;
     align-items: center;
     background-color: white;
+    margin-right: 3rem;
 }
 
 .profile-button {
@@ -260,4 +258,19 @@
 .logout-box {
     position: relative;
     left: 0;
+}
+
+@media screen and (max-width: 550px) {
+
+    #hosting-box {
+        display: none;
+    }
+
+    .userBox {
+        margin-right: 1rem;
+    }
+
+    .iconContainer {
+        margin-left: 2rem;
+    }
 }

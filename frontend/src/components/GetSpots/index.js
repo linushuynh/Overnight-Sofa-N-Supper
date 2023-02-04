@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllSpots} from "../../store/spots"
 import './Spots.css';
 import { useHistory } from "react-router-dom"
+import { shaveRating } from "../../utils/calc-functions";
 
 function GetSpots() {
     const allSpots = useSelector(state => state.spots.Spots);
@@ -23,7 +24,7 @@ function GetSpots() {
                    {!spot.previewImage && (<img src="https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg" alt="" className="spot-image" onClick={() => history.push(`/spots/${spot.id}`)} />)}
                    <div id="spot-header" onClick={() => history.push(`/spots/${spot.id}`)}>
                         <p className="spot-name">{spot.name}</p>
-                        <p className="spot-info" id="rating">★ {spot.avgRating? spot.avgRating : "New"}</p>
+                        <p className="spot-info" id="rating">★ {spot.avgRating? shaveRating(spot?.avgRating) : "New"}</p>
                     </div>
                     <div id="middle-text" onClick={() => history.push(`/spots/${spot.id}`)}>
                         <p className="spot-info" id="spot-location">{spot.city}, {spot.country}</p>

@@ -164,22 +164,6 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         placeholder="Country"
                         />
                     </div>
-                    {/* <div>
-                        Latitude:
-                        <input
-                        type="number"
-                        value={lat}
-                        onChange={(e) => setLat(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        Longitude:
-                        <input
-                        type="number"
-                        value={lng}
-                        onChange={(e) => setLng(e.target.value)}
-                        />
-                    </div> */}
                     <div>
                         <hr className="hr-line"/>
                     </div>

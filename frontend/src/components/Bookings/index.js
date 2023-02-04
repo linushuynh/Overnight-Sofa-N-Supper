@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import { createBookingThunk } from '../../store/booking';
 import styles from './Bookings.module.css'
 import { defaultStartDate, defaultEndDate, differenceInDays } from '../../utils/date-management';
+import { shaveRating } from '../../utils/calc-functions';
 
-function Bookings({ spot, ratingShaved }) {
+function Bookings({ spot }) {
     const [startDate, setStartDate] = useState(defaultStartDate)
     const [endDate, setEndDate] = useState(defaultEndDate)
     const [successBooking, setSuccessBooking] = useState(false)
@@ -37,7 +38,7 @@ function Bookings({ spot, ratingShaved }) {
         <div className={styles.bookingsContainer}>
             <div className={styles.headerContainer}>
                     <div className={styles.price}>${spot.price} <span>night</span></div>
-                    <div className={styles.reviewInfo}>★{ratingShaved} · {spot.numReviews} reviews</div>
+                    <div className={styles.reviewInfo}>★{shaveRating(spot.avgRating)} · {spot.numReviews} reviews</div>
             </div>
             <div className={styles.formContainer}>
                 <form onSubmit={submitBooking}>
