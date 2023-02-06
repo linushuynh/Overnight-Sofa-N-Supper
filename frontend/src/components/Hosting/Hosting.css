@@ -126,3 +126,10 @@
     color: #ff385c;
     text-decoration: overline;
 }
+
+@media screen and (max-width: 700px) {
+    .user-spot-div {
+        justify-content: space-between;
+        gap: 5rem;
+    }
+}
