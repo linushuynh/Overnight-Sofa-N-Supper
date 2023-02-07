@@ -29,7 +29,7 @@ export const defaultEndDate = `${tdlYear}-${tdlMonth}-${tdlDay}`
 // Takes in a numeric date and return the date in a string
 export const convertToWords = (numDate) => {
     const newDate = new Date(numDate)
-    return newDate.toLocaleString("en-us", { month: "short", day: "numeric", year: "numeric" })
+    return newDate.toLocaleString("en-us", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
 }
 
 // ***************************************
