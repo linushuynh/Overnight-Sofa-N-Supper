@@ -9,14 +9,13 @@ import Bookings from "../Bookings";
 import MapContainer from "../Maps";
 import github from "../../images/github.svg"
 import linkedIn from "../../images/linkedin.svg"
+import { shaveRating } from "../../utils/calc-functions";
 
 const SpotDetails = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots.spotById);
     const [loadAfterSubmit, setLoadAfterSubmit] = useState(false);
-    // const [selectEditForm, setSelectEditForm] = useState(0);
-    // const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         dispatch(getSpotById(spotId));
@@ -24,11 +23,6 @@ const SpotDetails = () => {
     }, [spotId, loadAfterSubmit, dispatch])
 
     if (!spot) return null
-
-    let ratingShaved;
-    if(spot.avgRating) {
-        ratingShaved = Math.ceil(spot.avgRating)
-    }
 
     // FIND HIGHEST ID AKA MOST RECENTLY ADDED SPOT IMAGE
    let displayImg;
@@ -47,7 +41,7 @@ const SpotDetails = () => {
                 <div id="spot-detail-container">
                     <div id="spot-name">{spot.name}</div>
                     <div className="header-info">
-                        ★{ratingShaved} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
+                        ★{shaveRating(spot?.avgRating)} · {spot.numReviews} review{spot.numReviews !== 1 && <p>s </p>}
                          &nbsp; · &nbsp;
                         <img src={superhost} alt="superhost-icon"/> &nbsp; Superhost &nbsp; · &nbsp;
                         <p id="city-country-text">{spot.city}, {spot.country} </p>
@@ -76,7 +70,7 @@ const SpotDetails = () => {
                                     6 guests · 4 bedroom · 4 beds · 3 baths
                                 </div>
                             </div>
-                            <hr className="hr-line"/>
+                            <hr className="description-break-line"/>
                             <div className="description-box">
                                 <div id="about">
                                     About this space
@@ -88,11 +82,11 @@ const SpotDetails = () => {
                             </div>
                         </div>
 
-                        <Bookings spot={spot} ratingShaved={ratingShaved} />
+                        <Bookings spot={spot} />
                     </div>
                     {/* <hr className="hr-line"/>
                     <div>Calendar goes here</div> */}
-                    <hr className="hr-line"/>
+                    <hr className="description-break-line"/>
                     <Reviews />
                     <MapContainer />
                 </div>

@@ -1,5 +1,5 @@
 #form{
-    height: 618px;
+    height: fit-content;
     width: 568px;
 }
 
@@ -14,6 +14,7 @@
 #form-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 15px;
 }
 
 .spot-form {
@@ -26,13 +27,17 @@
 #input-list {
     border-radius: 5px;
     border: 2px solid rgb(156, 156, 156);
-
+    display: flex;
+    flex-direction: column;
 }
 
 .hr-line {
     opacity: 40%;
-    /* border: 1px solid lightgray; */
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
+
 
 .input-line {
     width: 95%;
@@ -51,7 +56,8 @@
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: rgb(156, 156, 156, 0.4) 1px solid;
 }
 
 #form-submit {
@@ -73,4 +79,20 @@
 
 #description-input {
     height: 100px;
+}
+
+@media screen and (max-width: 680px) {
+    #form {
+        width: 30rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    #form {
+        width: 20rem;
+    }
+
+    #form-submit {
+        width: 50%;
+    }
 }

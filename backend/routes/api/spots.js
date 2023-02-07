@@ -516,13 +516,24 @@ router.post(
             const bookingEndDateCompare = bookingEndDateOnly.getTime();
 
             const errsObj = {};
-
             // Check if startDate or endDate is between the existing booking's time
-            if (bookingStartDateCompare <= startDateCompare && startDateCompare <= bookingEndDateCompare) {
-                errsObj.startDate = "Start date conflicts with an existing booking";
+            if (startDateCompare >= bookingStartDateCompare && bookingStartDateCompare <= endDateCompare) {
+                errsObj['startDate'] = "Start date conflicts with an existing booking"
             }
-            if (bookingStartDateCompare <= endDateCompare && endDateCompare <= bookingEndDateCompare) {
-                errsObj.endDate = "End date conflicts with an existing booking";
+            if (startDateCompare >= bookingEndDateCompare && endDateCompare <= bookingEndDateCompare) {
+                errsObj['endDate'] = "End date conflicts with an existing booking"
+            }
+
+            if (bookingStartDateCompare <= startDateCompare) {
+                if (startDateCompare <= bookingEndDateCompare) {
+                    errsObj['range'] = "Someone else has already booked a slot inside your range"
+                }
+            }
+
+            if (endDateCompare <= bookingEndDateCompare) {
+                if (bookingStartDateCompare < endDateCompare) {
+                    errsObj['range'] = "Someone else has already booked a slot inside your range"
+                }
             }
 
             if (Object.keys(errsObj).length !== 0) {
