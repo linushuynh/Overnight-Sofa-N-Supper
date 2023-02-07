@@ -2,8 +2,10 @@
 
 [![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=Overnight%20SnS%20🌙&text2=Sofa%20and%20Supper&width=800&height=400)](https://github.com/Akshay090/svg-banners)
 
+
 ### 🛏️ An AirBnB Clone
-Overnight S&S is a clone of AirBnB and rather than BnB's bed and breakfast, S&S stands for Overnight Sofa & Supper
+
+Overnight S&S is a clone of AirBnB where you can find spots to reserve bookings and stay. You can also host your own spots and make reviews for other hosts' spots.
 The live site is located at: [https://overnightsns.onrender.com/](https://overnightsns.onrender.com/)
 
 This project was built with:
@@ -18,6 +20,7 @@ This project was built with:
 * Redux
 * PostgreSQL
 * Postman
+
 
 ### 👨‍💻Code Snippets:
 *The code snippet below is used for setting up booking dates and when a user submits their booking*
@@ -64,6 +67,7 @@ This project was built with:
 
       return response
     }
+
 
 The link to the wiki can be found at: https://github.com/linushuynh/Overnight-Sofa-N-Supper/wiki
 
