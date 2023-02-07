@@ -516,10 +516,6 @@ router.post(
             const bookingEndDateCompare = bookingEndDateOnly.getTime();
 
             const errsObj = {};
-            console.log('******************************startdatecompare', startDateCompare)
-            console.log('*****************************enddatecompare', endDateCompare)
-            console.log('**************************bookingstartdatecompare',bookingStartDateCompare)
-            console.log('************************bookingenddatecompare', bookingEndDateCompare)
             // Check if startDate or endDate is between the existing booking's time
             if (startDateCompare >= bookingStartDateCompare && bookingStartDateCompare <= endDateCompare) {
                 errsObj['startDate'] = "Start date conflicts with an existing booking"
