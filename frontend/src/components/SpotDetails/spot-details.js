@@ -70,7 +70,7 @@ const SpotDetails = () => {
                                     6 guests · 4 bedroom · 4 beds · 3 baths
                                 </div>
                             </div>
-                            <hr className="hr-line"/>
+                            <hr className="description-break-line"/>
                             <div className="description-box">
                                 <div id="about">
                                     About this space
@@ -86,7 +86,7 @@ const SpotDetails = () => {
                     </div>
                     {/* <hr className="hr-line"/>
                     <div>Calendar goes here</div> */}
-                    <hr className="hr-line"/>
+                    <hr className="description-break-line"/>
                     <Reviews />
                     <MapContainer />
                 </div>

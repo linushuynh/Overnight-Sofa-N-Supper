@@ -124,9 +124,6 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         placeholder="Address"
                         />
                     </div>
-                    <div>
-                        <hr className="hr-line"/>
-                    </div>
                     <div className="input-container">
                         <input
                         className="input-line"
@@ -136,9 +133,6 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         required
                         placeholder="City"
                          />
-                    </div>
-                    <div>
-                        <hr className="hr-line"/>
                     </div>
                     <div className="input-container">
                         <input
@@ -150,11 +144,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         placeholder="State"
                          />
                     </div>
-                    <div>
-                        <hr className="hr-line"/>
-                    </div>
                     <div className="input-container">
-
                         <input
                         className="input-line"
                         type="text"
@@ -163,9 +153,6 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         required
                         placeholder="Country"
                         />
-                    </div>
-                    <div>
-                        <hr className="hr-line"/>
                     </div>
                     <div className="input-container">
                         <input
@@ -176,9 +163,6 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         required
                         placeholder="Display Name"
                         />
-                    </div>
-                    <div>
-                        <hr className="hr-line"/>
                     </div>
                     <div className="input-container">
                         <textarea
@@ -191,9 +175,6 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         placeholder="Description"
                         />
                     </div>
-                    <div>
-                        <hr className="hr-line"/>
-                    </div>
                     <div className="input-container">
                         <input
                         className="input-line"
@@ -202,6 +183,7 @@ const SpotForm = ({ setShowModal, actionType, spotId, setLoadAfterSubmit }) => {
                         onChange={(e) => setPrice(e.target.value)}
                         required
                         placeholder="Price($) per night"
+                        min={0}
                         />
                     </div>
                     {actionType === "update" && (

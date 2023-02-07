@@ -133,7 +133,7 @@ const Hosting = () => {
                     {bookings.length > 0 ? (bookings?.map(booking => (
                         <div key={booking.id} className='booking-card'>
                             <div className="booking-info">
-                                {booking?.Spot.address} · {booking?.Spot.city} , {booking?.Spot.state}
+                                {booking?.Spot.address} · {booking?.Spot.city}, {booking?.Spot.state}
                             </div>
                             <div className="booking-img-container">
                                 {booking?.Spot.previewImage && (
@@ -144,7 +144,7 @@ const Hosting = () => {
                                 <span>{convertToWords(booking?.startDate)}</span> to <span>{convertToWords(booking?.endDate)}</span>
                             </div>
                             <div>
-                                <button className="action-buttons" onClick={(e) => handleDeleteBooking(e, booking.id)}>Delete this booking</button>
+                                <button className="action-buttons" onClick={(e) => handleDeleteBooking(e, booking.id)}>Cancel this booking</button>
                             </div>
                         </div>
                     ))): (
